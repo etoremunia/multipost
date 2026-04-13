@@ -1,9 +1,6 @@
 // netlify/functions/instagram-callback.js
-// Meta redirige aquí después de que el usuario autoriza Instagram
-
 exports.handler = async (event) => {
   const { code, state, error } = event.queryStringParameters || {};
-
   if (error) return redirect('/?instagram_error=acceso_denegado');
   if (!code || !state) return redirect('/?instagram_error=parametros_invalidos');
 
@@ -15,17 +12,18 @@ exports.handler = async (event) => {
     return redirect('/?instagram_error=estado_invalido');
   }
 
-  // Intercambiar código por token de acceso de corta duración
+  // Intercambiar código por token de corta duración
   let shortToken;
   try {
-    const tokenRes = await fetch('https://graph.facebook.com/v18.0/oauth/access_token', {
+    const tokenRes = await fetch('https://api.instagram.com/oauth/access_token', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({
         client_id: process.env.INSTAGRAM_CLIENT_ID,
         client_secret: process.env.INSTAGRAM_CLIENT_SECRET,
         redirect_uri: process.env.INSTAGRAM_REDIRECT_URI,
-        code: code
+        code: code,
+        grant_type: 'authorization_code'
       })
     });
     shortToken = await tokenRes.json();
@@ -41,11 +39,11 @@ exports.handler = async (event) => {
   let longToken;
   try {
     const longRes = await fetch(
-      `https://graph.facebook.com/v18.0/oauth/access_token?grant_type=fb_exchange_token&client_id=${process.env.INSTAGRAM_CLIENT_ID}&client_secret=${process.env.INSTAGRAM_CLIENT_SECRET}&fb_exchange_token=${shortToken.access_token}`
+      `https://graph.instagram.com/access_token?grant_type=ig_exchange_token&client_secret=${process.env.INSTAGRAM_CLIENT_SECRET}&access_token=${shortToken.access_token}`
     );
     longToken = await longRes.json();
   } catch (e) {
-    longToken = shortToken; // fallback al token corto si falla
+    longToken = shortToken;
   }
 
   const accessToken = longToken.access_token || shortToken.access_token;
@@ -55,7 +53,6 @@ exports.handler = async (event) => {
   try {
     const supabaseUrl = process.env.SUPABASE_URL;
     const supabaseKey = process.env.SUPABASE_ANON_KEY;
-
     await fetch(`${supabaseUrl}/rest/v1/platform_tokens`, {
       method: 'POST',
       headers: {
