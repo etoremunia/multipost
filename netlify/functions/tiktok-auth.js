@@ -14,8 +14,8 @@ exports.handler = async (event) => {
     return { statusCode: 500, body: JSON.stringify({ error: 'TikTok no configurado aún' }) };
   }
 
-  const scopes = 'user.info.basic,video.upload,video.publish';
-
+const scopes = 'user.info.basic,video.upload';
+  
   const state = Buffer.from(JSON.stringify({ email: userEmail })).toString('base64');
 
   const params = new URLSearchParams({
