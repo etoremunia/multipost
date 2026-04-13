@@ -1047,13 +1047,13 @@ function fetchConnectedFromServer() {
 function connectPlatform(platform) {
   var session=JSON.parse(localStorage.getItem('mp_session')||'null');
   if (!session) return;
-  var names={tiktok:'TikTok',youtube:'YouTube',instagram:'Instagram'};
-  if (platform==='youtube') {
-    // Redirige al OAuth real de Google/YouTube
-    window.location.href='/.netlify/functions/youtube-auth?email='+encodeURIComponent(session.email);
-  } else {
-    // TikTok e Instagram: próximamente (requieren aprobación de sus APIs)
-    alert(names[platform]+' estará disponible próximamente.\nActualmente en proceso de aprobación de API.');
+  var authUrls={
+    youtube: '/.netlify/functions/youtube-auth?email=',
+    tiktok:  '/.netlify/functions/tiktok-auth?email=',
+    instagram: '/.netlify/functions/instagram-auth?email='
+  };
+  if (authUrls[platform]) {
+    window.location.href = authUrls[platform] + encodeURIComponent(session.email);
   }
 }
 
@@ -1316,24 +1316,30 @@ window.addEventListener('DOMContentLoaded',function(){
   var session=JSON.parse(localStorage.getItem('mp_session')||'null');
   var params=new URLSearchParams(window.location.search);
 
-  // Volvemos del OAuth de YouTube
-  if (params.get('youtube_connected')==='1') {
-    var email=params.get('email');
-    if (email && session && session.email===email) {
-      var connected=getConnected();
-      if (connected.indexOf('youtube')===-1) {
-        connected.push('youtube');
-        saveConnected(connected);
+  // Manejar callbacks OAuth de cualquier plataforma
+  var platforms=['youtube','tiktok','instagram'];
+  platforms.forEach(function(p) {
+    if (params.get(p+'_connected')==='1') {
+      var email=params.get('email');
+      if (email && session && session.email===email) {
+        var connected=getConnected();
+        if (connected.indexOf(p)===-1) {
+          connected.push(p);
+          saveConnected(connected);
+        }
       }
     }
-    // Limpiar URL
+    if (params.get(p+'_error')) {
+      var names={youtube:'YouTube',tiktok:'TikTok',instagram:'Instagram'};
+      setTimeout(function(){
+        alert('Error al conectar '+names[p]+': '+params.get(p+'_error')+'. Inténtalo de nuevo.');
+      },500);
+    }
+  });
+
+  // Limpiar URL si venimos de un callback
+  if (window.location.search) {
     window.history.replaceState({},document.title,'/');
-  }
-  if (params.get('youtube_error')) {
-    window.history.replaceState({},document.title,'/');
-    setTimeout(function(){
-      alert('Error al conectar YouTube: '+params.get('youtube_error')+'. Inténtalo de nuevo.');
-    },500);
   }
 
   if (session) showDashboard();
