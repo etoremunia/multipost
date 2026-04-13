@@ -11,6 +11,11 @@
   status = 200
 
 [[redirects]]
+  from = "/auth/tiktok/callback"
+  to = "/.netlify/functions/tiktok-callback"
+  status = 200
+
+[[redirects]]
   from = "/auth/instagram/callback"
   to = "/.netlify/functions/instagram-callback"
   status = 200
