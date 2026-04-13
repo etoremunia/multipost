@@ -1,23 +1,21 @@
 // netlify/functions/instagram-auth.js
-// Redirige al usuario a la página de autorización de Instagram (Meta)
-
 exports.handler = async (event) => {
   const clientId = process.env.INSTAGRAM_CLIENT_ID;
   const redirectUri = process.env.INSTAGRAM_REDIRECT_URI;
-
   const userEmail = event.queryStringParameters && event.queryStringParameters.email;
+
   if (!userEmail) {
     return { statusCode: 400, body: JSON.stringify({ error: 'Email requerido' }) };
   }
-
   if (!clientId) {
     return { statusCode: 500, body: JSON.stringify({ error: 'Instagram no configurado aún' }) };
   }
 
   const scopes = [
-    'instagram_basic',
-    'instagram_content_publish',
-    'pages_read_engagement'
+    'instagram_business_basic',
+    'instagram_business_content_publish',
+    'instagram_business_manage_messages',
+    'instagram_business_manage_comments'
   ].join(',');
 
   const state = Buffer.from(JSON.stringify({ email: userEmail })).toString('base64');
@@ -30,7 +28,7 @@ exports.handler = async (event) => {
     state: state
   });
 
-  const authUrl = `https://www.facebook.com/v18.0/dialog/oauth?${params.toString()}`;
+  const authUrl = `https://www.instagram.com/oauth/authorize?${params.toString()}`;
 
   return {
     statusCode: 302,
