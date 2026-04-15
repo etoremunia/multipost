@@ -989,14 +989,20 @@ function handleRegister(e) {
   if (pass.length<8){errEl.textContent='La contraseña debe tener al menos 8 caracteres.';return;}
   if (pass!==passConf){errEl.textContent='Las contraseñas no coinciden.';return;}
   if (!terms){errEl.textContent='Debes aceptar los términos y condiciones.';return;}
-  errEl.textContent='';
-  var users=JSON.parse(localStorage.getItem('mp_users')||'[]');
-  if (users.find(function(u){return u.email===email;})){errEl.textContent='Ya existe una cuenta con ese email.';return;}
-  users.push({name:name,email:email,pass:pass,plan:'gratis',created:new Date().toISOString()});
-  localStorage.setItem('mp_users',JSON.stringify(users));
-  localStorage.setItem('mp_session',JSON.stringify({name:name,email:email,plan:'gratis'}));
-  closeModal();
-  showDashboard();
+  errEl.textContent='Registrando…';
+  fetch('/.netlify/functions/register', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({name: name, email: email, password: pass})
+  })
+  .then(function(r){return r.json();})
+  .then(function(data){
+    if (data.error){errEl.textContent=data.error;return;}
+    localStorage.setItem('mp_session',JSON.stringify({name:data.name,email:data.email,plan:data.plan}));
+    closeModal();
+    showDashboard();
+  })
+  .catch(function(){errEl.textContent='Error de conexión. Inténtalo de nuevo.';});
 }
 
 // ── LOGIN ──
@@ -1005,13 +1011,20 @@ function handleLogin(e) {
   var email=document.getElementById('login-email').value.trim();
   var pass=document.getElementById('login-pass').value;
   var errEl=document.getElementById('login-error');
-  var users=JSON.parse(localStorage.getItem('mp_users')||'[]');
-  var user=users.find(function(u){return u.email===email&&u.pass===pass;});
-  if (!user){errEl.textContent='Email o contraseña incorrectos.';return;}
-  errEl.textContent='';
-  localStorage.setItem('mp_session',JSON.stringify({name:user.name,email:user.email,plan:user.plan}));
-  closeModal();
-  showDashboard();
+  errEl.textContent='Iniciando sesión…';
+  fetch('/.netlify/functions/login', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({email: email, password: pass})
+  })
+  .then(function(r){return r.json();})
+  .then(function(data){
+    if (data.error){errEl.textContent=data.error;return;}
+    localStorage.setItem('mp_session',JSON.stringify({name:data.name,email:data.email,plan:data.plan}));
+    closeModal();
+    showDashboard();
+  })
+  .catch(function(){errEl.textContent='Error de conexión. Inténtalo de nuevo.';});
 }
 
 // ── CONNECTED PLATFORMS ──
