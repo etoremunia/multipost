@@ -57,3 +57,11 @@ export async function onRequestGet(context) {
         refresh_token: tokens.refresh_token || null,
         expires_at: tokens.expires_in ? new Date(Date.now() + tokens.expires_in * 1000).toISOString() : null,
         updated_at: new Date().toISOString()
+      })
+    });
+  } catch (e) {
+    return json({error: 'guardado_fallido'});
+  }
+
+  return json({ok: true, email: userEmail});
+}
