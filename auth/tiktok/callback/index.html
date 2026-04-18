@@ -1,15 +1,16 @@
-tiktok-developers-site-verification=Xdq0zp4DS5NHwnpuqzcdBrVKQ7VMFIqG
 <script>
 (function() {
   var params = new URLSearchParams(window.location.search);
   var code = params.get('code');
-  var email = params.get('email') || '';
+  var state = params.get('state') || '';
+  var errorParam = params.get('error');
+  if (errorParam) { window.location.href = '/?tiktok_error=acceso_denegado'; return; }
   if (!code) { window.location.href = '/?tiktok_error=falta_codigo'; return; }
-  fetch('/api/tiktok-callback?code=' + encodeURIComponent(code) + '&email=' + encodeURIComponent(email))
+  fetch('/api/tiktok-callback?code=' + encodeURIComponent(code) + '&state=' + encodeURIComponent(state))
     .then(function(r) { return r.json(); })
     .then(function(data) {
       if (data.error) { window.location.href = '/?tiktok_error=' + encodeURIComponent(data.error); }
-      else { window.location.href = '/?tiktok_connected=1&email=' + encodeURIComponent(email); }
+      else { window.location.href = '/?tiktok_connected=1&email=' + encodeURIComponent(data.email); }
     })
     .catch(function() { window.location.href = '/?tiktok_error=error_de_red'; });
 })();
