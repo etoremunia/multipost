@@ -4,15 +4,19 @@ export async function onRequestGet(context) {
   const state = url.searchParams.get('state');
   const error = url.searchParams.get('error');
 
-  if (error) return Response.redirect('/?youtube_error=acceso_denegado', 302);
-  if (!code || !state) return Response.redirect('/?youtube_error=parametros_invalidos', 302);
+  const json = (data, status=200) => new Response(JSON.stringify(data), {
+    status, headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'}
+  });
+
+  if (error) return json({error: 'acceso_denegado'});
+  if (!code || !state) return json({error: 'parametros_invalidos'});
 
   let userEmail;
   try {
     const decoded = JSON.parse(atob(state));
     userEmail = decoded.email;
   } catch (e) {
-    return Response.redirect('/?youtube_error=estado_invalido', 302);
+    return json({error: 'estado_invalido'});
   }
 
   let tokens;
@@ -30,10 +34,10 @@ export async function onRequestGet(context) {
     });
     tokens = await tokenRes.json();
   } catch (e) {
-    return Response.redirect('/?youtube_error=token_fallido', 302);
+    return json({error: 'token_fallido'});
   }
 
-  if (!tokens.access_token) return Response.redirect('/?youtube_error=token_vacio', 302);
+  if (!tokens.access_token) return json({error: 'token_vacio'});
 
   try {
     const supabaseUrl = context.env.SUPABASE_URL;
@@ -53,11 +57,3 @@ export async function onRequestGet(context) {
         refresh_token: tokens.refresh_token || null,
         expires_at: tokens.expires_in ? new Date(Date.now() + tokens.expires_in * 1000).toISOString() : null,
         updated_at: new Date().toISOString()
-      })
-    });
-  } catch (e) {
-    return Response.redirect('/?youtube_error=guardado_fallido', 302);
-  }
-
-  return Response.redirect(`/?youtube_connected=1&email=${encodeURIComponent(userEmail)}`, 302);
-}
