@@ -3,14 +3,11 @@ export async function onRequestGet(context) {
   const code = url.searchParams.get('code');
   const state = url.searchParams.get('state');
   const error = url.searchParams.get('error');
-
   const json = (data, status=200) => new Response(JSON.stringify(data), {
     status, headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'}
   });
-
   if (error) return json({error: 'acceso_denegado'});
   if (!code || !state) return json({error: 'parametros_invalidos'});
-
   let userEmail;
   try {
     const decoded = JSON.parse(atob(state));
@@ -18,7 +15,6 @@ export async function onRequestGet(context) {
   } catch (e) {
     return json({error: 'estado_invalido'});
   }
-
   let tokens;
   try {
     const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
@@ -36,9 +32,7 @@ export async function onRequestGet(context) {
   } catch (e) {
     return json({error: 'token_fallido'});
   }
-
   if (!tokens.access_token) return json({error: 'token_vacio'});
-
   try {
     const supabaseUrl = context.env.SUPABASE_URL;
     const supabaseKey = context.env.SUPABASE_ANON_KEY;
@@ -62,6 +56,5 @@ export async function onRequestGet(context) {
   } catch (e) {
     return json({error: 'guardado_fallido'});
   }
-
   return json({ok: true, email: userEmail});
 }
