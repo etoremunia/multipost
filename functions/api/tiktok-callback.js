@@ -4,15 +4,19 @@ export async function onRequestGet(context) {
   const state = url.searchParams.get('state');
   const error = url.searchParams.get('error');
 
-  if (error) return Response.redirect('/?tiktok_error=acceso_denegado', 302);
-  if (!code || !state) return Response.redirect('/?tiktok_error=parametros_invalidos', 302);
+  const json = (data, status=200) => new Response(JSON.stringify(data), {
+    status, headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'}
+  });
+
+  if (error) return json({error: 'acceso_denegado'});
+  if (!code || !state) return json({error: 'parametros_invalidos'});
 
   let userEmail;
   try {
     const decoded = JSON.parse(atob(state));
     userEmail = decoded.email;
   } catch (e) {
-    return Response.redirect('/?tiktok_error=estado_invalido', 302);
+    return json({error: 'estado_invalido'});
   }
 
   let tokens;
@@ -23,17 +27,17 @@ export async function onRequestGet(context) {
       body: new URLSearchParams({
         client_key: context.env.TIKTOK_CLIENT_KEY,
         client_secret: context.env.TIKTOK_CLIENT_SECRET,
-        code: code,
+        code,
         grant_type: 'authorization_code',
         redirect_uri: context.env.TIKTOK_REDIRECT_URI
       })
     });
     tokens = await tokenRes.json();
   } catch (e) {
-    return Response.redirect('/?tiktok_error=token_fallido', 302);
+    return json({error: 'token_fallido'});
   }
 
-  if (!tokens.access_token) return Response.redirect('/?tiktok_error=token_vacio', 302);
+  if (!tokens.access_token) return json({error: 'token_vacio'});
 
   try {
     const supabaseUrl = context.env.SUPABASE_URL;
@@ -56,8 +60,8 @@ export async function onRequestGet(context) {
       })
     });
   } catch (e) {
-    return Response.redirect('/?tiktok_error=guardado_fallido', 302);
+    return json({error: 'guardado_fallido'});
   }
 
-  return Response.redirect(`/?tiktok_connected=1&email=${encodeURIComponent(userEmail)}`, 302);
+  return json({ok: true, email: userEmail});
 }
