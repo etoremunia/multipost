@@ -788,101 +788,91 @@ function updateStats() {
   if (platEl) platEl.textContent=getConnected().length;
 }
 
-function handleDashUpload(e) {
+// ── DASHBOARD UPLOAD ──
+async function handleDashUpload(e) {
   e.preventDefault();
-  var file = document.getElementById('dash-file').files[0];
-  var platforms = Array.from(document.querySelectorAll('.dash-platform:checked')).map(function(c) { return c.value; });
-  var errEl = document.getElementById('dash-error');
-  var successEl = document.getElementById('dash-success');
-  errEl.textContent = '';
-  successEl.style.display = 'none';
+  var file=document.getElementById('dash-file').files[0];
+  var platforms=Array.from(document.querySelectorAll('.dash-platform:checked')).map(function(c){return c.value;});
+  var errEl=document.getElementById('dash-error');
+  var successEl=document.getElementById('dash-success');
+  errEl.textContent='';
+  successEl.style.display='none';
 
-  var connected = getConnected();
-  if (connected.length === 0) {
-    errEl.textContent = '⚠️ Primero conecta al menos una red social.';
-    document.getElementById('connect-warning').style.display = 'block';
-    document.getElementById('connect-accounts-card').scrollIntoView({ behavior: 'smooth' });
+  var connected=getConnected();
+  if (connected.length===0){
+    errEl.textContent='⚠️ Primero conecta al menos una red social en la sección "Conecta tus cuentas".';
+    document.getElementById('connect-warning').style.display='block';
+    document.getElementById('connect-accounts-card').scrollIntoView({behavior:'smooth'});
     return;
   }
-  if (!file) { errEl.textContent = 'Selecciona un archivo de video.'; return; }
-  if (platforms.length === 0) { errEl.textContent = 'Selecciona al menos una plataforma.'; return; }
+  if (!file){errEl.textContent='Selecciona un archivo de video.';return;}
+  if (platforms.length===0){errEl.textContent='Selecciona al menos una plataforma.';return;}
 
-  var session = JSON.parse(localStorage.getItem('mp_session') || 'null');
-  if (session && session.plan === 'gratis') {
-    var count = getMonthlyCount();
-    if (count >= FREE_LIMIT) {
-      errEl.innerHTML = 'Has alcanzado el límite de ' + FREE_LIMIT + ' publicaciones gratuitas este mes. <a href="https://buy.stripe.com/14A9AT3debVVcu0drW3gk01" target="_blank" style="color:#ff3c3c;text-decoration:underline">Actualiza a Pro →</a>';
+  var session=JSON.parse(localStorage.getItem('mp_session')||'null');
+  if (session && session.plan==='gratis') {
+    var count=getMonthlyCount();
+    if (count>=FREE_LIMIT) {
+      errEl.innerHTML='Has alcanzado el límite de '+FREE_LIMIT+' publicaciones gratuitas este mes. <a href="https://buy.stripe.com/14A9AT3debVVcu0drW3gk01" target="_blank" style="color:#ff3c3c;text-decoration:underline">Actualiza a Pro →</a>';
       return;
     }
   }
 
-  var btn = document.getElementById('dash-publish-btn');
-  var progressBar = document.getElementById('upload-progress');
-  var progressFill = document.getElementById('upload-progress-fill');
-  var progressText = document.getElementById('upload-progress-text');
+  var btn=document.getElementById('dash-publish-btn');
+  btn.disabled=true;
+  btn.textContent='Obteniendo enlace de subida…';
 
-  btn.disabled = true;
-  btn.textContent = 'Subiendo video…';
-  progressBar.style.display = 'block';
-  progressFill.style.width = '10%';
-  progressText.textContent = 'Subiendo video...';
+  try {
+    // 1. Pedimos a Cloudflare una URL directa para subir a R2
+    var resUrl = await fetch('/api/get-upload-url?email=' + encodeURIComponent(session.email));
+    var dataUrl = await resUrl.json();
+    if (dataUrl.error) throw new Error(dataUrl.error);
 
-  var title = document.getElementById('dash-title').value || file.name;
-  var description = document.getElementById('dash-desc').value || '';
+    btn.textContent='Subiendo video a la nube (0%)…';
 
-  var formData = new FormData();
-  formData.append('video', file);
-  formData.append('email', session.email);
-  formData.append('title', title);
-  formData.append('description', description);
-  formData.append('platforms', JSON.stringify(platforms));
+    // 2. El navegador sube el video DIRECTAMENTE a R2 (sin pasar por el servidor)
+    var xhr = new XMLHttpRequest();
+    
+    var uploadPromise = new Promise(function(resolve, reject) {
+      xhr.upload.addEventListener('progress', function(e) {
+        if (e.lengthComputable) {
+          var percent = Math.round((e.loaded / e.total) * 100);
+          btn.textContent = 'Subiendo video a la nube (' + percent + '%)…';
+        }
+      });
+      xhr.addEventListener('load', function() {
+        if (xhr.status === 200) resolve();
+        else reject(new Error('Error subiendo a R2: ' + xhr.statusText));
+      });
+      xhr.addEventListener('error', function() { reject(new Error('Error de red al subir')); });
+      
+      xhr.open('PUT', dataUrl.uploadUrl);
+      xhr.setRequestHeader('Content-Type', file.type);
+      xhr.send(file);
+    });
 
-  // Simular progreso mientras sube
-  var progressInterval = setInterval(function() {
-    var current = parseFloat(progressFill.style.width);
-    if (current < 85) { progressFill.style.width = (current + 5) + '%'; }
-  }, 1000);
+    await uploadPromise;
 
-  fetch('/api/upload-video', { method: 'POST', body: formData })
-  .then(function(r) { return r.json(); })
-  .then(function(data) {
-    clearInterval(progressInterval);
-    progressFill.style.width = '100%';
-    btn.disabled = false;
-    btn.textContent = 'Publicar ahora →';
-
-    if (data.error) {
-      progressBar.style.display = 'none';
-      progressText.textContent = '';
-      errEl.textContent = '❌ Error: ' + data.error;
-      return;
-    }
-
-    progressText.textContent = '✅ ¡Publicado!';
-    setTimeout(function() { progressBar.style.display = 'none'; progressText.textContent = ''; }, 3000);
-
+    // 3. El video ya está en la nube. 
     incrementMonthlyCount();
-    var posts = JSON.parse(localStorage.getItem('mp_posts_' + session.email) || '[]');
-    posts.unshift({ file: file.name, platforms: platforms, date: new Date().toLocaleString('es-ES'), status: 'Publicado' });
-    localStorage.setItem('mp_posts_' + session.email, JSON.stringify(posts));
-
-    successEl.textContent = '✅ ¡Publicado correctamente en ' + platforms.join(', ') + '!';
-    successEl.style.display = 'block';
+    var posts=JSON.parse(localStorage.getItem('mp_posts_'+session.email)||'[]');
+    posts.unshift({file:file.name,platforms:platforms,date:new Date().toLocaleString('es-ES'),status:'Video subido a la nube ✅'});
+    localStorage.setItem('mp_posts_'+session.email,JSON.stringify(posts));
+    
+    successEl.textContent='✅ ¡Video subido a la nube correctamente! (Pendiente de conectar la publicación a las redes)';
+    successEl.style.display='block';
     renderHistory();
     updateStats();
     updatePlanLimitBar();
-    document.getElementById('dash-file').value = '';
-    document.getElementById('dash-title').value = '';
-    document.getElementById('dash-desc').value = '';
-  })
-  .catch(function(err) {
-    clearInterval(progressInterval);
-    progressBar.style.display = 'none';
-    progressText.textContent = '';
-    btn.disabled = false;
-    btn.textContent = 'Publicar ahora →';
-    errEl.textContent = '❌ Error de conexión: ' + err.message;
-  });
+    document.getElementById('dash-file').value='';
+    document.getElementById('dash-title').value='';
+    document.getElementById('dash-desc').value='';
+
+  } catch (err) {
+    errEl.textContent = 'Error: ' + err.message;
+  } finally {
+    btn.disabled=false;
+    btn.textContent='Publicar ahora →';
+  }
 }
 
 function renderHistory() {
