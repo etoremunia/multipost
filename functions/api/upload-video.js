@@ -30,7 +30,7 @@ export async function onRequestPost(context) {
 
     if (!uploadRes.ok) {
       const errText = await uploadRes.text();
-      return json({ error: 'Error subiendo a R2: ' + errText }, 500);
+      return json({ error: 'Error subiendo a R2: ' + uploadRes.status + ' - ' + errText }, 500);
     }
 
     // 2. Obtener token de YouTube desde Supabase
