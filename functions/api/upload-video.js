@@ -1,179 +1,201 @@
 export async function onRequestPost(context) {
-  const json = (data, status = 200) => new Response(JSON.stringify(data), {
-    status, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
-  });
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json'
+  };
 
   try {
     const formData = await context.request.formData();
-    const file = formData.get('video');
     const email = formData.get('email');
     const title = formData.get('title') || 'Video sin título';
     const description = formData.get('description') || '';
+    const platformsRaw = formData.get('platforms');
+    const videoFile = formData.get('video');
 
-    if (!file || !email) return json({ error: 'Faltan datos' }, 400);
-
-    // 1. Subir a R2
-    const fileName = `${Date.now()}-${file.name}`;
-    const r2Endpoint = context.env.R2_ENDPOINT;
-    const bucket = context.env.R2_BUCKET;
-    const accessKey = context.env.R2_ACCESS_KEY_ID;
-    const secretKey = context.env.R2_SECRET_ACCESS_KEY;
-
-    const uploadUrl = `${r2Endpoint}/${bucket}/${fileName}`;
-    const fileBuffer = await file.arrayBuffer();
-
-    // Firma AWS S3 compatible para R2
-    const uploadRes = await fetchWithAwsAuth(
-      uploadUrl, 'PUT', fileBuffer, file.type,
-      accessKey, secretKey, bucket, fileName
-    );
-
-    if (!uploadRes.ok) {
-      const errText = await uploadRes.text();
-      return json({ error: 'Error subiendo a R2: ' + uploadRes.status + ' - ' + errText }, 500);
+    if (!email || !videoFile || !platformsRaw) {
+      return new Response(JSON.stringify({ error: 'Faltan campos requeridos' }), { status: 400, headers });
     }
 
-    // 2. Obtener token de YouTube desde Supabase
+    const platforms = JSON.parse(platformsRaw).map(p => p.toLowerCase());
     const supabaseUrl = context.env.SUPABASE_URL;
     const supabaseKey = context.env.SUPABASE_ANON_KEY;
 
-    const tokenRes = await fetch(
-      `${supabaseUrl}/rest/v1/platform_tokens?user_email=eq.${encodeURIComponent(email)}&platform=eq.youtube&select=access_token`,
+    // Obtener tokens de Supabase
+    const tokensRes = await fetch(
+      `${supabaseUrl}/rest/v1/platform_tokens?user_email=eq.${encodeURIComponent(email)}&select=platform,access_token,refresh_token`,
       { headers: { 'apikey': supabaseKey, 'Authorization': `Bearer ${supabaseKey}` } }
     );
-    const tokens = await tokenRes.json();
-    if (!tokens.length) return json({ error: 'YouTube no conectado' }, 400);
-    const accessToken = tokens[0].access_token;
+    const tokens = await tokensRes.json();
 
-    // 3. Publicar en YouTube (resumable upload)
-    const metaRes = await fetch('https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-        'X-Upload-Content-Type': file.type,
-        'X-Upload-Content-Length': fileBuffer.byteLength
-      },
-      body: JSON.stringify({
-        snippet: { title, description, categoryId: '22' },
-        status: { privacyStatus: 'public' }
-      })
-    });
+    const results = {};
+    const videoBytes = await videoFile.arrayBuffer();
 
-    if (!metaRes.ok) {
-      const err = await metaRes.text();
-      return json({ error: 'Error iniciando upload YouTube: ' + err }, 500);
+    // ── YOUTUBE ──
+    if (platforms.includes('youtube')) {
+      const ytToken = tokens.find(t => t.platform === 'youtube');
+      if (!ytToken) {
+        results.youtube = { ok: false, error: 'No hay cuenta de YouTube conectada' };
+      } else {
+        try {
+          // Refrescar token si es necesario
+          let accessToken = ytToken.access_token;
+          if (ytToken.refresh_token) {
+            const refreshRes = await fetch('https://oauth2.googleapis.com/token', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+              body: new URLSearchParams({
+                client_id: context.env.YOUTUBE_CLIENT_ID,
+                client_secret: context.env.YOUTUBE_CLIENT_SECRET,
+                refresh_token: ytToken.refresh_token,
+                grant_type: 'refresh_token'
+              })
+            });
+            const refreshData = await refreshRes.json();
+            if (refreshData.access_token) {
+              accessToken = refreshData.access_token;
+              // Actualizar token en Supabase
+              await fetch(
+                `${supabaseUrl}/rest/v1/platform_tokens?user_email=eq.${encodeURIComponent(email)}&platform=eq.youtube`,
+                {
+                  method: 'PATCH',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'apikey': supabaseKey,
+                    'Authorization': `Bearer ${supabaseKey}`
+                  },
+                  body: JSON.stringify({ access_token: accessToken, updated_at: new Date().toISOString() })
+                }
+              );
+            }
+          }
+
+          // Paso 1: Iniciar subida resumable
+          const initRes = await fetch(
+            'https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status',
+            {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+                'X-Upload-Content-Type': videoFile.type || 'video/mp4',
+                'X-Upload-Content-Length': videoBytes.byteLength
+              },
+              body: JSON.stringify({
+                snippet: {
+                  title: title,
+                  description: description,
+                  categoryId: '22'
+                },
+                status: {
+                  privacyStatus: 'public'
+                }
+              })
+            }
+          );
+
+          if (!initRes.ok) {
+            const errText = await initRes.text();
+            results.youtube = { ok: false, error: 'Error al iniciar subida: ' + errText };
+          } else {
+            const uploadUrl = initRes.headers.get('Location');
+
+            // Paso 2: Subir el video
+            const uploadRes = await fetch(uploadUrl, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': videoFile.type || 'video/mp4',
+                'Content-Length': videoBytes.byteLength
+              },
+              body: videoBytes
+            });
+
+            if (uploadRes.ok || uploadRes.status === 201) {
+              const videoData = await uploadRes.json();
+              results.youtube = { ok: true, videoId: videoData.id };
+            } else {
+              const errText = await uploadRes.text();
+              results.youtube = { ok: false, error: 'Error al subir video: ' + errText };
+            }
+          }
+        } catch (e) {
+          results.youtube = { ok: false, error: e.message };
+        }
+      }
     }
 
-    const uploadLocation = metaRes.headers.get('Location');
-    if (!uploadLocation) return json({ error: 'No se obtuvo URL de upload de YouTube' }, 500);
+    // ── TIKTOK ──
+    if (platforms.includes('tiktok')) {
+      const ttToken = tokens.find(t => t.platform === 'tiktok');
+      if (!ttToken) {
+        results.tiktok = { ok: false, error: 'No hay cuenta de TikTok conectada' };
+      } else {
+        try {
+          // Iniciar subida a TikTok
+          const initRes = await fetch('https://open.tiktokapis.com/v2/post/publish/inbox/video/init/', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${ttToken.access_token}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              source_info: {
+                source: 'FILE_UPLOAD',
+                video_size: videoBytes.byteLength,
+                chunk_size: videoBytes.byteLength,
+                total_chunk_count: 1
+              }
+            })
+          });
+          const initData = await initRes.json();
 
-    // 4. Subir el video a YouTube
-    const ytRes = await fetch(uploadLocation, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': file.type,
-        'Content-Length': fileBuffer.byteLength
-      },
-      body: fileBuffer
-    });
-
-    if (!ytRes.ok) {
-      const err = await ytRes.text();
-      return json({ error: 'Error subiendo video a YouTube: ' + err }, 500);
+          if (initData.data && initData.data.upload_url) {
+            const uploadRes = await fetch(initData.data.upload_url, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'video/mp4',
+                'Content-Length': videoBytes.byteLength,
+                'Content-Range': `bytes 0-${videoBytes.byteLength - 1}/${videoBytes.byteLength}`
+              },
+              body: videoBytes
+            });
+            results.tiktok = uploadRes.ok
+              ? { ok: true, publishId: initData.data.publish_id }
+              : { ok: false, error: 'Error al subir a TikTok' };
+          } else {
+            results.tiktok = { ok: false, error: initData.error?.message || 'Error al iniciar subida TikTok' };
+          }
+        } catch (e) {
+          results.tiktok = { ok: false, error: e.message };
+        }
+      }
     }
 
-    const ytData = await ytRes.json();
+    // ── INSTAGRAM ──
+    if (platforms.includes('instagram')) {
+      results.instagram = { ok: false, error: 'Subida directa a Instagram requiere URL pública del video. Próximamente.' };
+    }
 
-    // 5. Guardar en historial Supabase
-    await fetch(`${supabaseUrl}/rest/v1/posts`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': supabaseKey,
-        'Authorization': `Bearer ${supabaseKey}`
-      },
-      body: JSON.stringify({
-        user_email: email,
-        filename: file.name,
-        title,
-        description,
-        platforms: ['youtube'],
-        status: 'published'
-      })
-    });
+    // Comprobar si al menos una plataforma tuvo éxito
+    const anySuccess = Object.values(results).some(r => r.ok);
+    if (!anySuccess) {
+      const errors = Object.entries(results).map(([p, r]) => `${p}: ${r.error}`).join(', ');
+      return new Response(JSON.stringify({ error: errors }), { status: 500, headers });
+    }
 
-    return json({ ok: true, youtube_id: ytData.id });
+    return new Response(JSON.stringify({ ok: true, results }), { status: 200, headers });
 
   } catch (e) {
-    return json({ error: 'Error interno: ' + e.message + ' | stack: ' + (e.stack || 'none') }, 500);
+    return new Response(JSON.stringify({ error: 'Error interno: ' + e.message }), { status: 500, headers });
   }
 }
 
-// AWS Signature V4 para R2
-async function fetchWithAwsAuth(url, method, body, contentType, accessKey, secretKey, bucket, key) {
-  const now = new Date();
-  const dateStamp = now.toISOString().slice(0, 10).replace(/-/g, '');
-  const amzDate = now.toISOString().replace(/[:-]|\.\d{3}/g, '').slice(0, 15) + 'Z';
-  const region = 'auto';
-  const service = 's3';
-
-  const bodyHash = await sha256Hex(body);
-
-  const canonicalHeaders = `content-type:${contentType}\nhost:${new URL(url).host}\nx-amz-content-sha256:${bodyHash}\nx-amz-date:${amzDate}\n`;
-  const signedHeaders = 'content-type;host;x-amz-content-sha256;x-amz-date';
-  const canonicalRequest = `${method}\n/${bucket}/${key}\n\n${canonicalHeaders}\n${signedHeaders}\n${bodyHash}`;
-
-  const credentialScope = `${dateStamp}/${region}/${service}/aws4_request`;
-  const stringToSign = `AWS4-HMAC-SHA256\n${amzDate}\n${credentialScope}\n${await sha256Hex(canonicalRequest)}`;
-
-  const signingKey = await getSigningKey(secretKey, dateStamp, region, service);
-  const signature = await hmacHex(signingKey, stringToSign);
-
-  const authHeader = `AWS4-HMAC-SHA256 Credential=${accessKey}/${credentialScope}, SignedHeaders=${signedHeaders}, Signature=${signature}`;
-
-  return fetch(url, {
-    method,
-    headers: {
-      'Content-Type': contentType,
-      'x-amz-date': amzDate,
-      'x-amz-content-sha256': bodyHash,
-      'Authorization': authHeader
-    },
-    body
-  });
-}
-
-async function sha256Hex(data) {
-  const buf = typeof data === 'string' ? new TextEncoder().encode(data) : data;
-  const hash = await crypto.subtle.digest('SHA-256', buf instanceof ArrayBuffer ? buf : buf.buffer || buf);
-  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
-}
-
-async function hmacHex(key, message) {
-  const msgBuf = new TextEncoder().encode(message);
-  const sig = await crypto.subtle.sign('HMAC', key, msgBuf);
-  return Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, '0')).join('');
-}
-
-async function getSigningKey(secretKey, dateStamp, region, service) {
-  const enc = new TextEncoder();
-  const kDate = await crypto.subtle.importKey('raw', enc.encode('AWS4' + secretKey), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
-  const kDateSig = await crypto.subtle.sign('HMAC', kDate, enc.encode(dateStamp));
-  const kRegion = await crypto.subtle.importKey('raw', kDateSig, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
-  const kRegionSig = await crypto.subtle.sign('HMAC', kRegion, enc.encode(region));
-  const kService = await crypto.subtle.importKey('raw', kRegionSig, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
-  const kServiceSig = await crypto.subtle.sign('HMAC', kService, enc.encode(service));
-  const kSigning = await crypto.subtle.importKey('raw', kServiceSig, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
-  return kSigning;
-}
-
 export async function onRequestOptions() {
-  return new Response(null, {
+  return new Response('', {
+    status: 200,
     headers: {
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type'
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS'
     }
   });
 }
