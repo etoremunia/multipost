@@ -14,93 +14,35 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --black: #0a0a0a;
-    --white: #f5f3ee;
-    --accent: #ff3c3c;
-    --card-bg: #111111;
-    --text-muted: #888;
-    --border: #1e1e1e;
-  }
+  :root { --black: #0a0a0a; --white: #f5f3ee; --accent: #ff3c3c; --card-bg: #111111; --text-muted: #888; --border: #1e1e1e; }
   html { scroll-behavior: smooth; }
-  body {
-    background: var(--black);
-    color: var(--white);
-    font-family: 'DM Sans', sans-serif;
-    overflow-x: hidden;
-    min-height: 100vh;
-  }
+  body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; overflow-x: hidden; min-height: 100vh; }
   a { color: inherit; text-decoration: none; }
-
-  /* ── NAV ── */
-  nav {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1.4rem 5%; border-bottom: 1px solid var(--border);
-    position: sticky; top: 0; background: rgba(10,10,10,0.93);
-    backdrop-filter: blur(14px); z-index: 100;
-  }
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 1.4rem 5%; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(10,10,10,0.93); backdrop-filter: blur(14px); z-index: 100; }
   .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; letter-spacing: -0.5px; }
   .logo span { color: var(--accent); }
   nav ul { display: flex; gap: 1.8rem; list-style: none; }
   nav ul a { color: var(--text-muted); font-size: 0.88rem; transition: color .2s; }
   nav ul a:hover { color: var(--white); }
-  .btn-nav {
-    background: var(--accent); color: var(--white); border: none;
-    padding: .6rem 1.4rem; border-radius: 100px; font-family: 'DM Sans', sans-serif;
-    font-weight: 500; cursor: pointer; font-size: .88rem; transition: opacity .2s;
-  }
+  .btn-nav { background: var(--accent); color: var(--white); border: none; padding: .6rem 1.4rem; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer; font-size: .88rem; transition: opacity .2s; }
   .btn-nav:hover { opacity: .85; }
-
-  /* ── HERO ── */
   .hero { padding: 6rem 5% 3rem; max-width: 1100px; margin: 0 auto; text-align: center; position: relative; }
-  .blob {
-    position: absolute; width: 700px; height: 700px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,60,60,0.07) 0%, transparent 70%);
-    top: -100px; left: 50%; transform: translateX(-50%); pointer-events: none;
-    animation: blobmove 8s ease-in-out infinite alternate;
-  }
+  .blob { position: absolute; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle, rgba(255,60,60,0.07) 0%, transparent 70%); top: -100px; left: 50%; transform: translateX(-50%); pointer-events: none; animation: blobmove 8s ease-in-out infinite alternate; }
   @keyframes blobmove { from{transform:translateX(-50%) scale(1)} to{transform:translateX(-50%) scale(1.1)} }
-
-  .badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 100px;
-    padding: .4rem 1rem; font-size: .78rem; color: var(--text-muted); margin-bottom: 1.8rem;
-  }
+  .badge { display: inline-flex; align-items: center; gap: 8px; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 100px; padding: .4rem 1rem; font-size: .78rem; color: var(--text-muted); margin-bottom: 1.8rem; }
   .badge-dot { width: 7px; height: 7px; border-radius: 50%; background: #4cff72; animation: pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
-
-  h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(2.6rem, 7vw, 5rem);
-    font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 1.4rem;
-  }
+  h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.6rem, 7vw, 5rem); font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 1.4rem; }
   h1 .line2 { color: var(--accent); }
   .hero-sub { font-size: 1.05rem; color: var(--text-muted); max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.75; font-weight: 300; }
-
   .cta-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; }
-  .btn-primary {
-    background: var(--accent); color: var(--white); border: none;
-    padding: .9rem 2.2rem; border-radius: 100px; font-family: 'DM Sans', sans-serif;
-    font-size: 1rem; font-weight: 500; cursor: pointer; transition: opacity .2s, transform .15s; display: inline-block;
-  }
+  .btn-primary { background: var(--accent); color: var(--white); border: none; padding: .9rem 2.2rem; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 500; cursor: pointer; transition: opacity .2s, transform .15s; display: inline-block; }
   .btn-primary:hover { opacity: .85; transform: scale(.98); }
-  .btn-secondary {
-    background: transparent; color: var(--white); border: 1px solid #2a2a2a;
-    padding: .9rem 2.2rem; border-radius: 100px; font-family: 'DM Sans', sans-serif;
-    font-size: 1rem; cursor: pointer; transition: background .2s, border-color .2s; display: inline-block;
-  }
+  .btn-secondary { background: transparent; color: var(--white); border: 1px solid #2a2a2a; padding: .9rem 2.2rem; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 1rem; cursor: pointer; transition: background .2s, border-color .2s; display: inline-block; }
   .btn-secondary:hover { background: #111; border-color: #555; }
-
-  /* ── PLATFORM PILLS ── */
   .platforms-strip { display: flex; justify-content: center; align-items: center; margin-bottom: 3.5rem; flex-wrap: wrap; gap: .5rem; }
-  .plat-pill {
-    display: flex; align-items: center; gap: 10px;
-    padding: .7rem 1.4rem; border: 1px solid #222; border-radius: 100px;
-    font-weight: 500; font-size: .95rem;
-  }
+  .plat-pill { display: flex; align-items: center; gap: 10px; padding: .7rem 1.4rem; border: 1px solid #222; border-radius: 100px; font-weight: 500; font-size: .95rem; }
   .plat-icon { width: 20px; height: 20px; }
-
-  /* ── MOCKUP ── */
   .mockup-wrap { max-width: 680px; margin: 0 auto 5rem; background: #111; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; }
   .mockup-bar { background: #0d0d0d; padding: .9rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
   .dot { width: 10px; height: 10px; border-radius: 50%; }
@@ -121,36 +63,26 @@
   .check-yt{background:#f00}.check-ig{background:#c13584}.check-tk{background:#fff;color:#000}
   .btn-publish { width:100%;background:var(--accent);color:var(--white);border:none;padding:.9rem;border-radius:12px;font-size:.95rem;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity .2s; }
   .btn-publish:hover { opacity: .85; }
-
-  /* ── SECTIONS ── */
   section { padding: 5rem 5%; max-width: 1100px; margin: 0 auto; }
   .section-label { font-size: .72rem; color: var(--accent); letter-spacing: .15em; text-transform: uppercase; margin-bottom: .8rem; }
   .section-title { font-family: 'Syne', sans-serif; font-size: clamp(1.7rem, 4vw, 2.8rem); font-weight: 800; letter-spacing: -1px; margin-bottom: 3rem; max-width: 480px; }
   .section-title.center { margin-left: auto; margin-right: auto; text-align: center; max-width: 100%; }
-
-  /* ── STATS ── */
   .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.5rem; }
   .stat-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px; padding: 1.8rem; text-align: center; }
   .stat-num { font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 800; color: var(--accent); }
   .stat-label { font-size: .85rem; color: var(--text-muted); margin-top: .3rem; }
-
-  /* ── HOW ── */
   .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.5rem; }
   .step-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px; padding: 1.8rem; transition: border-color .2s; }
   .step-card:hover { border-color: #333; }
   .step-num { font-family: 'Syne', sans-serif; font-size: 2.8rem; font-weight: 800; color: #1e1e1e; line-height: 1; margin-bottom: .8rem; }
   .step-title { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: .5rem; }
   .step-desc { color: var(--text-muted); font-size: .88rem; line-height: 1.7; font-weight: 300; }
-
-  /* ── FEATURES ── */
   .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 1.5rem; }
   .feat-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px; padding: 1.8rem; transition: border-color .2s; }
   .feat-card:hover { border-color: #333; }
   .feat-icon { width: 42px; height: 42px; background: #1e1e1e; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; margin-bottom: .9rem; }
   .feat-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: .45rem; }
   .feat-desc { color: var(--text-muted); font-size: .87rem; line-height: 1.7; font-weight: 300; }
-
-  /* ── TESTIMONIALS ── */
   .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
   .testi-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px; padding: 1.8rem; transition: border-color .2s; }
   .testi-card:hover { border-color: #333; }
@@ -158,16 +90,10 @@
   .testi-text { font-size: .92rem; line-height: 1.75; color: #ccc; margin-bottom: 1.2rem; font-weight: 300; font-style: italic; }
   .testi-author { display: flex; align-items: center; gap: 10px; }
   .avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; flex-shrink: 0; }
-  .av-a{background:#2d1a4a;color:#b48fe0}
-  .av-b{background:#1a2e1a;color:#72c472}
-  .av-c{background:#2e1a1a;color:#e07272}
-  .av-d{background:#1a1e2e;color:#7290e0}
-  .av-e{background:#2e261a;color:#e0c072}
-  .av-f{background:#1a2a2e;color:#72cce0}
+  .av-a{background:#2d1a4a;color:#b48fe0} .av-b{background:#1a2e1a;color:#72c472} .av-c{background:#2e1a1a;color:#e07272}
+  .av-d{background:#1a1e2e;color:#7290e0} .av-e{background:#2e261a;color:#e0c072} .av-f{background:#1a2a2e;color:#72cce0}
   .author-name { font-size: .88rem; font-weight: 500; }
   .author-handle { font-size: .78rem; color: var(--text-muted); }
-
-  /* ── FAQ ── */
   .faq-list { max-width: 720px; margin: 0 auto; }
   .faq-item { border-bottom: 1px solid var(--border); padding: 1.4rem 0; cursor: pointer; }
   .faq-q { display: flex; justify-content: space-between; align-items: center; font-weight: 500; font-size: .97rem; gap: 1rem; }
@@ -175,8 +101,6 @@
   .faq-a { font-size: .88rem; color: var(--text-muted); line-height: 1.75; max-height: 0; overflow: hidden; transition: max-height .3s ease, padding-top .3s; font-weight: 300; }
   .faq-item.open .faq-a { max-height: 200px; padding-top: .9rem; }
   .faq-item.open .faq-arrow { transform: rotate(45deg); }
-
-  /* ── PRICING ── */
   .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
   .price-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px; padding: 2rem; position: relative; transition: border-color .2s; }
   .price-card:hover { border-color: #333; }
@@ -193,13 +117,9 @@
   .btn-plan:hover { background: #1a1a1a; }
   .btn-plan.featured-btn { background: var(--accent); border-color: var(--accent); }
   .btn-plan.featured-btn:hover { opacity: .85; }
-
-  /* ── CTA BANNER ── */
   .cta-banner { background: var(--card-bg); border: 1px solid var(--border); border-radius: 24px; padding: 4rem 2rem; text-align: center; max-width: 1100px; margin: 0 auto 5rem; }
   .cta-banner h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800; letter-spacing: -1px; margin-bottom: 1rem; }
   .cta-banner p { color: var(--text-muted); margin-bottom: 2rem; font-weight: 300; }
-
-  /* ── LEGAL PAGES ── */
   .legal-section { display: none; padding: 4rem 5%; max-width: 800px; margin: 0 auto; }
   .legal-section.active { display: block; }
   .legal-section h2 { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; margin-bottom: 2rem; }
@@ -208,21 +128,12 @@
   .legal-section ul { padding-left: 1.5rem; }
   .back-btn { background: transparent; border: 1px solid var(--border); color: var(--text-muted); padding: .5rem 1.2rem; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: .85rem; cursor: pointer; margin-bottom: 2rem; transition: border-color .2s; }
   .back-btn:hover { border-color: #555; }
-
-  /* ── COOKIE BANNER ── */
-  #cookie-banner {
-    position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
-    background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 16px;
-    padding: 1.2rem 1.6rem; display: flex; align-items: center; gap: 1.5rem;
-    max-width: 680px; width: 90%; z-index: 999; flex-wrap: wrap;
-  }
+  #cookie-banner { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 16px; padding: 1.2rem 1.6rem; display: flex; align-items: center; gap: 1.5rem; max-width: 680px; width: 90%; z-index: 999; flex-wrap: wrap; }
   #cookie-banner p { font-size: .83rem; color: var(--text-muted); line-height: 1.6; flex: 1; min-width: 200px; font-weight: 300; }
   #cookie-banner p a { color: var(--accent); }
   .cookie-btns { display: flex; gap: .6rem; flex-shrink: 0; }
   .btn-cookie-accept { background: var(--accent); color: var(--white); border: none; padding: .5rem 1.2rem; border-radius: 100px; font-size: .82rem; cursor: pointer; font-family: 'DM Sans', sans-serif; }
   .btn-cookie-reject { background: transparent; color: var(--text-muted); border: 1px solid #333; padding: .5rem 1.2rem; border-radius: 100px; font-size: .82rem; cursor: pointer; font-family: 'DM Sans', sans-serif; }
-
-  /* ── FOOTER ── */
   footer { border-top: 1px solid var(--border); padding: 3rem 5% 2rem; }
   .footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 2rem; max-width: 1100px; margin: 0 auto 2.5rem; }
   .footer-brand p { color: var(--text-muted); font-size: .85rem; margin-top: .8rem; line-height: 1.7; font-weight: 300; max-width: 240px; }
@@ -232,24 +143,95 @@
   .footer-col ul a { color: var(--text-muted); font-size: .85rem; transition: color .2s; }
   .footer-col ul a:hover { color: var(--white); }
   .footer-bottom { border-top: 1px solid var(--border); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; color: var(--text-muted); font-size: .8rem; flex-wrap: wrap; gap: .5rem; }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 768px) {
-    nav ul { display: none; }
-    h1 { letter-spacing: -1px; }
-    .footer-grid { grid-template-columns: 1fr 1fr; }
-    .footer-brand { grid-column: 1 / -1; }
-    #cookie-banner { bottom: 0; border-radius: 16px 16px 0 0; width: 100%; }
-  }
-  @media (max-width: 480px) {
-    .cta-group { flex-direction: column; align-items: center; }
-    .footer-grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 768px) { nav ul { display: none; } h1 { letter-spacing: -1px; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } #cookie-banner { bottom: 0; border-radius: 16px 16px 0 0; width: 100%; } }
+  @media (max-width: 480px) { .cta-group { flex-direction: column; align-items: center; } .footer-grid { grid-template-columns: 1fr; } }
+  #modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(6px); z-index: 1000; align-items: center; justify-content: center; }
+  #modal-overlay.active { display: flex; }
+  .modal-box { background: #111; border: 1px solid #2a2a2a; border-radius: 20px; padding: 2.2rem; width: 90%; max-width: 420px; position: relative; }
+  .modal-close { position: absolute; top: 1rem; right: 1.2rem; background: none; border: none; color: #888; font-size: 1.4rem; cursor: pointer; line-height:1; }
+  .modal-close:hover { color: #fff; }
+  .modal-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; margin-bottom: 1.4rem; }
+  .modal-logo span { color: #ff3c3c; }
+  .modal-tabs { display: flex; gap: 0; border: 1px solid #2a2a2a; border-radius: 10px; overflow: hidden; margin-bottom: 1.6rem; }
+  .modal-tab { flex: 1; background: none; border: none; color: #888; padding: .6rem; font-family: 'DM Sans', sans-serif; font-size: .88rem; cursor: pointer; transition: background .2s, color .2s; }
+  .modal-tab.active { background: #1e1e1e; color: #f5f3ee; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .modal-field { margin-bottom: 1rem; }
+  .modal-field label { display: block; font-size: .78rem; color: #888; margin-bottom: .35rem; letter-spacing: .04em; }
+  .modal-field input[type=text], .modal-field input[type=email], .modal-field input[type=password] { width: 100%; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; color: #f5f3ee; padding: .65rem 1rem; font-family: 'DM Sans', sans-serif; font-size: .92rem; outline: none; transition: border-color .2s; }
+  .modal-field input:focus { border-color: #ff3c3c; }
+  .modal-field-check { display: flex; align-items: flex-start; gap: .5rem; font-size: .8rem; color: #888; margin-bottom: 1.2rem; }
+  .modal-field-check input { margin-top: 2px; accent-color: #ff3c3c; }
+  .modal-field-check a { color: #ff3c3c; }
+  .btn-modal-submit { width: 100%; background: #ff3c3c; border: none; color: #f5f3ee; padding: .8rem; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .95rem; font-weight: 500; cursor: pointer; transition: opacity .2s; }
+  .btn-modal-submit:hover { opacity: .85; }
+  .btn-modal-submit:disabled { opacity: .5; cursor: not-allowed; }
+  .modal-error { color: #ff6b6b; font-size: .8rem; margin-bottom: .8rem; min-height: 1em; }
+  #modal-plan-hint { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px; padding: .5rem .9rem; font-size: .8rem; color: #888; margin-bottom: 1rem; }
+  #dashboard { display: none; min-height: 100vh; }
+  .dash-nav { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 5%; border-bottom: 1px solid #1e1e1e; background: rgba(10,10,10,0.95); backdrop-filter: blur(14px); position: sticky; top: 0; z-index: 100; }
+  .dash-user { display: flex; align-items: center; gap: .8rem; }
+  .dash-avatar { width: 36px; height: 36px; border-radius: 50%; background: #2d1a4a; color: #b48fe0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; }
+  .dash-user-info { font-size: .85rem; }
+  .dash-user-info strong { display: block; color: #f5f3ee; }
+  .dash-user-info small { color: #888; }
+  .btn-logout { background: transparent; border: 1px solid #2a2a2a; color: #888; padding: .45rem 1rem; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: .82rem; cursor: pointer; transition: border-color .2s, color .2s; }
+  .btn-logout:hover { border-color: #555; color: #f5f3ee; }
+  .dash-body { max-width: 900px; margin: 0 auto; padding: 2.5rem 5%; }
+  .dash-header { margin-bottom: 2.5rem; }
+  .dash-header h2 { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; letter-spacing: -1px; }
+  .dash-header p { color: #888; font-size: .9rem; margin-top: .3rem; }
+  .dash-badge { display: inline-flex; align-items: center; gap: 6px; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 100px; padding: .25rem .8rem; font-size: .75rem; color: #888; margin-top: .5rem; }
+  .dash-badge strong { color: #ff3c3c; }
+  .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  @media(max-width:640px){ .dash-grid { grid-template-columns: 1fr; } }
+  .dash-card { background: #111; border: 1px solid #1e1e1e; border-radius: 18px; padding: 1.8rem; }
+  .dash-card h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 1.2rem; }
+  .dash-form-field { margin-bottom: .9rem; }
+  .dash-form-field label { display: block; font-size: .75rem; color: #888; margin-bottom: .3rem; }
+  .dash-form-field input[type=text], .dash-form-field input[type=file], .dash-form-field textarea { width: 100%; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; color: #f5f3ee; padding: .6rem .9rem; font-family: 'DM Sans', sans-serif; font-size: .88rem; outline: none; transition: border-color .2s; resize: vertical; }
+  .dash-form-field input:focus, .dash-form-field textarea:focus { border-color: #ff3c3c; }
+  .dash-form-field input[type=file] { padding: .5rem .9rem; color: #888; }
+  .platform-checks { display: flex; flex-direction: column; gap: .5rem; margin-bottom: 1rem; }
+  .platform-check-row { display: flex; align-items: center; gap: .5rem; font-size: .88rem; color: #ccc; }
+  .platform-check-row input { accent-color: #ff3c3c; }
+  .btn-dash-publish { width: 100%; background: #ff3c3c; border: none; color: #f5f3ee; padding: .8rem; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .92rem; font-weight: 500; cursor: pointer; transition: opacity .2s; }
+  .btn-dash-publish:hover { opacity: .85; }
+  .btn-dash-publish:disabled { opacity: .5; cursor: not-allowed; }
+  .dash-error { color: #ff6b6b; font-size: .8rem; margin-bottom: .6rem; min-height: 1em; }
+  .dash-success { background: rgba(76,255,114,0.08); border: 1px solid rgba(76,255,114,0.3); border-radius: 10px; padding: .7rem 1rem; font-size: .85rem; color: #4cff72; margin-bottom: .8rem; display: none; }
+  .dash-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; margin-bottom: 1.5rem; }
+  .dash-stat { background: #1a1a1a; border-radius: 12px; padding: 1rem; text-align: center; }
+  .dash-stat-num { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; color: #ff3c3c; }
+  .dash-stat-label { font-size: .72rem; color: #888; margin-top: .2rem; }
+  .history-item { background: #1a1a1a; border-radius: 10px; padding: .9rem 1rem; margin-bottom: .6rem; }
+  .history-file { font-size: .88rem; font-weight: 500; margin-bottom: .2rem; }
+  .history-meta { font-size: .75rem; color: #888; margin-bottom: .2rem; }
+  .history-status { font-size: .75rem; color: #4cff72; }
+  .connect-grid { display: flex; flex-direction: column; gap: .8rem; }
+  .connect-row { display: flex; align-items: center; justify-content: space-between; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 12px; padding: .9rem 1.2rem; transition: border-color .2s; }
+  .connect-row.connected { border-color: #1a3a1a; background: #0f1f0f; }
+  .connect-info { display: flex; align-items: center; gap: .9rem; }
+  .connect-icon { font-size: 1.3rem; }
+  .connect-name { font-size: .9rem; font-weight: 500; }
+  .connect-status { font-size: .75rem; color: #888; margin-top: .1rem; }
+  .connect-row.connected .connect-status { color: #4cff72; }
+  .btn-connect { background: transparent; border: 1px solid #333; color: #f5f3ee; padding: .45rem 1.1rem; border-radius: 100px; font-family: "DM Sans", sans-serif; font-size: .82rem; cursor: pointer; transition: background .2s, border-color .2s; white-space: nowrap; }
+  .btn-connect:hover { background: #222; border-color: #555; }
+  .btn-disconnect { background: transparent; border: 1px solid #3a1a1a; color: #ff6b6b; padding: .45rem 1.1rem; border-radius: 100px; font-family: "DM Sans", sans-serif; font-size: .82rem; cursor: pointer; transition: background .2s; }
+  .btn-disconnect:hover { background: #1a0a0a; }
+  .plan-limit-bar { background: #1a1a1a; border-radius: 8px; height: 6px; margin-top: .5rem; overflow: hidden; }
+  .plan-limit-fill { height: 100%; background: #ff3c3c; border-radius: 8px; transition: width .4s; }
+  .plan-limit-text { font-size: .75rem; color: #888; margin-top: .3rem; }
+  .dash-full { grid-column: 1 / -1; }
+  .upload-progress { background: #1a1a1a; border-radius: 8px; height: 8px; margin-top: .8rem; overflow: hidden; display: none; }
+  .upload-progress-fill { height: 100%; background: #ff3c3c; border-radius: 8px; transition: width .3s; width: 0%; }
+  .upload-progress-text { font-size: .75rem; color: #888; margin-top: .3rem; text-align: center; }
 </style>
 </head>
 <body>
 
-<!-- ════════ NAV ════════ -->
 <nav>
   <div class="logo">Multi<span>Post</span></div>
   <ul>
@@ -261,10 +243,7 @@
   <button class="btn-nav" onclick="openModal('Gratis')">Empezar gratis</button>
 </nav>
 
-<!-- ════════ MAIN CONTENT ════════ -->
 <div id="main-content">
-
-  <!-- HERO -->
   <div class="hero">
     <div class="blob"></div>
     <div class="badge"><div class="badge-dot"></div> Publica en 3 plataformas a la vez</div>
@@ -274,38 +253,15 @@
       <a href="#" class="btn-primary" onclick="openModal()">Empezar gratis</a>
       <a href="#como-funciona" class="btn-secondary">Ver cómo funciona</a>
     </div>
-
-    <!-- Platform pills -->
     <div class="platforms-strip">
-      <div class="plat-pill">
-        <svg class="plat-icon" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.21a8.25 8.25 0 004.83 1.56V7.32a4.85 4.85 0 01-1.06-.63z"/></svg>
-        TikTok
-      </div>
-      <div class="plat-pill">
-        <svg class="plat-icon" viewBox="0 0 24 24"><rect width="24" height="24" fill="#ff0000" rx="5"/><polygon points="9.5,7 9.5,17 17,12" fill="white"/></svg>
-        YouTube
-      </div>
-      <div class="plat-pill">
-        <svg class="plat-icon" viewBox="0 0 24 24"><defs><linearGradient id="ig" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f09433"/><stop offset="25%" stop-color="#e6683c"/><stop offset="50%" stop-color="#dc2743"/><stop offset="75%" stop-color="#cc2366"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs><rect width="24" height="24" rx="6" fill="url(#ig)"/><rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="white" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="none" stroke="white" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="white"/></svg>
-        Instagram
-      </div>
+      <div class="plat-pill"><svg class="plat-icon" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.21a8.25 8.25 0 004.83 1.56V7.32a4.85 4.85 0 01-1.06-.63z"/></svg>TikTok</div>
+      <div class="plat-pill"><svg class="plat-icon" viewBox="0 0 24 24"><rect width="24" height="24" fill="#ff0000" rx="5"/><polygon points="9.5,7 9.5,17 17,12" fill="white"/></svg>YouTube</div>
+      <div class="plat-pill"><svg class="plat-icon" viewBox="0 0 24 24"><defs><linearGradient id="ig" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f09433"/><stop offset="25%" stop-color="#e6683c"/><stop offset="50%" stop-color="#dc2743"/><stop offset="75%" stop-color="#cc2366"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs><rect width="24" height="24" rx="6" fill="url(#ig)"/><rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="white" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="none" stroke="white" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="white"/></svg>Instagram</div>
     </div>
-
-    <!-- UI Mockup -->
     <div class="mockup-wrap">
-      <div class="mockup-bar">
-        <div class="dot dot-r"></div>
-        <div class="dot dot-y"></div>
-        <div class="dot dot-g"></div>
-      </div>
+      <div class="mockup-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
       <div class="mockup-body">
-        <div class="upload-zone">
-          <div class="upload-icon">🎬</div>
-          <div class="upload-text">
-            <strong>Arrastra tu video aquí</strong>
-            o haz clic para seleccionar · MP4, MOV, AVI
-          </div>
-        </div>
+        <div class="upload-zone"><div class="upload-icon">🎬</div><div class="upload-text"><strong>Arrastra tu video aquí</strong>o haz clic para seleccionar · MP4, MOV, AVI</div></div>
         <div class="dest-label">Publicar en</div>
         <div class="dest-row">
           <div class="dest-chip active-tiktok"><div class="check check-tk">✓</div> TikTok</div>
@@ -317,7 +273,6 @@
     </div>
   </div>
 
-  <!-- STATS -->
   <section style="padding-top:0">
     <div class="stats-row">
       <div class="stat-card"><div class="stat-num">+12k</div><div class="stat-label">Creadores activos</div></div>
@@ -327,7 +282,6 @@
     </div>
   </section>
 
-  <!-- HOW IT WORKS -->
   <section id="como-funciona">
     <div class="section-label">Cómo funciona</div>
     <h2 class="section-title">Simple, rápido<br>y sin complicaciones</h2>
@@ -339,7 +293,6 @@
     </div>
   </section>
 
-  <!-- FEATURES -->
   <section id="caracteristicas">
     <div class="section-label">Características</div>
     <h2 class="section-title">Todo lo que<br>un creador necesita</h2>
@@ -353,130 +306,56 @@
     </div>
   </section>
 
-  <!-- TESTIMONIALS -->
   <section id="testimonios">
     <div class="section-label">Testimonios</div>
     <h2 class="section-title">Lo que dicen<br>nuestros usuarios</h2>
     <div class="testi-grid">
-      <div class="testi-card">
-        <div class="stars">★★★★★</div>
-        <div class="testi-text">"MultiPost me ha ahorrado horas cada semana. Antes tardaba 40 minutos en publicar en las tres redes, ahora lo hago en 2 minutos. Imprescindible."</div>
-        <div class="testi-author"><div class="avatar av-a">AR</div><div><div class="author-name">Alejandro Rivas</div><div class="author-handle">@alejandro.creates · 180k seguidores</div></div></div>
-      </div>
-      <div class="testi-card">
-        <div class="stars">★★★★★</div>
-        <div class="testi-text">"La función de programación es increíble. Preparo toda la semana el domingo y MultiPost lo publica automáticamente. Mi engagement ha subido un 35%."</div>
-        <div class="testi-author"><div class="avatar av-b">SG</div><div><div class="author-name">Sara Gómez</div><div class="author-handle">@saragomez.fit · 92k seguidores</div></div></div>
-      </div>
-      <div class="testi-card">
-        <div class="stars">★★★★★</div>
-        <div class="testi-text">"Llevaba meses buscando una herramienta así. La interfaz es súper intuitiva y el soporte responde en minutos. 100% recomendado para cualquier creador."</div>
-        <div class="testi-author"><div class="avatar av-c">ML</div><div><div class="author-name">Marcos López</div><div class="author-handle">@marcostech · 45k seguidores</div></div></div>
-      </div>
-      <div class="testi-card">
-        <div class="stars">★★★★★</div>
-        <div class="testi-text">"Gestiono las cuentas de 6 clientes y MultiPost ha transformado mi flujo de trabajo. El plan Agencia vale cada céntimo."</div>
-        <div class="testi-author"><div class="avatar av-d">PV</div><div><div class="author-name">Paula Vidal</div><div class="author-handle">Social Media Manager · Agencia Pixel</div></div></div>
-      </div>
-      <div class="testi-card">
-        <div class="stars">★★★★★</div>
-        <div class="testi-text">"Empecé con el plan gratuito y a la semana ya estaba en Pro. La diferencia en tiempo ahorrado es brutal. Mi canal de YouTube creció un 20% en un mes."</div>
-        <div class="testi-author"><div class="avatar av-e">JM</div><div><div class="author-name">Jaime Moreno</div><div class="author-handle">@jaimedviajes · 210k seguidores</div></div></div>
-      </div>
-      <div class="testi-card">
-        <div class="stars">★★★★★</div>
-        <div class="testi-text">"Por fin una herramienta que funciona de verdad. Probé otras y fallaban constantemente. MultiPost lleva 3 meses sin un solo error en mis publicaciones."</div>
-        <div class="testi-author"><div class="avatar av-f">CR</div><div><div class="author-name">Carmen Ruiz</div><div class="author-handle">@carmen.cocina · 330k seguidores</div></div></div>
-      </div>
+      <div class="testi-card"><div class="stars">★★★★★</div><div class="testi-text">"MultiPost me ha ahorrado horas cada semana. Antes tardaba 40 minutos en publicar en las tres redes, ahora lo hago en 2 minutos. Imprescindible."</div><div class="testi-author"><div class="avatar av-a">AR</div><div><div class="author-name">Alejandro Rivas</div><div class="author-handle">@alejandro.creates · 180k seguidores</div></div></div></div>
+      <div class="testi-card"><div class="stars">★★★★★</div><div class="testi-text">"La función de programación es increíble. Preparo toda la semana el domingo y MultiPost lo publica automáticamente. Mi engagement ha subido un 35%."</div><div class="testi-author"><div class="avatar av-b">SG</div><div><div class="author-name">Sara Gómez</div><div class="author-handle">@saragomez.fit · 92k seguidores</div></div></div></div>
+      <div class="testi-card"><div class="stars">★★★★★</div><div class="testi-text">"Llevaba meses buscando una herramienta así. La interfaz es súper intuitiva y el soporte responde en minutos. 100% recomendado para cualquier creador."</div><div class="testi-author"><div class="avatar av-c">ML</div><div><div class="author-name">Marcos López</div><div class="author-handle">@marcostech · 45k seguidores</div></div></div></div>
+      <div class="testi-card"><div class="stars">★★★★★</div><div class="testi-text">"Gestiono las cuentas de 6 clientes y MultiPost ha transformado mi flujo de trabajo. El plan Agencia vale cada céntimo."</div><div class="testi-author"><div class="avatar av-d">PV</div><div><div class="author-name">Paula Vidal</div><div class="author-handle">Social Media Manager · Agencia Pixel</div></div></div></div>
+      <div class="testi-card"><div class="stars">★★★★★</div><div class="testi-text">"Empecé con el plan gratuito y a la semana ya estaba en Pro. La diferencia en tiempo ahorrado es brutal. Mi canal de YouTube creció un 20% en un mes."</div><div class="testi-author"><div class="avatar av-e">JM</div><div><div class="author-name">Jaime Moreno</div><div class="author-handle">@jaimedviajes · 210k seguidores</div></div></div></div>
+      <div class="testi-card"><div class="stars">★★★★★</div><div class="testi-text">"Por fin una herramienta que funciona de verdad. Probé otras y fallaban constantemente. MultiPost lleva 3 meses sin un solo error en mis publicaciones."</div><div class="testi-author"><div class="avatar av-f">CR</div><div><div class="author-name">Carmen Ruiz</div><div class="author-handle">@carmen.cocina · 330k seguidores</div></div></div></div>
     </div>
   </section>
 
-  <!-- FAQ -->
   <section id="faq" style="text-align:center">
     <div class="section-label">FAQ</div>
     <h2 class="section-title center">Preguntas frecuentes</h2>
     <div class="faq-list" style="text-align:left">
-      <div class="faq-item">
-        <div class="faq-q">¿Necesito dar mi contraseña de TikTok, YouTube o Instagram? <span class="faq-arrow">+</span></div>
-        <div class="faq-a">No. MultiPost usa autenticación OAuth oficial de cada plataforma. Tú autorizas el acceso directamente desde la app de cada red social, sin que nosotros veamos ni almacenemos tu contraseña en ningún momento.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">¿Qué formatos de video acepta MultiPost? <span class="faq-arrow">+</span></div>
-        <div class="faq-a">Aceptamos MP4, MOV y AVI. El tamaño máximo es de 4 GB por archivo. MultiPost convierte y optimiza automáticamente el video para cumplir los requisitos técnicos de cada plataforma.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">¿Puedo programar publicaciones para diferentes horas en cada red? <span class="faq-arrow">+</span></div>
-        <div class="faq-a">Sí, en los planes Pro y Agencia puedes establecer horarios distintos para cada plataforma. Por ejemplo, publicar en TikTok a las 18:00 y en YouTube a las 20:00 el mismo día.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">¿Qué pasa si una publicación falla en una plataforma? <span class="faq-arrow">+</span></div>
-        <div class="faq-a">Recibirás una notificación inmediata por email indicando el motivo del fallo. Las otras plataformas no se ven afectadas. Puedes reintentar la publicación fallida desde tu panel con un solo clic.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">¿Puedo cancelar mi suscripción en cualquier momento? <span class="faq-arrow">+</span></div>
-        <div class="faq-a">Sí, puedes cancelar cuando quieras desde tu panel de configuración, sin penalizaciones ni compromisos de permanencia. Seguirás teniendo acceso al plan hasta el final del periodo pagado.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">¿MultiPost cumple con el RGPD? <span class="faq-arrow">+</span></div>
-        <div class="faq-a">Sí. MultiPost cumple con el Reglamento General de Protección de Datos de la UE. Todos los datos se almacenan en servidores dentro del Espacio Económico Europeo y puedes ejercer tus derechos ARCO en cualquier momento escribiéndonos a hola@multipost.cc.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">¿Hay un periodo de prueba gratuito del plan Pro? <span class="faq-arrow">+</span></div>
-        <div class="faq-a">El plan Gratis te permite probar la plataforma sin límite de tiempo. Si quieres acceder a todas las funciones Pro, ofrecemos una garantía de devolución de 14 días desde el primer pago, sin preguntas.</div>
-      </div>
+      <div class="faq-item"><div class="faq-q">¿Necesito dar mi contraseña de TikTok, YouTube o Instagram? <span class="faq-arrow">+</span></div><div class="faq-a">No. MultiPost usa autenticación OAuth oficial de cada plataforma. Tú autorizas el acceso directamente desde la app de cada red social, sin que nosotros veamos ni almacenemos tu contraseña en ningún momento.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Qué formatos de video acepta MultiPost? <span class="faq-arrow">+</span></div><div class="faq-a">Aceptamos MP4, MOV y AVI. El tamaño máximo es de 4 GB por archivo. MultiPost convierte y optimiza automáticamente el video para cumplir los requisitos técnicos de cada plataforma.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Puedo programar publicaciones para diferentes horas en cada red? <span class="faq-arrow">+</span></div><div class="faq-a">Sí, en los planes Pro y Agencia puedes establecer horarios distintos para cada plataforma. Por ejemplo, publicar en TikTok a las 18:00 y en YouTube a las 20:00 el mismo día.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Qué pasa si una publicación falla en una plataforma? <span class="faq-arrow">+</span></div><div class="faq-a">Recibirás una notificación inmediata por email indicando el motivo del fallo. Las otras plataformas no se ven afectadas. Puedes reintentar la publicación fallida desde tu panel con un solo clic.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Puedo cancelar mi suscripción en cualquier momento? <span class="faq-arrow">+</span></div><div class="faq-a">Sí, puedes cancelar cuando quieras desde tu panel de configuración, sin penalizaciones ni compromisos de permanencia. Seguirás teniendo acceso al plan hasta el final del periodo pagado.</div></div>
+      <div class="faq-item"><div class="faq-q">¿MultiPost cumple con el RGPD? <span class="faq-arrow">+</span></div><div class="faq-a">Sí. MultiPost cumple con el Reglamento General de Protección de Datos de la UE. Todos los datos se almacenan en servidores dentro del Espacio Económico Europeo y puedes ejercer tus derechos ARCO en cualquier momento escribiéndonos a hola@multipost.cc.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Hay un periodo de prueba gratuito del plan Pro? <span class="faq-arrow">+</span></div><div class="faq-a">El plan Gratis te permite probar la plataforma sin límite de tiempo. Si quieres acceder a todas las funciones Pro, ofrecemos una garantía de devolución de 14 días desde el primer pago, sin preguntas.</div></div>
     </div>
   </section>
 
-  <!-- PRICING -->
   <section id="precios" style="text-align:center">
     <div class="section-label">Precios</div>
     <h2 class="section-title center">Planes para cada creador</h2>
     <div class="pricing-grid">
       <div class="price-card">
-        <div class="plan-name">Gratis</div>
-        <div class="plan-price">€0 <span>/ mes</span></div>
-        <div class="plan-desc">Para empezar sin compromiso</div>
-        <ul class="plan-features">
-          <li>5 publicaciones al mes</li>
-          <li>2 plataformas</li>
-          <li>Subida manual</li>
-          <li>Soporte por email</li>
-        </ul>
+        <div class="plan-name">Gratis</div><div class="plan-price">€0 <span>/ mes</span></div><div class="plan-desc">Para empezar sin compromiso</div>
+        <ul class="plan-features"><li>5 publicaciones al mes</li><li>2 plataformas</li><li>Subida manual</li><li>Soporte por email</li></ul>
         <button class="btn-plan" onclick="openModal('Gratis')">Empezar gratis</button>
       </div>
       <div class="price-card featured">
         <div class="featured-badge">Más popular</div>
-        <div class="plan-name">Pro</div>
-        <div class="plan-price">€12 <span>/ mes</span></div>
-        <div class="plan-desc">Para creadores activos</div>
-        <ul class="plan-features">
-          <li>Publicaciones ilimitadas</li>
-          <li>3 plataformas</li>
-          <li>Programación avanzada</li>
-          <li>Analíticas completas</li>
-          <li>Soporte prioritario</li>
-          <li>14 días de garantía</li>
-        </ul>
+        <div class="plan-name">Pro</div><div class="plan-price">€12 <span>/ mes</span></div><div class="plan-desc">Para creadores activos</div>
+        <ul class="plan-features"><li>Publicaciones ilimitadas</li><li>3 plataformas</li><li>Programación avanzada</li><li>Analíticas completas</li><li>Soporte prioritario</li><li>14 días de garantía</li></ul>
         <button class="btn-plan featured-btn" onclick="window.open('https://buy.stripe.com/14A9AT3debVVcu0drW3gk01','_blank')">Empezar con Pro</button>
       </div>
       <div class="price-card">
-        <div class="plan-name">Agencia</div>
-        <div class="plan-price">€39 <span>/ mes</span></div>
-        <div class="plan-desc">Para equipos y agencias</div>
-        <ul class="plan-features">
-          <li>Cuentas múltiples</li>
-          <li>Hasta 10 usuarios</li>
-          <li>API de integración</li>
-          <li>Panel de equipo</li>
-          <li>SLA garantizado</li>
-          <li>Gestor dedicado</li>
-        </ul>
+        <div class="plan-name">Agencia</div><div class="plan-price">€39 <span>/ mes</span></div><div class="plan-desc">Para equipos y agencias</div>
+        <ul class="plan-features"><li>Cuentas múltiples</li><li>Hasta 10 usuarios</li><li>API de integración</li><li>Panel de equipo</li><li>SLA garantizado</li><li>Gestor dedicado</li></ul>
         <button class="btn-plan" onclick="window.open('https://buy.stripe.com/00w4gzg00f87bpW3Rm3gk00','_blank')">Contactar ventas</button>
       </div>
     </div>
   </section>
 
-  <!-- CTA BANNER -->
   <div style="padding:0 5%">
     <div class="cta-banner">
       <h2>¿Listo para publicar<br>en todas partes?</h2>
@@ -485,125 +364,68 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
   <footer>
     <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="logo">Multi<span>Post</span></div>
-        <p>La forma más rápida de publicar tu contenido en TikTok, YouTube e Instagram simultáneamente.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Producto</h4>
-        <ul>
-          <li><a href="#como-funciona">Cómo funciona</a></li>
-          <li><a href="#caracteristicas">Características</a></li>
-          <li><a href="#precios">Precios</a></li>
-          <li><a href="#faq">FAQ</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Empresa</h4>
-        <ul>
-          <li><a href="#" onclick="showLegal('about');return false">Sobre nosotros</a></li>
-          <li><a href="#" onclick="showLegal('contacto');return false">Contacto</a></li>
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">Afiliados</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Legal</h4>
-        <ul>
-          <li><a href="#" onclick="showLegal('privacidad');return false">Política de privacidad</a></li>
-          <li><a href="#" onclick="showLegal('terminos');return false">Términos y condiciones</a></li>
-          <li><a href="#" onclick="showLegal('cookies');return false">Política de cookies</a></li>
-          <li><a href="#" onclick="showLegal('aviso');return false">Aviso legal</a></li>
-        </ul>
-      </div>
+      <div class="footer-brand"><div class="logo">Multi<span>Post</span></div><p>La forma más rápida de publicar tu contenido en TikTok, YouTube e Instagram simultáneamente.</p></div>
+      <div class="footer-col"><h4>Producto</h4><ul><li><a href="#como-funciona">Cómo funciona</a></li><li><a href="#caracteristicas">Características</a></li><li><a href="#precios">Precios</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+      <div class="footer-col"><h4>Empresa</h4><ul><li><a href="#" onclick="showLegal('about');return false">Sobre nosotros</a></li><li><a href="#" onclick="showLegal('contacto');return false">Contacto</a></li><li><a href="#">Blog</a></li><li><a href="#">Afiliados</a></li></ul></div>
+      <div class="footer-col"><h4>Legal</h4><ul><li><a href="#" onclick="showLegal('privacidad');return false">Política de privacidad</a></li><li><a href="#" onclick="showLegal('terminos');return false">Términos y condiciones</a></li><li><a href="#" onclick="showLegal('cookies');return false">Política de cookies</a></li><li><a href="#" onclick="showLegal('aviso');return false">Aviso legal</a></li></ul></div>
     </div>
     <div class="footer-bottom">
       <span>© 2025 MultiPost Technologies S.L. · CIF: B-XXXXXXXX · Bilbao, España</span>
       <span>Hecho con ♥ para creadores</span>
     </div>
   </footer>
+</div>
 
-</div><!-- /main-content -->
-
-<!-- ════════ LEGAL PAGES ════════ -->
+<!-- LEGAL PAGES -->
 <div class="legal-section" id="page-privacidad">
   <button class="back-btn" onclick="hideLegal()">← Volver</button>
   <h2>Política de Privacidad</h2>
   <p><em>Última actualización: enero de 2025</em></p>
-  <h3>1. Responsable del tratamiento</h3>
-  <p>MultiPost Technologies S.L., con domicilio en Bilbao, España, y CIF B-XXXXXXXX, es el responsable del tratamiento de los datos personales recogidos a través de este sitio web.</p>
-  <h3>2. Datos que recogemos</h3>
-  <p>Recogemos los datos que nos proporcionas al registrarte (nombre, email, contraseña cifrada), los datos de conexión con plataformas de terceros vía OAuth (tokens de acceso cifrados, nunca contraseñas), y datos de uso del servicio (videos subidos, publicaciones realizadas, configuración).</p>
-  <h3>3. Finalidad del tratamiento</h3>
-  <p>Tus datos se usan exclusivamente para prestar el servicio MultiPost: gestionar tu cuenta, ejecutar publicaciones en tu nombre y enviarte comunicaciones relacionadas con el servicio.</p>
-  <h3>4. Base legal</h3>
-  <p>El tratamiento se basa en la ejecución del contrato de servicio (Art. 6.1.b RGPD) y, para comunicaciones comerciales, en tu consentimiento explícito (Art. 6.1.a RGPD).</p>
-  <h3>5. Conservación de datos</h3>
-  <p>Los datos se conservan durante la vigencia de tu cuenta y hasta 3 años después de su eliminación por obligaciones legales. Puedes solicitar la eliminación en cualquier momento.</p>
-  <h3>6. Tus derechos (ARCO)</h3>
-  <p>Tienes derecho a acceder, rectificar, suprimir, limitar el tratamiento, oponerte y a la portabilidad de tus datos. Escríbenos a <strong>hola@multipost.cc</strong>. También puedes reclamar ante la AEPD en www.aepd.es.</p>
-  <h3>7. Transferencias internacionales</h3>
-  <p>Los datos se almacenan en servidores dentro del Espacio Económico Europeo. No realizamos transferencias internacionales fuera del EEE sin garantías adecuadas.</p>
+  <h3>1. Responsable del tratamiento</h3><p>MultiPost Technologies S.L., con domicilio en Bilbao, España, y CIF B-XXXXXXXX, es el responsable del tratamiento de los datos personales recogidos a través de este sitio web.</p>
+  <h3>2. Datos que recogemos</h3><p>Recogemos los datos que nos proporcionas al registrarte (nombre, email, contraseña cifrada), los datos de conexión con plataformas de terceros vía OAuth (tokens de acceso cifrados, nunca contraseñas), y datos de uso del servicio (videos subidos, publicaciones realizadas, configuración).</p>
+  <h3>3. Finalidad del tratamiento</h3><p>Tus datos se usan exclusivamente para prestar el servicio MultiPost: gestionar tu cuenta, ejecutar publicaciones en tu nombre y enviarte comunicaciones relacionadas con el servicio.</p>
+  <h3>4. Base legal</h3><p>El tratamiento se basa en la ejecución del contrato de servicio (Art. 6.1.b RGPD) y, para comunicaciones comerciales, en tu consentimiento explícito (Art. 6.1.a RGPD).</p>
+  <h3>5. Conservación de datos</h3><p>Los datos se conservan durante la vigencia de tu cuenta y hasta 3 años después de su eliminación por obligaciones legales. Puedes solicitar la eliminación en cualquier momento.</p>
+  <h3>6. Tus derechos (ARCO)</h3><p>Tienes derecho a acceder, rectificar, suprimir, limitar el tratamiento, oponerte y a la portabilidad de tus datos. Escríbenos a <strong>hola@multipost.cc</strong>. También puedes reclamar ante la AEPD en www.aepd.es.</p>
+  <h3>7. Transferencias internacionales</h3><p>Los datos se almacenan en servidores dentro del Espacio Económico Europeo. No realizamos transferencias internacionales fuera del EEE sin garantías adecuadas.</p>
 </div>
 
 <div class="legal-section" id="page-terminos">
   <button class="back-btn" onclick="hideLegal()">← Volver</button>
   <h2>Términos y Condiciones</h2>
   <p><em>Última actualización: enero de 2025</em></p>
-  <h3>1. Aceptación</h3>
-  <p>El uso de MultiPost implica la aceptación plena de estos términos. Si no estás de acuerdo, no uses el servicio.</p>
-  <h3>2. Descripción del servicio</h3>
-  <p>MultiPost es una plataforma SaaS que permite a los usuarios publicar contenido de video en múltiples redes sociales de forma simultánea o programada. El servicio no está afiliado a TikTok, YouTube ni Instagram.</p>
-  <h3>3. Cuenta de usuario</h3>
-  <p>Eres responsable de mantener la confidencialidad de tu cuenta y de todas las actividades realizadas bajo ella. Debes notificarnos de inmediato cualquier uso no autorizado.</p>
-  <h3>4. Uso aceptable</h3>
-  <p>Queda prohibido usar MultiPost para publicar contenido ilegal, spam, contenido que viole los términos de servicio de las plataformas de destino, o cualquier material que infrinja derechos de terceros.</p>
-  <h3>5. Propiedad intelectual</h3>
-  <p>El software, diseño y marca MultiPost son propiedad de MultiPost Technologies S.L. El usuario conserva todos los derechos sobre el contenido que publica a través del servicio.</p>
-  <h3>6. Limitación de responsabilidad</h3>
-  <p>MultiPost no se responsabiliza de cambios en las APIs de terceros que puedan afectar al servicio, ni del contenido publicado por los usuarios. La responsabilidad máxima de MultiPost se limita al importe pagado en los últimos 3 meses.</p>
-  <h3>7. Pagos y cancelaciones</h3>
-  <p>Los planes de pago se facturan mensualmente. Puedes cancelar en cualquier momento. Los planes Pro tienen garantía de devolución de 14 días desde el primer pago.</p>
-  <h3>8. Modificaciones</h3>
-  <p>MultiPost puede modificar estos términos notificando a los usuarios con al menos 30 días de antelación por email.</p>
-  <h3>9. Ley aplicable</h3>
-  <p>Estos términos se rigen por la legislación española. Para cualquier disputa, las partes se someten a los juzgados de Bilbao.</p>
+  <h3>1. Aceptación</h3><p>El uso de MultiPost implica la aceptación plena de estos términos. Si no estás de acuerdo, no uses el servicio.</p>
+  <h3>2. Descripción del servicio</h3><p>MultiPost es una plataforma SaaS que permite a los usuarios publicar contenido de video en múltiples redes sociales de forma simultánea o programada. El servicio no está afiliado a TikTok, YouTube ni Instagram.</p>
+  <h3>3. Cuenta de usuario</h3><p>Eres responsable de mantener la confidencialidad de tu cuenta y de todas las actividades realizadas bajo ella. Debes notificarnos de inmediato cualquier uso no autorizado.</p>
+  <h3>4. Uso aceptable</h3><p>Queda prohibido usar MultiPost para publicar contenido ilegal, spam, contenido que viole los términos de servicio de las plataformas de destino, o cualquier material que infrinja derechos de terceros.</p>
+  <h3>5. Propiedad intelectual</h3><p>El software, diseño y marca MultiPost son propiedad de MultiPost Technologies S.L. El usuario conserva todos los derechos sobre el contenido que publica a través del servicio.</p>
+  <h3>6. Limitación de responsabilidad</h3><p>MultiPost no se responsabiliza de cambios en las APIs de terceros que puedan afectar al servicio, ni del contenido publicado por los usuarios. La responsabilidad máxima de MultiPost se limita al importe pagado en los últimos 3 meses.</p>
+  <h3>7. Pagos y cancelaciones</h3><p>Los planes de pago se facturan mensualmente. Puedes cancelar en cualquier momento. Los planes Pro tienen garantía de devolución de 14 días desde el primer pago.</p>
+  <h3>8. Modificaciones</h3><p>MultiPost puede modificar estos términos notificando a los usuarios con al menos 30 días de antelación por email.</p>
+  <h3>9. Ley aplicable</h3><p>Estos términos se rigen por la legislación española. Para cualquier disputa, las partes se someten a los juzgados de Bilbao.</p>
 </div>
 
 <div class="legal-section" id="page-cookies">
   <button class="back-btn" onclick="hideLegal()">← Volver</button>
   <h2>Política de Cookies</h2>
   <p><em>Última actualización: enero de 2025</em></p>
-  <h3>¿Qué son las cookies?</h3>
-  <p>Las cookies son pequeños archivos de texto que los sitios web almacenan en tu dispositivo para recordar preferencias y mejorar la experiencia de usuario.</p>
+  <h3>¿Qué son las cookies?</h3><p>Las cookies son pequeños archivos de texto que los sitios web almacenan en tu dispositivo para recordar preferencias y mejorar la experiencia de usuario.</p>
   <h3>Cookies que usamos</h3>
-  <ul>
-    <li><strong>Cookies técnicas (necesarias):</strong> Sesión de usuario, preferencias de idioma. No requieren consentimiento.</li>
-    <li><strong>Cookies analíticas:</strong> Datos anónimos para entender cómo se usa el sitio. Requieren tu consentimiento.</li>
-    <li><strong>Cookies de marketing:</strong> Usadas para mostrarte anuncios relevantes. Requieren tu consentimiento.</li>
-  </ul>
-  <h3>Cómo gestionar las cookies</h3>
-  <p>Puedes aceptar o rechazar las cookies no técnicas en el banner que aparece al entrar al sitio, o desde la configuración de tu navegador en cualquier momento.</p>
-  <h3>Cookies de terceros</h3>
-  <p>Podemos integrar servicios como Google Analytics que establecen sus propias cookies. Consulta sus políticas de privacidad respectivas para más información.</p>
+  <ul><li><strong>Cookies técnicas (necesarias):</strong> Sesión de usuario, preferencias de idioma. No requieren consentimiento.</li><li><strong>Cookies analíticas:</strong> Datos anónimos para entender cómo se usa el sitio. Requieren tu consentimiento.</li><li><strong>Cookies de marketing:</strong> Usadas para mostrarte anuncios relevantes. Requieren tu consentimiento.</li></ul>
+  <h3>Cómo gestionar las cookies</h3><p>Puedes aceptar o rechazar las cookies no técnicas en el banner que aparece al entrar al sitio, o desde la configuración de tu navegador en cualquier momento.</p>
+  <h3>Cookies de terceros</h3><p>Podemos integrar servicios como Google Analytics que establecen sus propias cookies. Consulta sus políticas de privacidad respectivas para más información.</p>
 </div>
 
 <div class="legal-section" id="page-aviso">
   <button class="back-btn" onclick="hideLegal()">← Volver</button>
   <h2>Aviso Legal</h2>
-  <h3>Datos del titular</h3>
-  <p>MultiPost Technologies S.L.<br>CIF: B-XXXXXXXX<br>Domicilio social: Bilbao, País Vasco, España<br>Email: hola@multipost.cc</p>
-  <h3>Objeto</h3>
-  <p>El presente aviso legal regula el acceso y uso del sitio web, del que es titular MultiPost Technologies S.L., en cumplimiento de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y Comercio Electrónico (LSSICE).</p>
-  <h3>Propiedad intelectual e industrial</h3>
-  <p>Todos los contenidos del sitio web, incluyendo textos, imágenes, diseño, logotipos y código fuente, son propiedad de MultiPost Technologies S.L. o de sus licenciantes, protegidos por la legislación española e internacional de propiedad intelectual.</p>
-  <h3>Responsabilidad</h3>
-  <p>MultiPost Technologies S.L. no se responsabiliza de los daños producidos por el uso inadecuado del sitio o por la imposibilidad de acceso al mismo por causas ajenas a su control.</p>
-  <h3>Legislación aplicable</h3>
-  <p>Este aviso legal se rige por la legislación española vigente. Para cualquier controversia, las partes se someten expresamente a los juzgados y tribunales de Bilbao.</p>
+  <h3>Datos del titular</h3><p>MultiPost Technologies S.L.<br>CIF: B-XXXXXXXX<br>Domicilio social: Bilbao, País Vasco, España<br>Email: hola@multipost.cc</p>
+  <h3>Objeto</h3><p>El presente aviso legal regula el acceso y uso del sitio web, del que es titular MultiPost Technologies S.L., en cumplimiento de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y Comercio Electrónico (LSSICE).</p>
+  <h3>Propiedad intelectual e industrial</h3><p>Todos los contenidos del sitio web, incluyendo textos, imágenes, diseño, logotipos y código fuente, son propiedad de MultiPost Technologies S.L. o de sus licenciantes, protegidos por la legislación española e internacional de propiedad intelectual.</p>
+  <h3>Responsabilidad</h3><p>MultiPost Technologies S.L. no se responsabiliza de los daños producidos por el uso inadecuado del sitio o por la imposibilidad de acceso al mismo por causas ajenas a su control.</p>
+  <h3>Legislación aplicable</h3><p>Este aviso legal se rige por la legislación española vigente. Para cualquier controversia, las partes se someten expresamente a los juzgados y tribunales de Bilbao.</p>
 </div>
 
 <div class="legal-section" id="page-about">
@@ -619,17 +441,12 @@
   <button class="back-btn" onclick="hideLegal()">← Volver</button>
   <h2>Contacto</h2>
   <p>¿Tienes alguna pregunta o necesitas ayuda? Estamos aquí para ayudarte.</p>
-  <h3>Soporte técnico</h3>
-  <p>hola@multipost.cc — Tiempo de respuesta: menos de 24h (Pro y Agencia: menos de 4h)</p>
-  <h3>Consultas comerciales</h3>
-  <p>hola@multipost.cc</p>
-  <h3>Asuntos legales y privacidad</h3>
-  <p>hola@multipost.cc · hola@multipost.cc</p>
-  <h3>Dirección postal</h3>
-  <p>MultiPost Technologies S.L.<br>Bilbao, País Vasco, España</p>
+  <h3>Soporte técnico</h3><p>hola@multipost.cc — Tiempo de respuesta: menos de 24h (Pro y Agencia: menos de 4h)</p>
+  <h3>Consultas comerciales</h3><p>hola@multipost.cc</p>
+  <h3>Asuntos legales y privacidad</h3><p>hola@multipost.cc</p>
+  <h3>Dirección postal</h3><p>MultiPost Technologies S.L.<br>Bilbao, País Vasco, España</p>
 </div>
 
-<!-- ════════ COOKIE BANNER ════════ -->
 <div id="cookie-banner">
   <p>Usamos cookies propias y de terceros para mejorar tu experiencia y analizar el tráfico. Consulta nuestra <a href="#" onclick="showLegal('cookies');return false">política de cookies</a>.</p>
   <div class="cookie-btns">
@@ -637,135 +454,6 @@
     <button class="btn-cookie-accept" onclick="closeCookie()">Aceptar todas</button>
   </div>
 </div>
-
-<!-- ════════ JS ════════ -->
-
-<!-- ════════ MODAL REGISTRO/LOGIN ════════ -->
-<style>
-#modal-overlay {
-  display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,0.75); backdrop-filter: blur(6px);
-  z-index: 1000; align-items: center; justify-content: center;
-}
-#modal-overlay.active { display: flex; }
-.modal-box {
-  background: #111; border: 1px solid #2a2a2a; border-radius: 20px;
-  padding: 2.2rem; width: 90%; max-width: 420px; position: relative;
-}
-.modal-close {
-  position: absolute; top: 1rem; right: 1.2rem;
-  background: none; border: none; color: #888; font-size: 1.4rem; cursor: pointer; line-height:1;
-}
-.modal-close:hover { color: #fff; }
-.modal-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; margin-bottom: 1.4rem; }
-.modal-logo span { color: #ff3c3c; }
-.modal-tabs { display: flex; gap: 0; border: 1px solid #2a2a2a; border-radius: 10px; overflow: hidden; margin-bottom: 1.6rem; }
-.modal-tab {
-  flex: 1; background: none; border: none; color: #888; padding: .6rem;
-  font-family: 'DM Sans', sans-serif; font-size: .88rem; cursor: pointer; transition: background .2s, color .2s;
-}
-.modal-tab.active { background: #1e1e1e; color: #f5f3ee; }
-.tab-content { display: none; }
-.tab-content.active { display: block; }
-.modal-field { margin-bottom: 1rem; }
-.modal-field label { display: block; font-size: .78rem; color: #888; margin-bottom: .35rem; letter-spacing: .04em; }
-.modal-field input[type=text],
-.modal-field input[type=email],
-.modal-field input[type=password] {
-  width: 100%; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px;
-  color: #f5f3ee; padding: .65rem 1rem; font-family: 'DM Sans', sans-serif; font-size: .92rem;
-  outline: none; transition: border-color .2s;
-}
-.modal-field input:focus { border-color: #ff3c3c; }
-.modal-field-check { display: flex; align-items: flex-start; gap: .5rem; font-size: .8rem; color: #888; margin-bottom: 1.2rem; }
-.modal-field-check input { margin-top: 2px; accent-color: #ff3c3c; }
-.modal-field-check a { color: #ff3c3c; }
-.btn-modal-submit {
-  width: 100%; background: #ff3c3c; border: none; color: #f5f3ee;
-  padding: .8rem; border-radius: 10px; font-family: 'DM Sans', sans-serif;
-  font-size: .95rem; font-weight: 500; cursor: pointer; transition: opacity .2s;
-}
-.btn-modal-submit:hover { opacity: .85; }
-.btn-modal-submit:disabled { opacity: .5; cursor: not-allowed; }
-.modal-error { color: #ff6b6b; font-size: .8rem; margin-bottom: .8rem; min-height: 1em; }
-#modal-plan-hint { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px; padding: .5rem .9rem; font-size: .8rem; color: #888; margin-bottom: 1rem; }
-.modal-divider { text-align: center; color: #444; font-size: .78rem; margin: 1rem 0; position: relative; }
-.modal-divider::before, .modal-divider::after { content: ''; position: absolute; top: 50%; width: 38%; height: 1px; background: #2a2a2a; }
-.modal-divider::before { left: 0; } .modal-divider::after { right: 0; }
-
-/* ── DASHBOARD ── */
-#dashboard { display: none; min-height: 100vh; }
-.dash-nav {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 1.2rem 5%; border-bottom: 1px solid #1e1e1e;
-  background: rgba(10,10,10,0.95); backdrop-filter: blur(14px); position: sticky; top: 0; z-index: 100;
-}
-.dash-user { display: flex; align-items: center; gap: .8rem; }
-.dash-avatar { width: 36px; height: 36px; border-radius: 50%; background: #2d1a4a; color: #b48fe0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; }
-.dash-user-info { font-size: .85rem; }
-.dash-user-info strong { display: block; color: #f5f3ee; }
-.dash-user-info small { color: #888; }
-.btn-logout { background: transparent; border: 1px solid #2a2a2a; color: #888; padding: .45rem 1rem; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: .82rem; cursor: pointer; transition: border-color .2s, color .2s; }
-.btn-logout:hover { border-color: #555; color: #f5f3ee; }
-.dash-body { max-width: 900px; margin: 0 auto; padding: 2.5rem 5%; }
-.dash-header { margin-bottom: 2.5rem; }
-.dash-header h2 { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; letter-spacing: -1px; }
-.dash-header p { color: #888; font-size: .9rem; margin-top: .3rem; }
-.dash-badge { display: inline-flex; align-items: center; gap: 6px; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 100px; padding: .25rem .8rem; font-size: .75rem; color: #888; margin-top: .5rem; }
-.dash-badge strong { color: #ff3c3c; }
-.dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-@media(max-width:640px){ .dash-grid { grid-template-columns: 1fr; } }
-.dash-card { background: #111; border: 1px solid #1e1e1e; border-radius: 18px; padding: 1.8rem; }
-.dash-card h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 1.2rem; }
-.dash-form-field { margin-bottom: .9rem; }
-.dash-form-field label { display: block; font-size: .75rem; color: #888; margin-bottom: .3rem; }
-.dash-form-field input[type=text],
-.dash-form-field input[type=file],
-.dash-form-field textarea {
-  width: 100%; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px;
-  color: #f5f3ee; padding: .6rem .9rem; font-family: 'DM Sans', sans-serif; font-size: .88rem; outline: none;
-  transition: border-color .2s; resize: vertical;
-}
-.dash-form-field input:focus, .dash-form-field textarea:focus { border-color: #ff3c3c; }
-.dash-form-field input[type=file] { padding: .5rem .9rem; color: #888; }
-.platform-checks { display: flex; flex-direction: column; gap: .5rem; margin-bottom: 1rem; }
-.platform-check-row { display: flex; align-items: center; gap: .5rem; font-size: .88rem; color: #ccc; }
-.platform-check-row input { accent-color: #ff3c3c; }
-.btn-dash-publish {
-  width: 100%; background: #ff3c3c; border: none; color: #f5f3ee;
-  padding: .8rem; border-radius: 10px; font-family: 'DM Sans', sans-serif;
-  font-size: .92rem; font-weight: 500; cursor: pointer; transition: opacity .2s;
-}
-.btn-dash-publish:hover { opacity: .85; }
-.btn-dash-publish:disabled { opacity: .5; cursor: not-allowed; }
-.dash-error { color: #ff6b6b; font-size: .8rem; margin-bottom: .6rem; min-height: 1em; }
-.dash-success { background: rgba(76,255,114,0.08); border: 1px solid rgba(76,255,114,0.3); border-radius: 10px; padding: .7rem 1rem; font-size: .85rem; color: #4cff72; margin-bottom: .8rem; display: none; }
-.dash-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; margin-bottom: 1.5rem; }
-.dash-stat { background: #1a1a1a; border-radius: 12px; padding: 1rem; text-align: center; }
-.dash-stat-num { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; color: #ff3c3c; }
-.dash-stat-label { font-size: .72rem; color: #888; margin-top: .2rem; }
-.history-item { background: #1a1a1a; border-radius: 10px; padding: .9rem 1rem; margin-bottom: .6rem; }
-.history-file { font-size: .88rem; font-weight: 500; margin-bottom: .2rem; }
-.history-meta { font-size: .75rem; color: #888; margin-bottom: .2rem; }
-.history-status { font-size: .75rem; color: #4cff72; }
-.connect-grid { display: flex; flex-direction: column; gap: .8rem; }
-.connect-row { display: flex; align-items: center; justify-content: space-between; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 12px; padding: .9rem 1.2rem; transition: border-color .2s; }
-.connect-row.connected { border-color: #1a3a1a; background: #0f1f0f; }
-.connect-info { display: flex; align-items: center; gap: .9rem; }
-.connect-icon { font-size: 1.3rem; }
-.connect-name { font-size: .9rem; font-weight: 500; }
-.connect-status { font-size: .75rem; color: #888; margin-top: .1rem; }
-.connect-row.connected .connect-status { color: #4cff72; }
-.btn-connect { background: transparent; border: 1px solid #333; color: #f5f3ee; padding: .45rem 1.1rem; border-radius: 100px; font-family: "DM Sans", sans-serif; font-size: .82rem; cursor: pointer; transition: background .2s, border-color .2s; white-space: nowrap; }
-.btn-connect:hover { background: #222; border-color: #555; }
-.btn-connect.connected-btn { background: #1a3a1a; border-color: #2a5a2a; color: #4cff72; }
-.btn-disconnect { background: transparent; border: 1px solid #3a1a1a; color: #ff6b6b; padding: .45rem 1.1rem; border-radius: 100px; font-family: "DM Sans", sans-serif; font-size: .82rem; cursor: pointer; transition: background .2s; }
-.btn-disconnect:hover { background: #1a0a0a; }
-.plan-limit-bar { background: #1a1a1a; border-radius: 8px; height: 6px; margin-top: .5rem; overflow: hidden; }
-.plan-limit-fill { height: 100%; background: #ff3c3c; border-radius: 8px; transition: width .4s; }
-.plan-limit-text { font-size: .75rem; color: #888; margin-top: .3rem; }
-.dash-full { grid-column: 1 / -1; }
-</style>
 
 <div id="modal-overlay">
   <div class="modal-box">
@@ -776,46 +464,21 @@
       <button class="modal-tab active" data-tab="register" onclick="showTab('register')">Crear cuenta</button>
       <button class="modal-tab" data-tab="login" onclick="showTab('login')">Iniciar sesión</button>
     </div>
-
-    <!-- REGISTER -->
     <div class="tab-content active" id="tab-register">
       <form onsubmit="handleRegister(event)">
-        <div class="modal-field">
-          <label>NOMBRE COMPLETO</label>
-          <input type="text" id="reg-name" placeholder="Tu nombre" autocomplete="name">
-        </div>
-        <div class="modal-field">
-          <label>EMAIL</label>
-          <input type="email" id="reg-email" placeholder="tu@email.com" autocomplete="email">
-        </div>
-        <div class="modal-field">
-          <label>CONTRASEÑA (mín. 8 caracteres)</label>
-          <input type="password" id="reg-pass" placeholder="••••••••" autocomplete="new-password">
-        </div>
-        <div class="modal-field">
-          <label>CONFIRMAR CONTRASEÑA</label>
-          <input type="password" id="reg-pass-confirm" placeholder="••••••••" autocomplete="new-password">
-        </div>
-        <div class="modal-field-check">
-          <input type="checkbox" id="reg-terms">
-          <label for="reg-terms">Acepto los <a href="#" onclick="showLegal('terminos');closeModal();return false">Términos y Condiciones</a> y la <a href="#" onclick="showLegal('privacidad');closeModal();return false">Política de Privacidad</a></label>
-        </div>
+        <div class="modal-field"><label>NOMBRE COMPLETO</label><input type="text" id="reg-name" placeholder="Tu nombre" autocomplete="name"></div>
+        <div class="modal-field"><label>EMAIL</label><input type="email" id="reg-email" placeholder="tu@email.com" autocomplete="email"></div>
+        <div class="modal-field"><label>CONTRASEÑA (mín. 8 caracteres)</label><input type="password" id="reg-pass" placeholder="••••••••" autocomplete="new-password"></div>
+        <div class="modal-field"><label>CONFIRMAR CONTRASEÑA</label><input type="password" id="reg-pass-confirm" placeholder="••••••••" autocomplete="new-password"></div>
+        <div class="modal-field-check"><input type="checkbox" id="reg-terms"><label for="reg-terms">Acepto los <a href="#" onclick="showLegal('terminos');closeModal();return false">Términos y Condiciones</a> y la <a href="#" onclick="showLegal('privacidad');closeModal();return false">Política de Privacidad</a></label></div>
         <div class="modal-error" id="reg-error"></div>
         <button type="submit" class="btn-modal-submit">Crear cuenta gratis →</button>
       </form>
     </div>
-
-    <!-- LOGIN -->
     <div class="tab-content" id="tab-login">
       <form onsubmit="handleLogin(event)">
-        <div class="modal-field">
-          <label>EMAIL</label>
-          <input type="email" id="login-email" placeholder="tu@email.com" autocomplete="email">
-        </div>
-        <div class="modal-field">
-          <label>CONTRASEÑA</label>
-          <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password">
-        </div>
+        <div class="modal-field"><label>EMAIL</label><input type="email" id="login-email" placeholder="tu@email.com" autocomplete="email"></div>
+        <div class="modal-field"><label>CONTRASEÑA</label><input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password"></div>
         <div class="modal-error" id="login-error"></div>
         <button type="submit" class="btn-modal-submit">Iniciar sesión →</button>
       </form>
@@ -823,16 +486,12 @@
   </div>
 </div>
 
-<!-- ════════ DASHBOARD ════════ -->
 <div id="dashboard">
   <nav class="dash-nav">
     <div class="modal-logo" style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem">Multi<span style="color:#ff3c3c">Post</span></div>
     <div class="dash-user">
       <div class="dash-avatar" id="dash-avatar-initials">MP</div>
-      <div class="dash-user-info">
-        <strong class="dash-name">Usuario</strong>
-        <small class="dash-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="21444c40484d61444b444c514d4e0f424e4c">[email&#160;protected]</a></small>
-      </div>
+      <div class="dash-user-info"><strong class="dash-name">Usuario</strong><small class="dash-email">usuario@email.com</small></div>
     </div>
     <button class="btn-logout" onclick="logout()">Cerrar sesión</button>
   </nav>
@@ -842,7 +501,6 @@
       <p>Publica tu contenido en todas las plataformas con un solo clic.</p>
       <div class="dash-badge">Plan: <strong class="dash-plan">Gratis</strong></div>
     </div>
-
     <div class="dash-stats">
       <div class="dash-stat"><div class="dash-stat-num" id="stat-total">0</div><div class="dash-stat-label">Publicaciones</div></div>
       <div class="dash-stat"><div class="dash-stat-num" id="stat-platforms">0</div><div class="dash-stat-label">Plataformas</div></div>
@@ -856,23 +514,13 @@
       <div class="plan-limit-bar"><div class="plan-limit-fill" id="plan-limit-fill" style="width:0%"></div></div>
       <div class="plan-limit-text" id="plan-limit-text">Te quedan 3 publicaciones gratuitas este mes.</div>
     </div>
-
     <div class="dash-grid">
       <div class="dash-card">
         <h3>📤 Nueva publicación</h3>
         <form onsubmit="handleDashUpload(event)">
-          <div class="dash-form-field">
-            <label>VIDEO</label>
-            <input type="file" id="dash-file" accept="video/mp4,video/quicktime,video/avi">
-          </div>
-          <div class="dash-form-field">
-            <label>TÍTULO (opcional)</label>
-            <input type="text" id="dash-title" placeholder="Título del video">
-          </div>
-          <div class="dash-form-field">
-            <label>DESCRIPCIÓN (opcional)</label>
-            <textarea id="dash-desc" rows="2" placeholder="Descripción o hashtags…"></textarea>
-          </div>
+          <div class="dash-form-field"><label>VIDEO</label><input type="file" id="dash-file" accept="video/mp4,video/quicktime,video/avi"></div>
+          <div class="dash-form-field"><label>TÍTULO (opcional)</label><input type="text" id="dash-title" placeholder="Título del video"></div>
+          <div class="dash-form-field"><label>DESCRIPCIÓN (opcional)</label><textarea id="dash-desc" rows="2" placeholder="Descripción o hashtags…"></textarea></div>
           <label style="font-size:.75rem;color:#888;display:block;margin-bottom:.5rem">PUBLICAR EN</label>
           <div class="platform-checks" id="platform-checks-container">
             <p style="color:#ff6b6b;font-size:.82rem" id="no-platforms-msg">Primero conecta al menos una plataforma en la sección de abajo.</p>
@@ -880,8 +528,10 @@
             <label class="platform-check-row" id="check-youtube-wrap" style="display:none"><input type="checkbox" class="dash-platform" value="YouTube" checked> ▶️ YouTube</label>
             <label class="platform-check-row" id="check-instagram-wrap" style="display:none"><input type="checkbox" class="dash-platform" value="Instagram" checked> 📸 Instagram</label>
           </div>
+          <div class="upload-progress" id="upload-progress"><div class="upload-progress-fill" id="upload-progress-fill"></div></div>
+          <div class="upload-progress-text" id="upload-progress-text"></div>
           <div class="dash-error" id="dash-error"></div>
-          <div class="dash-success" id="dash-success">✅ ¡Publicado correctamente en todas las plataformas!</div>
+          <div class="dash-success" id="dash-success"></div>
           <button type="submit" class="btn-dash-publish" id="dash-publish-btn">Publicar ahora →</button>
         </form>
       </div>
@@ -909,51 +559,19 @@
         <h3 style="margin-bottom:1.2rem">🔗 Conecta tus cuentas</h3>
         <p style="color:#888;font-size:.85rem;margin-bottom:1.4rem">Vincula tus redes sociales para poder publicar. Debes conectar al menos una plataforma.</p>
         <div class="connect-grid">
-          <div class="connect-row" id="connect-tiktok">
-            <div class="connect-info">
-              <span class="connect-icon">🎵</span>
-              <div>
-                <div class="connect-name">TikTok</div>
-                <div class="connect-status" id="status-tiktok">No conectado</div>
-              </div>
-            </div>
-            <button class="btn-connect" onclick="connectPlatform('tiktok')">Conectar</button>
-          </div>
-          <div class="connect-row" id="connect-youtube">
-            <div class="connect-info">
-              <span class="connect-icon">▶️</span>
-              <div>
-                <div class="connect-name">YouTube</div>
-                <div class="connect-status" id="status-youtube">No conectado</div>
-              </div>
-            </div>
-            <button class="btn-connect" onclick="connectPlatform('youtube')">Conectar</button>
-          </div>
-          <div class="connect-row" id="connect-instagram">
-            <div class="connect-info">
-              <span class="connect-icon">📸</span>
-              <div>
-                <div class="connect-name">Instagram</div>
-                <div class="connect-status" id="status-instagram">No conectado</div>
-              </div>
-            </div>
-            <button class="btn-connect" onclick="connectPlatform('instagram')">Conectar</button>
-          </div>
+          <div class="connect-row" id="connect-tiktok"><div class="connect-info"><span class="connect-icon">🎵</span><div><div class="connect-name">TikTok</div><div class="connect-status" id="status-tiktok">No conectado</div></div></div><button class="btn-connect" onclick="connectPlatform('tiktok')">Conectar</button></div>
+          <div class="connect-row" id="connect-youtube"><div class="connect-info"><span class="connect-icon">▶️</span><div><div class="connect-name">YouTube</div><div class="connect-status" id="status-youtube">No conectado</div></div></div><button class="btn-connect" onclick="connectPlatform('youtube')">Conectar</button></div>
+          <div class="connect-row" id="connect-instagram"><div class="connect-info"><span class="connect-icon">📸</span><div><div class="connect-name">Instagram</div><div class="connect-status" id="status-instagram">No conectado</div></div></div><button class="btn-connect" onclick="connectPlatform('instagram')">Conectar</button></div>
         </div>
-        <div id="connect-warning" style="display:none;margin-top:1.2rem;background:rgba(255,60,60,0.08);border:1px solid rgba(255,60,60,0.3);border-radius:10px;padding:.8rem 1rem;font-size:.83rem;color:#ff6b6b">
-          ⚠️ Conecta al menos una plataforma antes de publicar.
-        </div>
+        <div id="connect-warning" style="display:none;margin-top:1.2rem;background:rgba(255,60,60,0.08);border:1px solid rgba(255,60,60,0.3);border-radius:10px;padding:.8rem 1rem;font-size:.83rem;color:#ff6b6b">⚠️ Conecta al menos una plataforma antes de publicar.</div>
       </div>
     </div>
   </div>
 </div>
 
-
 <script>
-// ── CONSTANTS ──
 var FREE_LIMIT = 3;
 
-// ── MODAL ──
 function openModal(plan) {
   document.getElementById('modal-overlay').classList.add('active');
   document.body.style.overflow = 'hidden';
@@ -962,21 +580,15 @@ function openModal(plan) {
   else { hint.style.display = 'none'; }
   showTab('register');
 }
-function closeModal() {
-  document.getElementById('modal-overlay').classList.remove('active');
-  document.body.style.overflow = '';
-}
+function closeModal() { document.getElementById('modal-overlay').classList.remove('active'); document.body.style.overflow = ''; }
 function showTab(tab) {
   document.querySelectorAll('.modal-tab').forEach(function(t){ t.classList.remove('active'); });
   document.querySelectorAll('.tab-content').forEach(function(c){ c.classList.remove('active'); });
   document.querySelector('[data-tab="'+tab+'"]').classList.add('active');
   document.getElementById('tab-'+tab).classList.add('active');
 }
-document.getElementById('modal-overlay').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
+document.getElementById('modal-overlay').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
 
-// ── REGISTER ──
 function handleRegister(e) {
   e.preventDefault();
   var name=document.getElementById('reg-name').value.trim();
@@ -989,36 +601,46 @@ function handleRegister(e) {
   if (pass.length<8){errEl.textContent='La contraseña debe tener al menos 8 caracteres.';return;}
   if (pass!==passConf){errEl.textContent='Las contraseñas no coinciden.';return;}
   if (!terms){errEl.textContent='Debes aceptar los términos y condiciones.';return;}
-  errEl.textContent='';
-  var users=JSON.parse(localStorage.getItem('mp_users')||'[]');
-  if (users.find(function(u){return u.email===email;})){errEl.textContent='Ya existe una cuenta con ese email.';return;}
-  users.push({name:name,email:email,pass:pass,plan:'gratis',created:new Date().toISOString()});
-  localStorage.setItem('mp_users',JSON.stringify(users));
-  localStorage.setItem('mp_session',JSON.stringify({name:name,email:email,plan:'gratis'}));
-  closeModal();
-  showDashboard();
+  errEl.textContent='Registrando…';
+  fetch('/api/register', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({name: name, email: email, password: pass})
+  })
+  .then(function(r){return r.json();})
+  .then(function(data){
+    if (data.error){errEl.textContent=data.error;return;}
+    localStorage.setItem('mp_session',JSON.stringify({name:data.name,email:data.email,plan:data.plan}));
+    closeModal();
+    showDashboard();
+  })
+  .catch(function(){errEl.textContent='Error de conexión. Inténtalo de nuevo.';});
 }
 
-// ── LOGIN ──
 function handleLogin(e) {
   e.preventDefault();
   var email=document.getElementById('login-email').value.trim();
   var pass=document.getElementById('login-pass').value;
   var errEl=document.getElementById('login-error');
-  var users=JSON.parse(localStorage.getItem('mp_users')||'[]');
-  var user=users.find(function(u){return u.email===email&&u.pass===pass;});
-  if (!user){errEl.textContent='Email o contraseña incorrectos.';return;}
-  errEl.textContent='';
-  localStorage.setItem('mp_session',JSON.stringify({name:user.name,email:user.email,plan:user.plan}));
-  closeModal();
-  showDashboard();
+  errEl.textContent='Iniciando sesión…';
+  fetch('/api/login', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({email: email, password: pass})
+  })
+  .then(function(r){return r.json();})
+  .then(function(data){
+    if (data.error){errEl.textContent=data.error;return;}
+    localStorage.setItem('mp_session',JSON.stringify({name:data.name,email:data.email,plan:data.plan}));
+    closeModal();
+    showDashboard();
+  })
+  .catch(function(){errEl.textContent='Error de conexión. Inténtalo de nuevo.';});
 }
 
-// ── CONNECTED PLATFORMS ──
 function getConnected() {
   var session=JSON.parse(localStorage.getItem('mp_session')||'null');
   if (!session) return [];
-  // Cache local para no hacer fetch en cada render
   return JSON.parse(localStorage.getItem('mp_connected_'+session.email)||'[]');
 }
 function saveConnected(arr) {
@@ -1029,47 +651,27 @@ function saveConnected(arr) {
 function fetchConnectedFromServer() {
   var session=JSON.parse(localStorage.getItem('mp_session')||'null');
   if (!session) return;
-  fetch('/.netlify/functions/get-connections?email='+encodeURIComponent(session.email))
+  fetch('/api/get-connections?email='+encodeURIComponent(session.email))
     .then(function(r){return r.json();})
     .then(function(data){
-      if (data.connected) {
-        saveConnected(data.connected);
-        renderConnectedPlatforms();
-        renderPlatformChecks();
-        updateStats();
-      }
+      if (data.connected) { saveConnected(data.connected); renderConnectedPlatforms(); renderPlatformChecks(); updateStats(); }
     })
-    .catch(function(){
-      // Si no hay backend aún, usar localStorage como fallback
-    });
+    .catch(function(){});
 }
 
 function connectPlatform(platform) {
   var session=JSON.parse(localStorage.getItem('mp_session')||'null');
   if (!session) return;
-  var authUrls={
-    youtube: '/.netlify/functions/youtube-auth?email=',
-    tiktok:  '/.netlify/functions/tiktok-auth?email=',
-    instagram: '/.netlify/functions/instagram-auth?email='
-  };
-  if (authUrls[platform]) {
-    window.location.href = authUrls[platform] + encodeURIComponent(session.email);
-  }
+  var authUrls={ youtube: '/api/youtube-auth?email=', tiktok: '/api/tiktok-auth?email=', instagram: '/api/instagram-auth?email=' };
+  if (authUrls[platform]) window.location.href = authUrls[platform] + encodeURIComponent(session.email);
 }
 
 function disconnectPlatform(platform) {
   var session=JSON.parse(localStorage.getItem('mp_session')||'null');
   if (!session) return;
   var names={tiktok:'TikTok',youtube:'YouTube',instagram:'Instagram'};
-  var confirmed=confirm('¿Desconectar '+names[platform]+'? Perderás acceso a publicar en esta plataforma.');
-  if (!confirmed) return;
-  // Eliminar del servidor
-  fetch('/.netlify/functions/disconnect-platform',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({email:session.email,platform:platform})
-  }).catch(function(){});
-  // Actualizar cache local
+  if (!confirm('¿Desconectar '+names[platform]+'?')) return;
+  fetch('/api/disconnect-platform',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:session.email,platform:platform})}).catch(function(){});
   var connected=getConnected().filter(function(p){return p!==platform;});
   saveConnected(connected);
   renderConnectedPlatforms();
@@ -1079,41 +681,27 @@ function disconnectPlatform(platform) {
 
 function renderConnectedPlatforms() {
   var connected=getConnected();
-  var platforms=[
-    {id:'tiktok',name:'TikTok',icon:'🎵'},
-    {id:'youtube',name:'YouTube',icon:'▶️'},
-    {id:'instagram',name:'Instagram',icon:'📸'}
-  ];
-  platforms.forEach(function(p) {
+  [{id:'tiktok',name:'TikTok'},{id:'youtube',name:'YouTube'},{id:'instagram',name:'Instagram'}].forEach(function(p) {
     var row=document.getElementById('connect-'+p.id);
     var statusEl=document.getElementById('status-'+p.id);
     var isConn=connected.indexOf(p.id)>-1;
     if (!row||!statusEl) return;
     if (isConn) {
-      row.classList.add('connected');
-      statusEl.textContent='✅ Conectado';
+      row.classList.add('connected'); statusEl.textContent='✅ Conectado';
       row.querySelector('.btn-connect') && row.querySelector('.btn-connect').remove();
       if (!row.querySelector('.btn-disconnect')) {
-        var btn=document.createElement('button');
-        btn.className='btn-disconnect';
-        btn.textContent='Desconectar';
-        btn.onclick=function(){disconnectPlatform(p.id);};
-        row.appendChild(btn);
+        var btn=document.createElement('button'); btn.className='btn-disconnect'; btn.textContent='Desconectar';
+        btn.onclick=function(){disconnectPlatform(p.id);}; row.appendChild(btn);
       }
     } else {
-      row.classList.remove('connected');
-      statusEl.textContent='No conectado';
+      row.classList.remove('connected'); statusEl.textContent='No conectado';
       row.querySelector('.btn-disconnect') && row.querySelector('.btn-disconnect').remove();
       if (!row.querySelector('.btn-connect')) {
-        var btn=document.createElement('button');
-        btn.className='btn-connect';
-        btn.textContent='Conectar';
-        btn.onclick=function(){connectPlatform(p.id);};
-        row.appendChild(btn);
+        var btn=document.createElement('button'); btn.className='btn-connect'; btn.textContent='Conectar';
+        btn.onclick=function(){connectPlatform(p.id);}; row.appendChild(btn);
       }
     }
   });
-  // Show/hide connect warning
   var warn=document.getElementById('connect-warning');
   if (warn) warn.style.display = connected.length===0 ? 'block' : 'none';
 }
@@ -1121,24 +709,16 @@ function renderConnectedPlatforms() {
 function renderPlatformChecks() {
   var connected=getConnected();
   var noMsg=document.getElementById('no-platforms-msg');
-  var platforms=['tiktok','youtube','instagram'];
   var anyVisible=false;
-  platforms.forEach(function(p) {
+  ['tiktok','youtube','instagram'].forEach(function(p) {
     var wrap=document.getElementById('check-'+p+'-wrap');
     if (!wrap) return;
-    if (connected.indexOf(p)>-1) {
-      wrap.style.display='flex';
-      anyVisible=true;
-    } else {
-      wrap.style.display='none';
-      var cb=wrap.querySelector('input');
-      if (cb) cb.checked=false;
-    }
+    if (connected.indexOf(p)>-1) { wrap.style.display='flex'; anyVisible=true; }
+    else { wrap.style.display='none'; var cb=wrap.querySelector('input'); if (cb) cb.checked=false; }
   });
   if (noMsg) noMsg.style.display=anyVisible?'none':'block';
 }
 
-// ── PLAN LIMIT ──
 function getMonthlyCount() {
   var session=JSON.parse(localStorage.getItem('mp_session')||'null');
   if (!session) return 0;
@@ -1149,8 +729,7 @@ function incrementMonthlyCount() {
   var session=JSON.parse(localStorage.getItem('mp_session')||'null');
   if (!session) return;
   var key='mp_month_'+session.email+'_'+new Date().getFullYear()+'_'+new Date().getMonth();
-  var count=parseInt(localStorage.getItem(key)||'0')+1;
-  localStorage.setItem(key,count);
+  localStorage.setItem(key, parseInt(localStorage.getItem(key)||'0')+1);
 }
 function updatePlanLimitBar() {
   var session=JSON.parse(localStorage.getItem('mp_session')||'null');
@@ -1174,7 +753,6 @@ function updatePlanLimitBar() {
   }
 }
 
-// ── DASHBOARD ──
 function showDashboard() {
   var session=JSON.parse(localStorage.getItem('mp_session')||'null');
   if (!session) return;
@@ -1190,7 +768,6 @@ function showDashboard() {
   renderHistory();
   updateStats();
   updatePlanLimitBar();
-  // Sincronizar con el servidor (YouTube OAuth callback)
   fetchConnectedFromServer();
   window.scrollTo(0,0);
 }
@@ -1207,61 +784,105 @@ function updateStats() {
   var posts=JSON.parse(localStorage.getItem('mp_posts_'+session.email)||'[]');
   var el=document.getElementById('stat-total');
   if (el) el.textContent=posts.length;
-  var connected=getConnected();
   var platEl=document.getElementById('stat-platforms');
-  if (platEl) platEl.textContent=connected.length;
+  if (platEl) platEl.textContent=getConnected().length;
 }
 
-// ── DASHBOARD UPLOAD ──
 function handleDashUpload(e) {
   e.preventDefault();
-  var file=document.getElementById('dash-file').files[0];
-  var platforms=Array.from(document.querySelectorAll('.dash-platform:checked')).map(function(c){return c.value;});
-  var errEl=document.getElementById('dash-error');
-  var successEl=document.getElementById('dash-success');
-  errEl.textContent='';
-  successEl.style.display='none';
+  var file = document.getElementById('dash-file').files[0];
+  var platforms = Array.from(document.querySelectorAll('.dash-platform:checked')).map(function(c) { return c.value; });
+  var errEl = document.getElementById('dash-error');
+  var successEl = document.getElementById('dash-success');
+  errEl.textContent = '';
+  successEl.style.display = 'none';
 
-  // Check platforms connected
-  var connected=getConnected();
-  if (connected.length===0){
-    errEl.textContent='⚠️ Primero conecta al menos una red social en la sección "Conecta tus cuentas".';
-    document.getElementById('connect-warning').style.display='block';
-    document.getElementById('connect-accounts-card').scrollIntoView({behavior:'smooth'});
+  var connected = getConnected();
+  if (connected.length === 0) {
+    errEl.textContent = '⚠️ Primero conecta al menos una red social.';
+    document.getElementById('connect-warning').style.display = 'block';
+    document.getElementById('connect-accounts-card').scrollIntoView({ behavior: 'smooth' });
     return;
   }
-  if (!file){errEl.textContent='Selecciona un archivo de video.';return;}
-  if (platforms.length===0){errEl.textContent='Selecciona al menos una plataforma.';return;}
+  if (!file) { errEl.textContent = 'Selecciona un archivo de video.'; return; }
+  if (platforms.length === 0) { errEl.textContent = 'Selecciona al menos una plataforma.'; return; }
 
-  // Check plan limit
-  var session=JSON.parse(localStorage.getItem('mp_session')||'null');
-  if (session && session.plan==='gratis') {
-    var count=getMonthlyCount();
-    if (count>=FREE_LIMIT) {
-      errEl.innerHTML='Has alcanzado el límite de '+FREE_LIMIT+' publicaciones gratuitas este mes. <a href="https://buy.stripe.com/14A9AT3debVVcu0drW3gk01" target="_blank" style="color:#ff3c3c;text-decoration:underline">Actualiza a Pro →</a>';
+  var session = JSON.parse(localStorage.getItem('mp_session') || 'null');
+  if (session && session.plan === 'gratis') {
+    var count = getMonthlyCount();
+    if (count >= FREE_LIMIT) {
+      errEl.innerHTML = 'Has alcanzado el límite de ' + FREE_LIMIT + ' publicaciones gratuitas este mes. <a href="https://buy.stripe.com/14A9AT3debVVcu0drW3gk01" target="_blank" style="color:#ff3c3c;text-decoration:underline">Actualiza a Pro →</a>';
       return;
     }
   }
 
-  var btn=document.getElementById('dash-publish-btn');
-  btn.disabled=true;
-  btn.textContent='Publicando…';
+  var btn = document.getElementById('dash-publish-btn');
+  var progressBar = document.getElementById('upload-progress');
+  var progressFill = document.getElementById('upload-progress-fill');
+  var progressText = document.getElementById('upload-progress-text');
 
-  setTimeout(function(){
-    btn.disabled=false;
-    btn.textContent='Publicar ahora →';
+  btn.disabled = true;
+  btn.textContent = 'Subiendo video…';
+  progressBar.style.display = 'block';
+  progressFill.style.width = '10%';
+  progressText.textContent = 'Subiendo video...';
+
+  var title = document.getElementById('dash-title').value || file.name;
+  var description = document.getElementById('dash-desc').value || '';
+
+  var formData = new FormData();
+  formData.append('video', file);
+  formData.append('email', session.email);
+  formData.append('title', title);
+  formData.append('description', description);
+  formData.append('platforms', JSON.stringify(platforms));
+
+  // Simular progreso mientras sube
+  var progressInterval = setInterval(function() {
+    var current = parseFloat(progressFill.style.width);
+    if (current < 85) { progressFill.style.width = (current + 5) + '%'; }
+  }, 1000);
+
+  fetch('/api/upload-video', { method: 'POST', body: formData })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    clearInterval(progressInterval);
+    progressFill.style.width = '100%';
+    btn.disabled = false;
+    btn.textContent = 'Publicar ahora →';
+
+    if (data.error) {
+      progressBar.style.display = 'none';
+      progressText.textContent = '';
+      errEl.textContent = '❌ Error: ' + data.error;
+      return;
+    }
+
+    progressText.textContent = '✅ ¡Publicado!';
+    setTimeout(function() { progressBar.style.display = 'none'; progressText.textContent = ''; }, 3000);
+
     incrementMonthlyCount();
-    var posts=JSON.parse(localStorage.getItem('mp_posts_'+session.email)||'[]');
-    posts.unshift({file:file.name,platforms:platforms,date:new Date().toLocaleString('es-ES'),status:'Publicado'});
-    localStorage.setItem('mp_posts_'+session.email,JSON.stringify(posts));
-    successEl.style.display='block';
+    var posts = JSON.parse(localStorage.getItem('mp_posts_' + session.email) || '[]');
+    posts.unshift({ file: file.name, platforms: platforms, date: new Date().toLocaleString('es-ES'), status: 'Publicado' });
+    localStorage.setItem('mp_posts_' + session.email, JSON.stringify(posts));
+
+    successEl.textContent = '✅ ¡Publicado correctamente en ' + platforms.join(', ') + '!';
+    successEl.style.display = 'block';
     renderHistory();
     updateStats();
     updatePlanLimitBar();
-    document.getElementById('dash-file').value='';
-    document.getElementById('dash-title').value='';
-    document.getElementById('dash-desc').value='';
-  },2000);
+    document.getElementById('dash-file').value = '';
+    document.getElementById('dash-title').value = '';
+    document.getElementById('dash-desc').value = '';
+  })
+  .catch(function(err) {
+    clearInterval(progressInterval);
+    progressBar.style.display = 'none';
+    progressText.textContent = '';
+    btn.disabled = false;
+    btn.textContent = 'Publicar ahora →';
+    errEl.textContent = '❌ Error de conexión: ' + err.message;
+  });
 }
 
 function renderHistory() {
@@ -1276,7 +897,6 @@ function renderHistory() {
   }).join('');
 }
 
-// ── FAQ ──
 document.querySelectorAll('.faq-item').forEach(function(item){
   item.querySelector('.faq-q').addEventListener('click',function(){
     var isOpen=item.classList.contains('open');
@@ -1285,7 +905,6 @@ document.querySelectorAll('.faq-item').forEach(function(item){
   });
 });
 
-// ── LEGAL ──
 function showLegal(page){
   document.getElementById('main-content').style.display='none';
   document.getElementById('dashboard').style.display='none';
@@ -1302,46 +921,26 @@ function hideLegal(){
   window.scrollTo(0,0);
 }
 
-// ── COOKIE ──
-function closeCookie(){
-  document.getElementById('cookie-banner').style.display='none';
-  localStorage.setItem('mp_cookie','1');
-}
-if (localStorage.getItem('mp_cookie')){
-  document.getElementById('cookie-banner').style.display='none';
-}
+function closeCookie(){ document.getElementById('cookie-banner').style.display='none'; localStorage.setItem('mp_cookie','1'); }
+if (localStorage.getItem('mp_cookie')){ document.getElementById('cookie-banner').style.display='none'; }
 
-// ── AUTO-LOGIN ──
 window.addEventListener('DOMContentLoaded',function(){
   var session=JSON.parse(localStorage.getItem('mp_session')||'null');
   var params=new URLSearchParams(window.location.search);
-
-  // Manejar callbacks OAuth de cualquier plataforma
-  var platforms=['youtube','tiktok','instagram'];
-  platforms.forEach(function(p) {
+  ['youtube','tiktok','instagram'].forEach(function(p) {
     if (params.get(p+'_connected')==='1') {
       var email=params.get('email');
       if (email && session && session.email===email) {
         var connected=getConnected();
-        if (connected.indexOf(p)===-1) {
-          connected.push(p);
-          saveConnected(connected);
-        }
+        if (connected.indexOf(p)===-1) { connected.push(p); saveConnected(connected); }
       }
     }
     if (params.get(p+'_error')) {
       var names={youtube:'YouTube',tiktok:'TikTok',instagram:'Instagram'};
-      setTimeout(function(){
-        alert('Error al conectar '+names[p]+': '+params.get(p+'_error')+'. Inténtalo de nuevo.');
-      },500);
+      setTimeout(function(){ alert('Error al conectar '+names[p]+': '+params.get(p+'_error')+'. Inténtalo de nuevo.'); },500);
     }
   });
-
-  // Limpiar URL si venimos de un callback
-  if (window.location.search) {
-    window.history.replaceState({},document.title,'/');
-  }
-
+  if (window.location.search) window.history.replaceState({},document.title,'/');
   if (session) showDashboard();
 });
 </script>
