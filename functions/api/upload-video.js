@@ -106,7 +106,7 @@ export async function onRequestPost(context) {
     return json({ ok: true, youtube_id: ytData.id });
 
   } catch (e) {
-    return json({ error: 'Error interno: ' + e.message }, 500);
+    return json({ error: 'Error interno: ' + e.message + ' | stack: ' + (e.stack || 'none') }, 500);
   }
 }
 
