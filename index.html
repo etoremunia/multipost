@@ -415,7 +415,8 @@ function logout() {
     document.getElementById('main-content').style.display = 'block';
     document.getElementById('dashboard').style.display = 'none';
   }
-  ocultarTodo();
+  document.getElementById('main-content').style.display='block';
+  document.getElementById('dashboard').style.display='none';
   window.scrollTo(0,0);
 }
 
@@ -452,7 +453,7 @@ async function handleGenerateAI(e) {
     }
   } catch(err) { errEl.textContent = 'Error: ' + (err.message || 'Error de conexión'); }
   function复原Btn() { btn.disabled = false; btn.textContent = 'Generar textos con IA →'; }
-  setTimeout(restaurarBtn, 10000);
+  setTimeout(function(){ btn.disabled = false; btn.textContent = 'Generar textos con IA →'; }, 10000);
 }
 
 function copyText(e, platform) {
