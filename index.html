@@ -26,7 +26,7 @@
   .btn-nav:hover { opacity: .85; }
   .hero { padding: 6rem 5% 3rem; max-width: 1100px; margin: 0 auto; text-align: center; position: relative; }
   .blob { position: absolute; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle, rgba(255,60,60,0.07) 0%, transparent 70%); top: -100px; left: 50%; transform: translateX(-50%); pointer-events: none; animation: blobmove 8s ease-in-out infinite alternate; }
-  @keyframes blobmove { from{transform:translateX(-50%) scale(1)} to{transform:translateX(-50%) scale(1.1)} }
+  @keyframes blobmove { from{transform: translateX(-50%) scale(1)} to{transform: translateX(-50%) scale(1.1)} }
   .badge { display: inline-flex; align-items: center; gap: 8px; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 100px; padding: .4rem 1rem; font-size: .78rem; color: var(--text-muted); margin-bottom: 1.8rem; }
   .badge-dot { width: 7px; height: 7px; border-radius: 50%; background: #4cff72; animation: pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
@@ -51,7 +51,6 @@
   .mockup-res-box::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent); transform: translateX(-100%); animation: shine 2s infinite; }
   @keyframes shine { 100% { transform: translateX(100%); } }
   .mockup-label { font-size: .7rem; color: #555; text-align: center; margin-top: .4rem; }
-  
   .pricing-grid-mockup { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 5rem; }
   .price-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px; padding: 2rem; position: relative; transition: border-color .2s; }
   .price-card:hover { border-color: #333; }
@@ -68,30 +67,29 @@
   .btn-plan:hover { background: #1a1a1a; }
   .btn-plan.featured-btn { background: var(--accent); border-color: var(--accent); }
   .btn-plan.featured-btn:hover { opacity: .85; }
-
   footer { border-top: 1px solid var(--border); padding: 3rem 5% 2rem; }
   .footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 2rem; max-width: 1100px; margin: 0 auto 2.5rem; }
   .footer-brand p { color: var(--text-muted); font-size: .85rem; margin-top: .8rem; line-height: 1.7; font-weight: 300; max-width: 240px; }
   .footer-col h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .88rem; margin-bottom: 1rem; }
   .footer-col ul { list-style: none; }
   .footer-col ul li { margin-bottom: .6rem; }
-  .footer-col ul a { color: var(--text-muted); font-size: .85rem; transition: color .2s; }
+  .footer-col ul a { color: var(--text-muted); font-size: .85rem; transition: color .2s; cursor: pointer; }
   .footer-col ul a:hover { color: var(--white); }
   .footer-bottom { border-top: 1px solid var(--border); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; color: var(--text-muted); font-size: .8rem; flex-wrap: wrap; gap: .5rem; }
   @media (max-width: 768px) { nav ul { display: none; } h1 { letter-spacing: -1px; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
   @media (max-width: 480px) { .cta-group { flex-direction: column; align-items: center; } .footer-grid { grid-template-columns: 1fr; } .pricing-grid-mockup { grid-template-columns: 1fr; } .mockup-results { grid-template-columns: 1fr; } }
-  
   #cookie-banner { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 16px; padding: 1.2rem 1.6rem; display: flex; align-items: center; gap: 1.5rem; max-width: 680px; width: 90%; z-index: 999; flex-wrap: wrap; }
   #cookie-banner p { font-size: .83rem; color: var(--text-muted); line-height: 1.6; flex: 1; min-width: 200px; font-weight: 300; }
+  #cookie-banner p a { color: var(--accent); }
   .cookie-btns { display: flex; gap: .6rem; flex-shrink: 0; }
-  .btn-cookie-accept { background: var(--accent); color: var(--white); border: none; padding: .5rem 1.2rem; border-radius: 100px; font-size: .82rem; cursor: pointer; font-family: 'DM Sans', sans-serif; }
-  .btn-cookie-reject { background: transparent; color: var(--text-muted); border: 1px solid #333; padding: .5rem 1.2rem; border-radius: 100px; font-size: .82rem; cursor: pointer; font-family: 'DM Sans', sans-serif; }
-
-  /* MODALS */
+  .btn-cookie-reject, .btn-cookie-accept { background: transparent; border: 1px solid #2a2a2a; color: var(--white); padding: .5rem 1rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: .82rem; cursor: pointer; transition: all .2s; }
+  .btn-cookie-accept { background: var(--accent); border-color: var(--accent); }
+  .btn-cookie-reject:hover { background: #222; }
+  .btn-cookie-accept:hover { opacity: .85; }
   #modal-overlay, #profile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(6px); z-index: 1000; align-items: center; justify-content: center; }
   #modal-overlay.active, #profile-overlay.active { display: flex; }
   .modal-box, .profile-box { background: #111; border: 1px solid #2a2a2a; border-radius: 20px; padding: 2.2rem; width: 90%; max-width: 420px; position: relative; }
-  .modal-close, .profile-close { position: absolute; top: 1rem; right: 1.2rem; background: none; border: none; color: #888; font-size: 1.4rem; cursor: pointer; line-height:1; }
+  .modal-close, .profile-close { position: absolute; top: 1rem; right: 1.2rem; background: none; border: none; color: #888; font-size: 1.4rem; cursor: pointer; line-height: 1; transition: color .2s; }
   .modal-close:hover, .profile-close:hover { color: #fff; }
   .modal-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; margin-bottom: 1.4rem; }
   .modal-logo span { color: #ff3c3c; }
@@ -100,7 +98,6 @@
   .btn-google svg { width: 20px; height: 20px; }
   .modal-error { color: #ff6b6b; font-size: .8rem; margin-top: 1rem; text-align: center; }
 
-  /* DASHBOARD */
   #dashboard { display: none; min-height: 100vh; }
   .dash-user { display: flex; align-items: center; gap: .8rem; cursor: pointer; padding: .4rem; border-radius: 12px; transition: background .2s; }
   .dash-user:hover { background: #1a1a1a; }
@@ -123,7 +120,7 @@
   .dash-form-field input:focus, .dash-form-field select:focus { border-color: #ff3c3c; }
   .btn-dash-publish { width: 100%; background: #ff3c3c; border: none; color: #f5f3ee; padding: .8rem; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .92rem; font-weight: 500; cursor: pointer; transition: opacity .2s; }
   .btn-dash-publish:hover { opacity: .85; }
-  .btn-dash-publish:disabled { opacity: .5; cursor: not-allowed; }
+  .btn-dash-publish:disabled { opacity: .5; cursor: not-allowed; background: #999; border-color: #888; color: #555; }
   .dash-error { color: #ff6b6b; font-size: .8rem; margin-bottom: .6rem; min-height: 1em; }
   
   .ai-results-grid { display: none; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 1.5rem; }
@@ -140,14 +137,19 @@
   .history-file { font-size: .88rem; font-weight: 500; margin-bottom: .2rem; }
   .history-meta { font-size: .75rem; color: #888; }
 
-  /* PERFIL MODAL */
   .dash-profile-header { display: flex; align-items: center; gap: 1.2rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #1e1e1e; }
-  .dash-profile-avatar { width: 70px; height: 70px; border-radius: 50%; background: #2d1a4a; color: #b48fe0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.5rem; background-size: cover; background-position: center; flex-shrink: 0; cursor: pointer; position: relative; overflow: hidden; }
-  .dash-profile-avatar:hover::after { content: '📷'; position: absolute; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; font-size: 24px; }
-  .dash-profile-plan { font-size: .78rem; padding: .2rem .6rem; border-radius: 100px; background: rgba(255,60,60,0.1); color: var(--accent); border: 1px solid rgba(255,60,60,0.3); display: inline-block; margin-top: .3rem; }
-  .btn-dash-secondary { width: 100%; background: transparent; border: 1px solid #2a2a2a; color: #f5f3ee; padding: .8rem; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .92rem; font-weight: 500; cursor: pointer; transition: all .2s; margin-top: .5rem; }
-  .btn-dash-secondary:hover { background: #1a1a1a; border-color: #555; }
-  .dash-success { color: #4cff72; font-size: .85rem; margin-top: .5rem; }
+  .dash-profile-avatar { width: 70px; height: 70px; border-radius: 50%; background: #2d1a4a; color: #b48fe0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.5rem; background-size: cover; background-position: center; flex-shrink:0; cursor:pointer; position:relative; overflow:hidden; }
+  .dash-profile-avatar:hover::after { content: '📷'; position: absolute; inset:0; background: rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; font-size:24px; }
+  .dash-profile-plan { font-size: .78rem; padding: .2rem .6rem; border-radius: 100px; background: rgba(255,60,60,0.1); color: var(--accent); border: 1px solid rgba(255,60,60,0.3); display:inline-block; margin-top:.3rem; }
+  .btn-dash-secondary { width: 100%; background: transparent; border: 1px solid #2a2a2a; color: #f5f3ee; padding: .8rem; border-radius: 10px; font-family: 'DM Sans'; font-size: .92rem; font-weight:500; cursor:pointer; transition:all .2s; margin-top: .5rem; }
+  .btn-dash-secondary:hover { background:#1a1a1a; border-color:#555; }
+  .dash-success { color:#4cff72; font-size:.85rem; margin-top:.5rem; display:none; }
+  
+  .legal-section { display: none; padding: 4rem 5%; max-width: 800px; margin: 0 auto; }
+  .legal-section h2 { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem; }
+  .legal-section p { color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem; }
+  .back-btn { background: transparent; border: 1px solid #2a2a2a; color: var(--text-muted); padding: .6rem 1.2rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: .88rem; cursor: pointer; transition: all .2s; margin-bottom: 2rem; }
+  .back-btn:hover { background: #1a1a1a; color: var(--white); border-color: #555; }
 </style>
 </head>
 <body>
@@ -174,9 +176,9 @@
     <div class="blob"></div>
     <div class="badge"><div class="badge-dot"></div> Impulsado por Inteligencia Artificial</div>
     <h1>Una idea.<br><span class="line2">Tres plataformas.</span><br>Textos perfectos.</h1>
-    <p class="hero-sub">Escribe de qué va tu video y nuestra IA genera los ganchos, captions y descripciones optimizadas para TikTok, Instagram y YouTube en segundos.</p>
+    <p class="hero-sub">Escribe de qué va tu video y nuestra IA genera los ganchos, captions y descripciones optimizados para TikTok, Instagram y YouTube en segundos.</p>
     <div class="cta-group">
-      <a href="#" class="btn-primary" onclick="openModal()">Empezar ahora</a>
+      <button class="btn-primary" onclick="openModal()">Empezar ahora</button>
     </div>
     <div class="platforms-strip">
       <div class="plat-pill"><svg class="plat-icon" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.21a8.25 8.25 0 004.83 1.56V7.32a4.85 4.85 0 01-1.06-.63z"/></svg>TikTok</div>
@@ -191,8 +193,8 @@
         <button class="mockup-btn">Generar Multipost con IA ✨</button>
         <div class="mockup-results">
           <div><div class="mockup-res-box"></div><div class="mockup-label">TikTok</div></div>
-          <div><div class="mockup-res-box"></div><div class="mockup-label">Instagram</div></div>
           <div><div class="mockup-res-box"></div><div class="mockup-label">YouTube</div></div>
+          <div><div class="mockup-res-box"></div><div class="mockup-label">Instagram</div></div>
         </div>
       </div>
     </div>
@@ -200,13 +202,27 @@
     <div class="pricing-grid-mockup">
       <div class="price-card featured">
         <div class="featured-badge">Más popular</div>
-        <div class="plan-name">Pro</div><div class="plan-price">7,99€ <span>/ mes</span></div><div class="plan-desc">Para creadores activos</div>
-        <ul class="plan-features"><li>Multipost ilimitados</li><li>3 plataformas</li><li>Todos los tonos de voz</li><li>Historial de generaciones</li></ul>
+        <div class="plan-name">Pro</div>
+        <div class="plan-price">7,99€ <span>/ mes</span></div>
+        <div class="plan-desc">Para creadores activos</div>
+        <ul class="plan-features">
+          <li>Multipost ilimitados</li>
+          <li>3 plataformas</li>
+          <li>Todos los tonos de voz</li>
+          <li>Historial de generaciones</li>
+        </ul>
         <button class="btn-plan featured-btn" onclick="window.open('https://buy.stripe.com/14A9AT3debVVcu0drW3gk01','_blank')">Empezar con Pro</button>
       </div>
       <div class="price-card">
-        <div class="plan-name">Agencia</div><div class="plan-price">29,99€ <span>/ mes</span></div><div class="plan-desc">Para equipos y agencias</div>
-        <ul class="plan-features"><li>Multipost ilimitados</li><li>Cuentas múltiples</li><li>Hasta 10 usuarios</li><li>API de integración</li></ul>
+        <div class="plan-name">Agencia</div>
+        <div class="plan-price">29,99€ <span>/ mes</span></div>
+        <div class="plan-desc">Para equipos y agencias</div>
+        <ul class="plan-features">
+          <li>Multipost ilimitados</li>
+          <li>Cuentas múltiples</li>
+          <li>Hasta 10 usuarios</li>
+          <li>API de integración</li>
+        </ul>
         <button class="btn-plan" onclick="window.open('https://buy.stripe.com/00w4gzg00f87bpW3Rm3gk00','_blank')">Contactar ventas</button>
       </div>
     </div>
@@ -214,8 +230,24 @@
 
   <footer>
     <div class="footer-grid">
-      <div class="footer-brand"><div class="logo">Multi<span>Post</span></div><p>La forma más rápida de generar textos virales para TikTok, YouTube e Instagram con Inteligencia Artificial.</p></div>
-      <div class="footer-col"><h4>Legal</h4><ul><li><a href="#" onclick="showLegal('privacidad');return false">Privacidad</a></li><li><a href="#" onclick="showLegal('terminos');return false">Términos</a></li></ul></div>
+      <div class="footer-brand">
+        <div class="logo">Multi<span>Post</span></div>
+        <p>La forma más rápida de generar textos virales para TikTok, YouTube e Instagram con Inteligencia Artificial.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#" onclick="showLegal('privacidad');return false">Privacidad</a></li>
+          <li><a href="#" onclick="showLegal('terminos');return false">Términos</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="#" onclick="showLegal('about');return false">Sobre nosotros</a></li>
+          <li><a href="#" onclick="showLegal('contacto');return false">Contacto</a></li>
+        </ul>
+      </div>
     </div>
     <div class="footer-bottom">
       <span>© 2025 MultiPost Technologies S.L. · Bilbao, España</span>
@@ -224,13 +256,36 @@
   </footer>
 </div>
 
-<div class="legal-section" id="page-privacidad"><button class="back-btn" onclick="hideLegal()">← Volver</button><h2>Política de Privacidad</h2><p>Recogemos tu correo de Google para prestar el servicio de IA y gestionar tu cuenta.</p></div>
-<div class="legal-section" id="page-terminos"><button class="back-btn" onclick="hideLegal()">← Volver</button><h2>Términos y Condiciones</h2><p>MultiPost genera textos con IA. El usuario es responsable del contenido que publica en sus redes.</p></div>
-<div class="legal-section" id="page-about"><button class="back-btn" onclick="hideLegal()">← Volver</button><h2>Sobre nosotros</h2><p>MultiPost nació en Bilbao. Asistente de copywriting definitivo para creadores.</p></div>
-<div class="legal-section" id="page-contacto"><button class="back-btn" onclick="hideLegal()">← Volver</button><h2>Contacto</h2><p>hola@multipost.cc</p></div>
+<div class="legal-section" id="page-privacidad">
+  <button class="back-btn" onclick="hideLegal()">← Volver</button>
+  <h2>Política de Privacidad</h2>
+  <p>Recogemos tu correo de Google para prestar el servicio de IA y gestionar tu cuenta.</p>
+  <p>Tus datos están protegidos y nunca los compartimos con terceros sin tu consentimiento.</p>
+</div>
+
+<div class="legal-section" id="page-terminos">
+  <button class="back-btn" onclick="hideLegal()">← Volver</button>
+  <h2>Términos y Condiciones</h2>
+  <p>MultiPost genera textos con IA. El usuario es el único responsable del contenido que publica en sus redes.</p>
+  <p>Al usar este servicio, aceptas nuestros términos de uso y política de privacidad.</p>
+</div>
+
+<div class="legal-section" id="page-about">
+  <button class="back-btn" onclick="hideLegal()">← Volver</button>
+  <h2>Sobre nosotros</h2>
+  <p>MultiPost nació en Bilbao con la misión de hacer el copywriting más accesible para creadores de contenido.</p>
+  <p>Somos el asistente de copywriting definitivo para creadores que quieren maximizar su impacto en redes sociales.</p>
+</div>
+
+<div class="legal-section" id="page-contacto">
+  <button class="back-btn" onclick="hideLegal()">← Volver</button>
+  <h2>Contacto</h2>
+  <p>¿Tienes preguntas o sugerencias? Escríbenos a:</p>
+  <p><strong>hola@multipost.cc</strong></p>
+</div>
 
 <div id="cookie-banner">
-  <p>Usamos cookies para mejorar tu experiencia.</p>
+  <p>Usamos cookies para mejorar tu experiencia. <a href="#" onclick="showLegal('privacidad');return false">Más información</a></p>
   <div class="cookie-btns">
     <button class="btn-cookie-reject" onclick="closeCookie()">Solo necesarias</button>
     <button class="btn-cookie-accept" onclick="closeCookie()">Aceptar todas</button>
@@ -243,7 +298,7 @@
     <div class="modal-logo" style="margin-bottom: 2rem;">Multi<span>Post</span></div>
     <p style="color: #888; margin-bottom: 1.5rem; font-size: .9rem;">Inicia sesión con Google. Sin contraseñas inventadas.</p>
     <button class="btn-google" onclick="loginWithGoogle()">
-      <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12V4h2.5c2.5 0 5 2.5 5 6v12.5c0 2.5-2.5 5-5 5H7c-2.5 0-5-2.5-5-5V10c0-3.5 2.5-6 5-6h5.56c.13-.72.2-1.47.2-2.25z" fill="#4285F4"/><path d="M5.84 14.09c-.22-.66-.35-1.21-.35-1.86 0-1.68 1.02-3.09 2.47-3.09h5.5v3.95h-5.5c0 1.68-1.02 3.09-2.47 3.09z" fill="#34A853"/><path d="M12 8.5v5h2.5c2.5 0 5 2.5 5 6v6c0 2.5-2.5 5-5 5H9.5c-2.5 0-5-2.5-5-5v-6c0-2.5 2.5-5 5-5H12z" fill="#FBBC05"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
       Continuar con Google
     </button>
     <div class="modal-error" id="login-error"></div>
@@ -256,7 +311,7 @@
     <h3 style="font-family:'Syne',sans-serif; font-size:1.2rem; margin-bottom:1.5rem;">⚙️ Mi Perfil</h3>
     <div class="dash-profile-header">
       <div class="dash-profile-avatar" id="settings-avatar" onclick="document.getElementById('avatar-input').click()">MP</div>
-      <input type="file" id="avatar-input" accept="image/png, image/jpeg, image/webp" style="display:none;" onchange="handleAvatarUpload(event)">
+      <input type="file" id="avatar-input" accept="image/png, image/jpeg, image/webp" onchange="handleAvatarUpload(event)" style="display:none;">
       <div>
         <div id="settings-name-display" style="font-weight:700; font-size:1.1rem; margin-bottom:.2rem;">Usuario</div>
         <div id="settings-email-display" style="font-size:.85rem; color:#888;">user@email.com</div>
@@ -268,7 +323,7 @@
         <label>NOMBRE DE USUARIO</label>
         <input type="text" id="settings-name" placeholder="Tu nombre público" required>
       </div>
-      <div class="dash-success" id="profile-success" style="display:none;">✅ Perfil actualizado.</div>
+      <div class="dash-success" id="profile-success">✅ Perfil actualizado.</div>
       <button type="submit" class="btn-dash-secondary">Guardar cambios</button>
     </form>
   </div>
@@ -293,7 +348,7 @@
             <select id="ai-tone">
               <option value="Divertido">😂 Divertido</option>
               <option value="Educativo">🧠 Educativo</option>
-              <option value="Serió y Profesional">💼 Serio y Profesional</option>
+              <option value="Serio y Profesional">💼 Serio y Profesional</option>
               <option value="Polémico">🔥 Polémico</option>
               <option value="Motivador">💪 Motivador</option>
             </select>
@@ -303,227 +358,321 @@
         </form>
       </div>
 
-      <div class="ai-results-grid" id="ai-results">
-        <div class="ai-card" style="border-top: 3px solid #fff;"><h3>🎵 TikTok</h3><div class="ai-block"><label>Gancho</label><p id="res-tiktok-hook"></p></div><div class="ai-block"><label>Texto en pantalla</label><p id="res-tiktok-screen"></p></div><div class="ai-block"><label>Caption</label><p id="res-tiktok-caption"></p></div><div class="ai-block"><label>Hashtags</label><p id="res-tiktok-tags"></p></div><button class="btn-copy" onclick="copyText(event, 'tiktok')">Copiar todo</button></div>
-        <div class="ai-card" style="border-top: 3px solid #e1306c;"><h3 style="color: #e1306c;">📸 Instagram</h3><div class="ai-block"><label>Caption</label><p id="res-ig-caption"></p></div><div class="ai-block"><label>Hashtags</label><p id="res-ig-tags"></p></div><button class="btn-copy" onclick="copyText(event, 'instagram')">Copiar todo</button></div>
-        <div class="ai-card" style="border-top: 3px solid #ff0000;"><h3 style="color: #ff0000;">▶️ YouTube</h3><div class="ai-block"><label>Título SEO</label><p id="res-yt-title"></p></div><div class="ai-block"><label>Descripción</label><p id="res-yt-desc"></p></div><button class="btn-copy" onclick="copyText(event, 'youtube')">Copiar todo</button></div>
-      </div>
-
-      <div class="dash-card">
-        <h3>📋 Historial</h3>
-        <div id="dash-history"><p style="color:#888;font-size:.85rem">Aún no has generado ningún texto.</p></div>
+      <div class="ai-results-grid" id="div-resultados-ia">
+        <div class="ai-card" style="border-top: 3px solid #fff;">
+          <h3>🎵 TikTok</h3>
+          <div class="ai-block"><label>Gancho</label><p id="res-tiktok-hook"></p></div>
+          <div class="ai-block"><label>Texto en pantalla</label><p id="res-tiktok-screen"></p></div>
+          <div class="ai-block"><label>Caption</label><p id="res-tiktok-caption"></p></div>
+          <div class="ai-block"><label>Hashtags</label><p id="res-tiktok-tags"></p></div>
+          <button class="btn-copy" onclick="copyText(event, 'tiktok')">Copiar todo</button>
+        </div>
+        <div class="ai-card" style="border-top: 3px solid #e1306c;">
+          <h3>📸 Instagram</h3>
+          <div class="ai-block"><label>Caption</label><p id="res-ig-caption"></p></div>
+          <div class="ai-block"><label>Hashtags</label><p id="res-ig-tags"></p></div>
+          <button class="btn-copy" onclick="copyText(event, 'instagram')">Copiar todo</button>
+        </div>
+        <div class="ai-card" style="border-top: 3px solid #ff0000;">
+          <h3>📺 YouTube</h3>
+          <div class="ai-block"><label>Título</label><p id="res-yt-title"></p></div>
+          <div class="ai-block"><label>Descripción</label><p id="res-yt-desc"></p></div>
+          <div class="ai-block"><label>Hashtags</label><p id="res-yt-tags"></p></div>
+          <button class="btn-copy" onclick="copyText(event, 'youtube')">Copiar todo</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-var SUPABASE_URL = 'https://xwbreyqsgujjxqwjtrbi.supabase.co';
-var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI6ImFyBlZiIsInJlZiIsInR5cCI6ImF1uY2lkIjoic3VwYmFzImlhdCI6MTcxOTg3NzQzNCwiZXhwIjoxMDM1NDQ3NDM0fQ.Q8r0d8YZy0HFsU4U_vTIPFr7b_MpIhXy3KV-3H2dY';
-var supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+// Global state
+let currentUser = null;
 
-function openModal() { document.getElementById('modal-overlay').classList.add('active'); document.body.style.overflow = 'hidden'; }
-function closeModal() { document.getElementById('modal-overlay').classList.remove('active'); document.body.style.overflow = ''; document.getElementById('login-error').textContent = ''; }
-document.getElementById('modal-overlay').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+  checkAuth();
+  
+  // Show cookie banner if not accepted
+  const cookieAccepted = localStorage.getItem('cookiesAccepted');
+  if (!cookieAccepted) {
+    document.getElementById('cookie-banner').style.display = 'flex';
+  }
+});
 
-function openProfile() { document.getElementById('profile-overlay').classList.add('active'); document.body.style.overflow = 'hidden'; }
-function closeProfile() { document.getElementById('profile-overlay').classList.remove('active'); document.body.style.overflow = ''; }
-document.getElementById('profile-overlay').addEventListener('click', function(e) { if (e.target === this) closeProfile(); });
+// Cookie functions
+function closeCookie() {
+  localStorage.setItem('cookiesAccepted', 'true');
+  document.getElementById('cookie-banner').style.display = 'none';
+}
 
-function loginWithGoogle() {
+// Modal functions
+function openModal() {
+  document.getElementById('modal-overlay').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('active');
   document.getElementById('login-error').textContent = '';
-  supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: 'https://multipost.cc' } })
-  .catch(err => { document.getElementById('login-error').textContent = 'Error al conectar con Google.'; });
 }
 
-function handleAvatarUpload(e) {
-  var file = e.target.files[0];
-  if (!file) return;
-  if (file.size > 2 * 1024 * 1024) { alert("La imagen es muy grande. Máximo 2MB."); return; }
-  var reader = new FileReader();
-  reader.onload = function(ev) {
-    var session = JSON.parse(localStorage.getItem('mp_session') || null;
-    if(session) {
-      session.avatar = ev.target.result;
-      localStorage.setItem('mp_session', JSON.stringify(session));
-      updateAvatars(session);
-    }
-  }
-  reader.readAsDataURL(file);
-}
-
-function handleSaveProfile(e) {
-  e.preventDefault();
-  var name = document.getElementById('settings-name').value.trim();
-  if(!name) return;
-  var session = JSON.parse(localStorage.getItem('mp_session') || null);
-  if(session) {
-    session.name = name;
-    localStorage.setItem('mp_session', JSON.stringify(session));
-    document.getElementById('settings-name-display').textContent = session.name;
-    document.getElementById('nav-name').textContent = session.name;
-    document.getElementById('profile-success').style.display = 'block';
-    setTimeout(function() { document.getElementById('profile-success').style.display = 'none'; }, 3000);
-  }
-}
-
-function updateAvatars(session) {
-  var navEl = document.getElementById('nav-avatar');
-  var setEl = document.getElementById('settings-avatar');
-  var initials = session.name.split(' ').map(function(w){return w[0];}).slice(0,2).join('').toUpperCase();
-  if(session.avatar) {
-    navEl.style.backgroundImage = 'url('+session.avatar+')'; navEl.style.color = 'transparent'; navEl.innerText = '';
-    setEl.style.backgroundImage = 'url('+session.avatar+')'; setEl.style.color = 'transparent'; setEl.innerText = '';
+function openProfile() {
+  if (!currentUser) return;
+  
+  document.getElementById('settings-name').value = currentUser.name || '';
+  document.getElementById('settings-name-display').textContent = currentUser.name || 'Usuario';
+  document.getElementById('settings-email-display').textContent = currentUser.email || '';
+  document.getElementById('settings-plan-badge').textContent = `Plan: ${currentUser.plan || 'Gratis'}`;
+  
+  if (currentUser.avatar) {
+    document.getElementById('settings-avatar').style.backgroundImage = `url(${currentUser.avatar})`;
+    document.getElementById('settings-avatar').textContent = '';
   } else {
-    navEl.style.backgroundImage = 'none'; navEl.style.color = '#b48fe0'; navEl.innerText = initials;
-    setEl.style.backgroundImage = 'none'; setEl.style.color = '#b48fe0'; setEl.innerText = initials;
+    const initials = (currentUser.name || 'MP').substring(0, 2).toUpperCase();
+    document.getElementById('settings-avatar').textContent = initials;
   }
+  
+  document.getElementById('profile-overlay').classList.add('active');
 }
 
-function goToSection(e, id) {
-  e.preventDefault();
-  document.getElementById('dashboard').style.display = 'none';
-  document.getElementById('main-content').style.display = 'block';
-  setTimeout(function() { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }, 50);
+function closeProfile() {
+  document.getElementById('profile-overlay').classList.remove('active');
+  document.getElementById('profile-success').style.display = 'none';
 }
 
-function showDashboard() {
-  var session = JSON.parse(localStorage.getItem('mp_session') || null;
-  if (!session) return;
-  document.getElementById('main-content').style.display = 'none';
-  document.getElementById('dashboard').style.display = 'block';
-  document.getElementById('nav-btn-guest').style.display = 'none';
-  document.getElementById('nav-user-menu').style.display = 'flex';
-  document.getElementById('nav-name').textContent = session.name;
-  document.getElementById('nav-email').textContent = session.email;
-  document.getElementById('settings-name-display').textContent = session.name;
-  document.getElementById('settings-email-display').textContent = session.email;
-  document.getElementById('settings-name').value = session.name;
-  var planText = session.plan ? session.plan.charAt(0).toUpperCase() + session.plan.slice(1) : 'Gratis';
-  document.getElementById('settings-plan-badge').textContent = 'Plan: ' + planText;
-  updateAvatars(session);
-  renderHistory();
-  window.scrollTo(0,0);
+// Auth functions
+function loginWithGoogle() {
+  // Simulate Google login
+  const mockUser = {
+    id: 'user_' + Math.random().toString(36).substr(2, 9),
+    email: 'demo@multipost.cc',
+    name: 'Usuario Demo',
+    avatar: null,
+    plan: 'Pro'
+  };
+  
+  currentUser = mockUser;
+  localStorage.setItem('user', JSON.stringify(mockUser));
+  
+  updateUIForLoggedInUser();
+  closeModal();
+  
+  // Show dashboard
+  showDashboard();
 }
 
 function logout() {
-  localStorage.removeItem('mp_session');
-  supabase.auth.signOut();
+  currentUser = null;
+  localStorage.removeItem('user');
+  updateUIForLoggedOutUser();
+  showMainContent();
+}
+
+function checkAuth() {
+  const savedUser = localStorage.getItem('user');
+  if (savedUser) {
+    currentUser = JSON.parse(savedUser);
+    updateUIForLoggedInUser();
+    // Don't auto-show dashboard, keep on home
+  }
+}
+
+function updateUIForLoggedInUser() {
+  document.getElementById('nav-btn-guest').style.display = 'none';
+  document.getElementById('nav-user-menu').style.display = 'flex';
+  
+  const initials = (currentUser.name || 'MP').substring(0, 2).toUpperCase();
+  document.getElementById('nav-name').textContent = currentUser.name || 'Usuario';
+  document.getElementById('nav-email').textContent = currentUser.email || '';
+  
+  if (currentUser.avatar) {
+    document.getElementById('nav-avatar').style.backgroundImage = `url(${currentUser.avatar})`;
+    document.getElementById('nav-avatar').textContent = '';
+  } else {
+    document.getElementById('nav-avatar').textContent = initials;
+  }
+}
+
+function updateUIForLoggedOutUser() {
   document.getElementById('nav-btn-guest').style.display = 'block';
   document.getElementById('nav-user-menu').style.display = 'none';
-  function ocultarTodo() {
-    document.getElementById('main-content').style.display = 'block';
-    document.getElementById('dashboard').style.display = 'none';
-  }
-  document.getElementById('main-content').style.display='block';
-  document.getElementById('dashboard').style.display='none';
-  window.scrollTo(0,0);
 }
 
-async function handleGenerateAI(e) {
-  e.preventDefault();
-  var topic = document.getElementById('ai-topic').value.trim();
-  var tone = document.getElementById('ai-tone').value;
-  var errEl = document.getElementById('dash-error');
-  var btn = document.getElementById('ai-generate-btn');
-  if(!topic) { errEl.textContent = 'Escribe un tema para tu video.'; return; }
-  errEl.textContent = '';
-  btn.disabled = true;
-  btn.textContent = 'Generando con IA (10s)...';
-  try {
-    var res = await fetch('/api/generate-copy', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ topic: topic, tone: tone }) });
-    var data = await res.json();
-    if(data.error) throw new Error(data.error);
-    document.getElementById('res-tiktok-hook').innerText = data.tiktok.hook;
-    document.getElementById('res-tiktok-screen').innerText = data.tiktok.on_screen_text;
-    document.getElementById('res-tiktok-caption').innerText = data.tiktok.caption;
-    document.getElementById('res-tiktok-tags').innerText = data.tiktok.hashtags;
-    document.getElementById('res-ig-caption').innerText = data.instagram.caption;
-    document.getElementById('res-ig-tags').innerText = data.instagram.hashtags;
-    document.getElementById('res-yt-title').innerText = data.youtube.title;
-    document.getElementById('res-yt-desc').innerText = data.youtube.description;
-    document.getElementById('ai-results').style.display = 'grid';
-    var session = JSON.parse(localStorage.getItem('mp_session') || null;
-    if(session) {
-      var posts = JSON.parse(localStorage.getItem('mp_ai_posts_'+session.email) || '[]');
-      posts.unshift({ topic: topic, tone: tone, date: new Date().toLocaleString('es-ES') });
-      if(posts.length > 20) posts.pop();
-      localStorage.setItem('mp_ai_posts_'+session.email, JSON.stringify(posts));
-      renderHistory();
-    }
-  } catch(err) { errEl.textContent = 'Error: ' + (err.message || 'Error de conexión'); }
-  function复原Btn() { btn.disabled = false; btn.textContent = 'Generar textos con IA →'; }
-  setTimeout(function(){ btn.disabled = false; btn.textContent = 'Generar textos con IA →'; }, 10000);
+// Navigation functions
+function showDashboard() {
+  document.getElementById('main-content').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  document.querySelectorAll('.legal-section').forEach(el => el.style.display = 'none');
 }
 
-function copyText(e, platform) {
-  var text = '';
-  if(platform === 'tiktok') { 
-    text = 'Gancho: ' + document.getElementById('res-tiktok-hook').innerText + '\n\nTexto en pantalla: ' + document.getElementById('res-tiktok-screen').innerText + '\n\nCaption:\n' + document.getElementById('res-tiktok-caption').innerText + '\n\n' + document.getElementById('res-tiktok-tags').innerText; 
-  } else if(platform === 'instagram') { 
-    text = document.getElementById('res-ig-caption').innerText + '\n\n' + document.getElementById('res-ig-tags').innerText; 
-  } else if(platform === 'youtube') { 
-    text = 'Título: ' + document.getElementById('res-yt-title').innerText + '\n\nDescripción:\n' + document.getElementById('res-yt-desc').innerText; 
-  }
-  navigator.clipboard.writeText(text).then(function() {
-    var btn = e.target; btn.innerText = '✅ ¡Copiado!'; btn.classList.add('copiado');
-    setTimeout(function() { btn.innerText = 'Copiar todo'; btn.classList.remove('copiado'); }, 2000);
-  });
-}
-
-function renderHistory() {
-  var session = JSON.parse(localStorage.getItem('mp_session') || null;
-  if (!session) return;
-  var posts = JSON.parse(localStorage.getItem('mp_ai_posts_'+session.email) || '[]';
-  var el = document.getElementById('dash-history');
-  if (!el) return;
-  if (posts.length===0) { el.innerHTML = '<p style="color:#888;font-size:.85rem">Aún no has generado ningún texto.</p>'; return; }
-  el.innerHTML = posts.map(function(p){ 
-    return '<div class="history-item"><div class="history-file">💡 '+p.topic+'</div><div class="history-meta">Tono: '+p.tone+' &nbsp;·&nbsp; '+p.date+'</div></div>'; 
-  }).join('');
+function showMainContent() {
+  document.getElementById('main-content').style.display = 'block';
+  document.getElementById('dashboard').style.display = 'none';
+  document.querySelectorAll('.legal-section').forEach(el => el.style.display = 'none');
 }
 
 function showLegal(page) {
   document.getElementById('main-content').style.display = 'none';
   document.getElementById('dashboard').style.display = 'none';
-  document.querySelectorAll('.legal-section').forEach(function(s){ s.classList.remove('active'); });
-  var target = document.getElementById('page-'+page);
-  if (target) target.classList.add('active');
-  window.scrollTo(0,0);
+  document.querySelectorAll('.legal-section').forEach(el => el.style.display = 'none');
+  document.getElementById('page-' + page).style.display = 'block';
+  window.scrollTo(0, 0);
 }
 
 function hideLegal() {
-  document.querySelectorAll('.legal-section').forEach(function(s){ s.classList.remove('active'); });
-  var session = JSON.parse(localStorage.getItem('mp_session') || null);
-  if(session) { document.getElementById('dashboard').style.display = 'block'; } 
-  else { document.getElementById('main-content').style.display = 'block'; }
-  window.scrollTo(0,0);
+  document.querySelectorAll('.legal-section').forEach(el => el.style.display = 'none');
+  if (currentUser) {
+    showDashboard();
+  } else {
+    showMainContent();
+  }
 }
 
-function closeCookie() { document.getElementById('cookie-banner').style.display = 'none'; localStorage.setItem('mp_cookie','1'); }
-if (localStorage.getItem('mp_cookie')) { document.getElementById('cookie-banner').display = 'none'; }
+function goToSection(event, section) {
+  event.preventDefault();
+  // Scroll to section (placeholder - you can add actual sections)
+  console.log('Navigate to:', section);
+}
 
-window.addEventListener('DOMContentLoaded', function() {
-  var hashParams = new URLSearchParams(window.location.hash.substring(1));
-  var accessToken = hashParams.get('access_token');
-  if(accessToken) {
-    window.history.replaceState({}, document.title, window.location.pathname);
-    supabase.auth.getUser(accessToken).then(function(data) {
-      var user = data.data.user;
-      var sessionData = {
-        name: user.user_metadata.full_name || user.email.split('@')[0],
-        email: user.email,
-        plan: 'Gratis'
-      };
-      localStorage.setItem('mp_session', JSON.stringify(sessionData));
-      showDashboard();
-    }).catch(function() { supabase.auth.signOut(); });
-    return;
+// Profile functions
+function handleSaveProfile(event) {
+  event.preventDefault();
+  
+  const newName = document.getElementById('settings-name').value;
+  
+  if (currentUser) {
+    currentUser.name = newName;
+    localStorage.setItem('user', JSON.stringify(currentUser));
+    updateUIForLoggedInUser();
+    
+    document.getElementById('profile-success').style.display = 'block';
+    setTimeout(() => {
+      document.getElementById('profile-success').style.display = 'none';
+    }, 3000);
   }
+}
 
-  var session = JSON.parse(localStorage.getItem('mp_session') || null;
-  if(session) showDashboard();
+function handleAvatarUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const avatarUrl = e.target.result;
+    
+    if (currentUser) {
+      currentUser.avatar = avatarUrl;
+      localStorage.setItem('user', JSON.stringify(currentUser));
+      
+      // Update all avatar displays
+      document.getElementById('nav-avatar').style.backgroundImage = `url(${avatarUrl})`;
+      document.getElementById('nav-avatar').textContent = '';
+      document.getElementById('settings-avatar').style.backgroundImage = `url(${avatarUrl})`;
+      document.getElementById('settings-avatar').textContent = '';
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+// AI Generation function
+async function handleGenerateAI(event) {
+  event.preventDefault();
+  
+  const topic = document.getElementById('ai-topic').value;
+  const tone = document.getElementById('ai-tone').value;
+  const errorDiv = document.getElementById('dash-error');
+  const submitBtn = document.getElementById('ai-generate-btn');
+  
+  errorDiv.textContent = '';
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Generando... ⏳';
+  
+  // Simulate AI generation with mock data
+  setTimeout(() => {
+    // Mock AI results
+    const results = {
+      tiktok: {
+        hook: `¿${topic}? 🤯 Te cuento el secreto que nadie te dice...`,
+        screen: `${topic.toUpperCase()} ✨`,
+        caption: `${topic} y te va a cambiar la vida 🚀 (Tono: ${tone})`,
+        tags: '#viral #tips #tutorial #parati'
+      },
+      instagram: {
+        caption: `💡 ${topic}\n\n${tone === 'Divertido' ? '😂' : tone === 'Educativo' ? '📚' : '💼'} Hoy te comparto todo lo que necesitas saber sobre esto.\n\n¿Listo para el cambio? 👇`,
+        tags: '#instagram #contenido #tutorial #aprendizaje'
+      },
+      youtube: {
+        title: `${topic} | Guía Completa 2025`,
+        desc: `En este video te enseño todo sobre: ${topic}\n\n⏱️ TIMESTAMPS:\n0:00 - Introducción\n1:30 - Paso 1\n3:45 - Paso 2\n6:20 - Conclusión\n\n🔔 Suscríbete para más contenido`,
+        tags: '#youtube #tutorial #guia #${topic.split(' ')[0].toLowerCase()}'
+      }
+    };
+    
+    // Populate results
+    document.getElementById('res-tiktok-hook').textContent = results.tiktok.hook;
+    document.getElementById('res-tiktok-screen').textContent = results.tiktok.screen;
+    document.getElementById('res-tiktok-caption').textContent = results.tiktok.caption;
+    document.getElementById('res-tiktok-tags').textContent = results.tiktok.tags;
+    
+    document.getElementById('res-ig-caption').textContent = results.instagram.caption;
+    document.getElementById('res-ig-tags').textContent = results.instagram.tags;
+    
+    document.getElementById('res-yt-title').textContent = results.youtube.title;
+    document.getElementById('res-yt-desc').textContent = results.youtube.desc;
+    document.getElementById('res-yt-tags').textContent = results.youtube.tags;
+    
+    // Show results
+    document.getElementById('div-resultados-ia').style.display = 'grid';
+    
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Generar textos con IA →';
+    
+    // Scroll to results
+    document.getElementById('div-resultados-ia').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 2000);
+}
+
+// Copy function
+function copyText(event, platform) {
+  const btn = event.target;
+  let textToCopy = '';
+  
+  if (platform === 'tiktok') {
+    const hook = document.getElementById('res-tiktok-hook').textContent;
+    const screen = document.getElementById('res-tiktok-screen').textContent;
+    const caption = document.getElementById('res-tiktok-caption').textContent;
+    const tags = document.getElementById('res-tiktok-tags').textContent;
+    textToCopy = `GANCHO:\n${hook}\n\nTEXTO EN PANTALLA:\n${screen}\n\nCAPTION:\n${caption}\n\nHASHTAGS:\n${tags}`;
+  } else if (platform === 'instagram') {
+    const caption = document.getElementById('res-ig-caption').textContent;
+    const tags = document.getElementById('res-ig-tags').textContent;
+    textToCopy = `${caption}\n\n${tags}`;
+  } else if (platform === 'youtube') {
+    const title = document.getElementById('res-yt-title').textContent;
+    const desc = document.getElementById('res-yt-desc').textContent;
+    const tags = document.getElementById('res-yt-tags').textContent;
+    textToCopy = `TÍTULO:\n${title}\n\nDESCRIPCIÓN:\n${desc}\n\nHASHTAGS:\n${tags}`;
+  }
+  
+  navigator.clipboard.writeText(textToCopy).then(() => {
+    btn.classList.add('copied');
+    btn.textContent = '✓ Copiado';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.textContent = 'Copiar todo';
+    }, 2000);
+  });
+}
+
+// Add click handler to logo to go to dashboard if logged in
+document.querySelector('.logo').addEventListener('click', () => {
+  if (currentUser) {
+    showDashboard();
+  } else {
+    showMainContent();
+  }
 });
 </script>
+
 </body>
 </html>
