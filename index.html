@@ -162,7 +162,6 @@
   .modal-error { color: #ff6b6b; font-size: .8rem; margin-bottom: .8rem; min-height: 1em; }
   #modal-plan-hint { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px; padding: .5rem .9rem; font-size: .8rem; color: #888; margin-bottom: 1rem; }
   
-  /* --- DASHBOARD --- */
   #dashboard { display: none; min-height: 100vh; }
   .dash-user { display: flex; align-items: center; gap: .8rem; }
   .dash-avatar { width: 36px; height: 36px; border-radius: 50%; background: #2d1a4a; color: #b48fe0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; }
@@ -186,10 +185,8 @@
   .btn-dash-publish:hover { opacity: .85; }
   .btn-dash-publish:disabled { opacity: .5; cursor: not-allowed; }
   .dash-error { color: #ff6b6b; font-size: .8rem; margin-bottom: .6rem; min-height: 1em; }
-
   .ai-results-grid { display: none; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 1.5rem; }
   @media(min-width: 768px) { .ai-results-grid { grid-template-columns: 1fr 1fr 1fr; } }
-  
   .ai-card { background: #111; border: 1px solid #1e1e1e; border-radius: 18px; padding: 1.5rem; display: flex; flex-direction: column; }
   .ai-card h3 { font-family: 'Syne', sans-serif; font-size: .95rem; font-weight: 700; margin-bottom: 1rem; padding-bottom: .8rem; border-bottom: 1px solid #222; }
   .ai-block { margin-bottom: .8rem; }
@@ -198,11 +195,9 @@
   .btn-copy { width: 100%; background: transparent; border: 1px solid #333; color: #fff; padding: .6rem; border-radius: 8px; font-family: 'DM Sans'; font-size: .82rem; cursor: pointer; margin-top: auto; transition: all .2s; }
   .btn-copy:hover { background: #222; border-color: #555; }
   .btn-copy.copied { background: #1a3a1a; border-color: #4cff72; color: #4cff72; }
-  
   .history-item { background: #1a1a1a; border-radius: 10px; padding: .9rem 1rem; margin-bottom: .6rem; }
   .history-file { font-size: .88rem; font-weight: 500; margin-bottom: .2rem; }
   .history-meta { font-size: .75rem; color: #888; }
-
 </style>
 </head>
 <body>
@@ -215,9 +210,7 @@
     <li><a href="#precios">Precios</a></li>
     <li><a href="#faq">FAQ</a></li>
   </ul>
-  
   <button class="btn-nav" id="nav-btn-guest" onclick="openModal()">Registrarse / Iniciar sesión</button>
-  
   <div id="nav-user-menu" style="display:none; align-items:center; gap:.8rem;">
     <div class="dash-user" style="margin:0">
       <div class="dash-avatar" id="nav-avatar">MP</div>
@@ -248,18 +241,9 @@
         <input type="text" class="mockup-input" placeholder="Ej: Cómo hacer la tortilla de patatas perfecta" disabled>
         <button class="mockup-btn">Generar Multipost con IA ✨</button>
         <div class="mockup-results">
-          <div>
-            <div class="mockup-res-box"></div>
-            <div class="mockup-label">TikTok</div>
-          </div>
-          <div>
-            <div class="mockup-res-box"></div>
-            <div class="mockup-label">Instagram</div>
-          </div>
-          <div>
-            <div class="mockup-res-box"></div>
-            <div class="mockup-label">YouTube</div>
-          </div>
+          <div><div class="mockup-res-box"></div><div class="mockup-label">TikTok</div></div>
+          <div><div class="mockup-res-box"></div><div class="mockup-label">Instagram</div></div>
+          <div><div class="mockup-res-box"></div><div class="mockup-label">YouTube</div></div>
         </div>
       </div>
     </div>
@@ -315,7 +299,6 @@
       <div class="faq-item"><div class="faq-q">¿MultiPost sube el vídeo por mí a las redes sociales? <span class="faq-arrow">+</span></div><div class="faq-a">No. MultiPost genera los textos (ganchos, títulos, descripciones) para que los copies y pegues tú al subir tu video. Esto hace que la herramienta sea 100% fiable, sin bloqueos por parte de TikTok, YouTube o Instagram.</div></div>
       <div class="faq-item"><div class="faq-q">¿Qué información necesito darle a la IA? <span class="faq-arrow">+</span></div><div class="faq-a">Solo necesitas escribir de qué trata tu video (ej: "Receta de galletas sin azúcar") y elegir el tono (divertido, serio, educativo...). La IA hace el resto.</div></div>
       <div class="faq-item"><div class="faq-q">¿Puedo editar los textos que genera la IA? <span class="faq-arrow">+</span></div><div class="faq-a">¡Por supuesto! Los textos se generan dentro de cajas de texto que puedes seleccionar y modificar libreto antes de copiarlos. La IA es tu asistente, tú tienes la última palabra.</div></div>
-      <div class="faq-item"><div class="faq-q">¿Funciona para videos largos de YouTube también? <span class="faq-arrow">+</span></div><div class="faq-a">Sí. Si le das un tema general, la IA adaptará el título para que sea SEO-friendly y escribirá una descripción larga adecuada para videos de YouTube tradicionales, no solo para Shorts.</div></div>
       <div class="faq-item"><div class="faq-q">¿Puedo cancelar mi suscripción en cualquier momento? <span class="faq-arrow">+</span></div><div class="faq-a">Sí, puedes cancelar cuando quieras desde tu panel de Stripe, sin penalizaciones ni compromisos de permanencia.</div></div>
     </div>
   </section>
@@ -365,7 +348,6 @@
   </footer>
 </div>
 
-<!-- LEGAL PAGES -->
 <div class="legal-section" id="page-privacidad">
   <button class="back-btn" onclick="hideLegal()">← Volver</button>
   <h2>Política de Privacidad</h2>
@@ -459,20 +441,18 @@
   </div>
 </div>
 
-<!-- DASHBOARD -->
 <div id="dashboard">
   <div class="dash-body">
     <div class="dash-header">
       <h2>Generador de Contenido</h2>
       <p>Escribe tu idea y obtén los textos perfectos para cada red social.</p>
     </div>
-    
     <div class="dash-grid">
       <div class="dash-card">
         <h3>✨ Nueva generación</h3>
         <form onsubmit="handleGenerateAI(event)">
           <div class="dash-form-field">
-            <label>¿DE QUÚ VA TU VIDEO?</label>
+            <label>¿DE QUÉ VA TU VIDEO?</label>
             <input type="text" id="ai-topic" placeholder="Ej: Cómo ganar dinero con IA sin ser programador" required>
           </div>
           <div class="dash-form-field">
@@ -491,53 +471,24 @@
       </div>
 
       <div class="ai-results-grid" id="ai-results">
-        <!-- TIKTOK -->
         <div class="ai-card" style="border-top: 3px solid #fff;">
           <h3>🎵 TikTok</h3>
-          <div class="ai-block">
-            <label>Gancho (Hook)</label>
-            <p id="res-tiktok-hook"></p>
-          </div>
-          <div class="ai-block">
-            <label>Texto en pantalla</label>
-            <p id="res-tiktok-screen"></p>
-          </div>
-          <div class="ai-block">
-            <label>Caption</label>
-            <p id="res-tiktok-caption"></p>
-          </div>
-          <div class="ai-block">
-            <label>Hashtags</label>
-            <p id="res-tiktok-tags"></p>
-          </div>
+          <div class="ai-block"><label>Gancho (Hook)</label><p id="res-tiktok-hook"></p></div>
+          <div class="ai-block"><label>Texto en pantalla</label><p id="res-tiktok-screen"></p></div>
+          <div class="ai-block"><label>Caption</label><p id="res-tiktok-caption"></p></div>
+          <div class="ai-block"><label>Hashtags</label><p id="res-tiktok-tags"></p></div>
           <button class="btn-copy" onclick="copyText(event, 'tiktok')">Copiar todo TikTok</button>
         </div>
-
-        <!-- INSTAGRAM -->
         <div class="ai-card" style="border-top: 3px solid #e1306c;">
           <h3 style="color: #e1306c;">📸 Instagram</h3>
-          <div class="ai-block">
-            <label>Caption</label>
-            <p id="res-ig-caption"></p>
-          </div>
-          <div class="ai-block">
-            <label>Hashtags</label>
-            <p id="res-ig-tags"></p>
-          </div>
+          <div class="ai-block"><label>Caption</label><p id="res-ig-caption"></p></div>
+          <div class="ai-block"><label>Hashtags</label><p id="res-ig-tags"></p></div>
           <button class="btn-copy" onclick="copyText(event, 'instagram')">Copiar todo Instagram</button>
         </div>
-
-        <!-- YOUTUBE -->
         <div class="ai-card" style="border-top: 3px solid #ff0000;">
           <h3 style="color: #ff0000;">▶️ YouTube</h3>
-          <div class="ai-block">
-            <label>Título SEO</label>
-            <p id="res-yt-title"></p>
-          </div>
-          <div class="ai-block">
-            <label>Descripción</label>
-            <p id="res-yt-desc"></p>
-          </div>
+          <div class="ai-block"><label>Título SEO</label><p id="res-yt-title"></p></div>
+          <div class="ai-block"><label>Descripción</label><p id="res-yt-desc"></p></div>
           <button class="btn-copy" onclick="copyText(event, 'youtube')">Copiar todo YouTube</button>
         </div>
       </div>
@@ -592,18 +543,9 @@ function handleRegister(e) {
   if (pass!==passConf){errEl.textContent='Las contraseñas no coinciden.';return;}
   if (!terms){errEl.textContent='Debes aceptar los términos y condiciones.';return;}
   errEl.textContent='Registrando…';
-  fetch('/api/register', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({name: name, email: email, password: pass})
-  })
+  fetch('/api/register', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({name: name, email: email, password: pass}) })
   .then(function(r){return r.json();})
-  .then(function(data){
-    if (data.error){errEl.textContent=data.error;return;}
-    localStorage.setItem('mp_session',JSON.stringify({name:data.name,email:data.email,plan:data.plan}));
-    closeModal();
-    showDashboard();
-  })
+  .then(function(data){ if (data.error){errEl.textContent=data.error;return;} localStorage.setItem('mp_session',JSON.stringify({name:data.name,email:data.email,plan:data.plan})); closeModal(); showDashboard(); })
   .catch(function(){errEl.textContent='Error de conexión.';});
 }
 
@@ -613,131 +555,78 @@ function handleLogin(e) {
   var pass=document.getElementById('login-pass').value;
   var errEl=document.getElementById('login-error');
   errEl.textContent='Iniciando sesión…';
-  fetch('/api/login', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({email: email, password: pass})
-  })
+  fetch('/api/login', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({email: email, password: pass}) })
   .then(function(r){return r.json();})
-  .then(function(data){
-    if (data.error){errEl.textContent=data.error;return;}
-    localStorage.setItem('mp_session',JSON.stringify({name:data.name,email:data.email,plan:data.plan}));
-    closeModal();
-    showDashboard();
-  })
+  .then(function(data){ if (data.error){errEl.textContent=data.error;return;} localStorage.setItem('mp_session',JSON.stringify({name:data.name,email:data.email,plan:data.plan})); closeModal(); showDashboard(); })
   .catch(function(){errEl.textContent='Error de conexión.';});
 }
 
 function showDashboard() {
   var session=JSON.parse(localStorage.getItem('mp_session')||'null');
   if (!session) return;
-  
-  // Ocultar/Mostrar contenido
   document.getElementById('main-content').style.display='none';
   document.getElementById('dashboard').style.display='block';
-  
-  // Cambiar la barra de navegación
   document.getElementById('nav-btn-guest').style.display='none';
   document.getElementById('nav-user-menu').style.display='flex';
   document.getElementById('nav-name').textContent=session.name;
   document.getElementById('nav-email').textContent=session.email;
   var initials=session.name.split(' ').map(function(w){return w[0];}).slice(0,2).join('').toUpperCase();
   document.getElementById('nav-avatar').textContent=initials;
-  
   renderHistory();
   window.scrollTo(0,0);
 }
 
 function logout() {
   localStorage.removeItem('mp_session');
-  
-  // Cambiar la barra de navegación
   document.getElementById('nav-btn-guest').style.display='block';
   document.getElementById('nav-user-menu').style.display='none';
-  
-  // Mostrar/Ocultar contenido
   document.getElementById('main-content').style.display='block';
   document.getElementById('dashboard').style.display='none';
 }
 
-// --- LÓGICA DE IA ---
 async function handleGenerateAI(e) {
   e.preventDefault();
   var topic = document.getElementById('ai-topic').value.trim();
   var tone = document.getElementById('ai-tone').value;
   var errEl = document.getElementById('dash-error');
   var btn = document.getElementById('ai-generate-btn');
-
   if(!topic) { errEl.textContent = 'Escribe un tema para tu video.'; return; }
-
   errEl.textContent = '';
   btn.disabled = true;
   btn.textContent = 'Generando con IA (10s)...';
-
   try {
-    var res = await fetch('/api/generate-copy', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ topic: topic, tone: tone })
-    });
-
+    var res = await fetch('/api/generate-copy', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ topic: topic, tone: tone }) });
     var data = await res.json();
-
     if(data.error) throw new Error(data.error);
-
-    // Rellenar TikTok
     document.getElementById('res-tiktok-hook').innerText = data.tiktok.hook;
     document.getElementById('res-tiktok-screen').innerText = data.tiktok.on_screen_text;
     document.getElementById('res-tiktok-caption').innerText = data.tiktok.caption;
     document.getElementById('res-tiktok-tags').innerText = data.tiktok.hashtags;
-
-    // Rellenar Instagram
     document.getElementById('res-ig-caption').innerText = data.instagram.caption;
     document.getElementById('res-ig-tags').innerText = data.instagram.hashtags;
-
-    // Rellenar YouTube
     document.getElementById('res-yt-title').innerText = data.youtube.title;
     document.getElementById('res-yt-desc').innerText = data.youtube.description;
-
-    // Mostrar resultados
     document.getElementById('ai-results').style.display = 'grid';
-
-    // Guardar en historial local
     var session = JSON.parse(localStorage.getItem('mp_session')||'null');
     if(session) {
       var posts = JSON.parse(localStorage.getItem('mp_ai_posts_'+session.email)||'[]');
       posts.unshift({ topic: topic, tone: tone, date: new Date().toLocaleString('es-ES') });
-      if(posts.length > 20) posts.pop(); // Limitar historial
+      if(posts.length > 20) posts.pop();
       localStorage.setItem('mp_ai_posts_'+session.email, JSON.stringify(posts));
       renderHistory();
     }
-
-  } catch(err) {
-    errEl.textContent = 'Error: ' + (err.message || 'Error de conexión');
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Generar textos con IA →';
-  }
+  } catch(err) { errEl.textContent = 'Error: ' + (err.message || 'Error de conexión'); }
+  finally { btn.disabled = false; btn.textContent = 'Generar textos con IA →'; }
 }
 
 function copyText(e, platform) {
   var text = '';
-  if(platform === 'tiktok') {
-    text = `Gancho: ${document.getElementById('res-tiktok-hook').innerText}\n\nTexto en pantalla: ${document.getElementById('res-tiktok-screen').innerText}\n\nCaption:\n${document.getElementById('res-tiktok-caption').innerText}\n\n${document.getElementById('res-tiktok-tags').innerText}`;
-  } else if(platform === 'instagram') {
-    text = `${document.getElementById('res-ig-caption').innerText}\n\n${document.getElementById('res-ig-tags').innerText}`;
-  } else if(platform === 'youtube') {
-    text = `Título: ${document.getElementById('res-yt-title').innerText}\n\nDescripción:\n${document.getElementById('res-yt-desc').innerText}`;
-  }
-  
+  if(platform === 'tiktok') { text = `Gancho: ${document.getElementById('res-tiktok-hook').innerText}\n\nTexto en pantalla: ${document.getElementById('res-tiktok-screen').innerText}\n\nCaption:\n${document.getElementById('res-tiktok-caption').innerText}\n\n${document.getElementById('res-tiktok-tags').innerText}`; }
+  else if(platform === 'instagram') { text = `${document.getElementById('res-ig-caption').innerText}\n\n${document.getElementById('res-ig-tags').innerText}`; }
+  else if(platform === 'youtube') { text = `Título: ${document.getElementById('res-yt-title').innerText}\n\nDescripción:\n${document.getElementById('res-yt-desc').innerText}`; }
   navigator.clipboard.writeText(text).then(function() {
-    var btn = e.target;
-    btn.innerText = '✅ ¡Copiado!';
-    btn.classList.add('copied');
-    setTimeout(function() {
-      btn.innerText = 'Copiar todo ' + platform.charAt(0).toUpperCase() + platform.slice(1);
-      btn.classList.remove('copied');
-    }, 2000);
+    var btn = e.target; btn.innerText = '✅ ¡Copiado!'; btn.classList.add('copied');
+    setTimeout(function() { btn.innerText = 'Copiar todo ' + platform.charAt(0).toUpperCase() + platform.slice(1); btn.classList.remove('copied'); }, 2000);
   });
 }
 
@@ -748,12 +637,9 @@ function renderHistory() {
   var el = document.getElementById('dash-history');
   if (!el) return;
   if (posts.length===0) { el.innerHTML='<p style="color:#888;font-size:.85rem">Aún no has generado ningún texto.</p>'; return; }
-  el.innerHTML = posts.map(function(p){
-    return '<div class="history-item"><div class="history-file">💡 '+p.topic+'</div><div class="history-meta">Tono: '+p.tone+' &nbsp;·&nbsp; '+p.date+'</div></div>';
-  }).join('');
+  el.innerHTML = posts.map(function(p){ return '<div class="history-item"><div class="history-file">💡 '+p.topic+'</div><div class="history-meta">Tono: '+p.tone+' &nbsp;·&nbsp; '+p.date+'</div></div>'; }).join('');
 }
 
-// --- UTILIDADES GENERALES ---
 document.querySelectorAll('.faq-item').forEach(function(item){
   item.querySelector('.faq-q').addEventListener('click',function(){
     var isOpen=item.classList.contains('open');
