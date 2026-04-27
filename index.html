@@ -162,9 +162,8 @@
   .modal-error { color: #ff6b6b; font-size: .8rem; margin-bottom: .8rem; min-height: 1em; }
   #modal-plan-hint { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px; padding: .5rem .9rem; font-size: .8rem; color: #888; margin-bottom: 1rem; }
   
-  /* --- DASHBOARD NUEVO --- */
+  /* --- DASHBOARD --- */
   #dashboard { display: none; min-height: 100vh; }
-  .dash-nav { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 5%; border-bottom: 1px solid #1e1e1e; background: rgba(10,10,10,0.95); backdrop-filter: blur(14px); position: sticky; top: 0; z-index: 100; }
   .dash-user { display: flex; align-items: center; gap: .8rem; }
   .dash-avatar { width: 36px; height: 36px; border-radius: 50%; background: #2d1a4a; color: #b48fe0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; }
   .dash-user-info { font-size: .85rem; }
@@ -216,7 +215,16 @@
     <li><a href="#precios">Precios</a></li>
     <li><a href="#faq">FAQ</a></li>
   </ul>
-  <button class="btn-nav" onclick="openModal('Gratis')">Empezar gratis</button>
+  
+  <button class="btn-nav" id="nav-btn-guest" onclick="openModal()">Registrarse / Iniciar sesión</button>
+  
+  <div id="nav-user-menu" style="display:none; align-items:center; gap:.8rem;">
+    <div class="dash-user" style="margin:0">
+      <div class="dash-avatar" id="nav-avatar">MP</div>
+      <div class="dash-user-info"><strong id="nav-name">Usuario</strong><small id="nav-email">user@email.com</small></div>
+    </div>
+    <button class="btn-logout" onclick="logout()">Cerrar sesión</button>
+  </div>
 </nav>
 
 <div id="main-content">
@@ -357,7 +365,7 @@
   </footer>
 </div>
 
-<!-- LEGAL PAGES (Sin cambios) -->
+<!-- LEGAL PAGES -->
 <div class="legal-section" id="page-privacidad">
   <button class="back-btn" onclick="hideLegal()">← Volver</button>
   <h2>Política de Privacidad</h2>
@@ -451,16 +459,8 @@
   </div>
 </div>
 
-<!-- DASHBOARD NUEVO -->
+<!-- DASHBOARD -->
 <div id="dashboard">
-  <nav class="dash-nav">
-    <div class="modal-logo" style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem">Multi<span style="color:#ff3c3c">Post</span></div>
-    <div class="dash-user">
-      <div class="dash-avatar" id="dash-avatar-initials">MP</div>
-      <div class="dash-user-info"><strong class="dash-name">Usuario</strong><small class="dash-email">usuario@email.com</small></div>
-    </div>
-    <button class="btn-logout" onclick="logout()">Cerrar sesión</button>
-  </nav>
   <div class="dash-body">
     <div class="dash-header">
       <h2>Generador de Contenido</h2>
@@ -631,23 +631,36 @@ function handleLogin(e) {
 function showDashboard() {
   var session=JSON.parse(localStorage.getItem('mp_session')||'null');
   if (!session) return;
+  
+  // Ocultar/Mostrar contenido
   document.getElementById('main-content').style.display='none';
   document.getElementById('dashboard').style.display='block';
-  document.querySelector('#dashboard .dash-name').textContent=session.name;
-  document.querySelector('#dashboard .dash-email').textContent=session.email;
+  
+  // Cambiar la barra de navegación
+  document.getElementById('nav-btn-guest').style.display='none';
+  document.getElementById('nav-user-menu').style.display='flex';
+  document.getElementById('nav-name').textContent=session.name;
+  document.getElementById('nav-email').textContent=session.email;
   var initials=session.name.split(' ').map(function(w){return w[0];}).slice(0,2).join('').toUpperCase();
-  document.getElementById('dash-avatar-initials').textContent=initials;
+  document.getElementById('nav-avatar').textContent=initials;
+  
   renderHistory();
   window.scrollTo(0,0);
 }
 
 function logout() {
   localStorage.removeItem('mp_session');
+  
+  // Cambiar la barra de navegación
+  document.getElementById('nav-btn-guest').style.display='block';
+  document.getElementById('nav-user-menu').style.display='none';
+  
+  // Mostrar/Ocultar contenido
   document.getElementById('main-content').style.display='block';
   document.getElementById('dashboard').style.display='none';
 }
 
-// --- NUEVA LÓGICA DE IA ---
+// --- LÓGICA DE IA ---
 async function handleGenerateAI(e) {
   e.preventDefault();
   var topic = document.getElementById('ai-topic').value.trim();
