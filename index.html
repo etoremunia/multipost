@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="MultiPost - Genera textos virales para TikTok, YouTube e Instagram con Inteligencia Artificial en 10 segundos.">
 <meta name="robots" content="index, follow">
-<meta property="og:title" content="MultiPost - Una idea. Tres plataformas. Textos perfectos.">
-<meta property="og:description" content="Escribe de qué va tu video y MultiPost genera los ganchos, captions y descripciones optimizados para cada red social.">
-<meta property="og:type" content="website">
 <title>MultiPost - Genera textos para TikTok, YouTube e Instagram con IA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,12 +36,10 @@
   .cta-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; }
   .btn-primary { background: var(--accent); color: var(--white); border: none; padding: .9rem 2.2rem; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 500; cursor: pointer; transition: opacity .2s, transform .15s; display: inline-block; }
   .btn-primary:hover { opacity: .85; transform: scale(.98); }
-  .btn-secondary { background: transparent; color: var(--white); border: 1px solid #2a2a2a; padding: .9rem 2.2rem; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 1rem; cursor: pointer; transition: background .2s, border-color .2s; display: inline-block; }
-  .btn-secondary:hover { background: #111; border-color: #555; }
   .platforms-strip { display: flex; justify-content: center; align-items: center; margin-bottom: 3.5rem; flex-wrap: wrap; gap: .5rem; }
   .plat-pill { display: flex; align-items: center; gap: 10px; padding: .7rem 1.4rem; border: 1px solid #222; border-radius: 100px; font-weight: 500; font-size: .95rem; }
   .plat-icon { width: 20px; height: 20px; }
-  .mockup-wrap { max-width: 680px; margin: 0 auto 5rem; background: #111; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; }
+  .mockup-wrap { max-width: 680px; margin: 0 auto 2rem; background: #111; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; }
   .mockup-bar { background: #0d0d0d; padding: .9rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
   .dot { width: 10px; height: 10px; border-radius: 50%; }
   .dot-r{background:#ff5f57}.dot-y{background:#febc2e}.dot-g{background:#28c840}
@@ -56,44 +51,8 @@
   .mockup-res-box::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent); transform: translateX(-100%); animation: shine 2s infinite; }
   @keyframes shine { 100% { transform: translateX(100%); } }
   .mockup-label { font-size: .7rem; color: #555; text-align: center; margin-top: .4rem; }
-  section { padding: 5rem 5%; max-width: 1100px; margin: 0 auto; }
-  .section-label { font-size: .72rem; color: var(--accent); letter-spacing: .15em; text-transform: uppercase; margin-bottom: .8rem; }
-  .section-title { font-family: 'Syne', sans-serif; font-size: clamp(1.7rem, 4vw, 2.8rem); font-weight: 800; letter-spacing: -1px; margin-bottom: 3rem; max-width: 480px; }
-  .section-title.center { margin-left: auto; margin-right: auto; text-align: center; max-width: 100%; }
-  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.5rem; }
-  .stat-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px; padding: 1.8rem; text-align: center; }
-  .stat-num { font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 800; color: var(--accent); }
-  .stat-label { font-size: .85rem; color: var(--text-muted); margin-top: .3rem; }
-  .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.5rem; }
-  .step-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px; padding: 1.8rem; transition: border-color .2s; }
-  .step-card:hover { border-color: #333; }
-  .step-num { font-family: 'Syne', sans-serif; font-size: 2.8rem; font-weight: 800; color: #1e1e1e; line-height: 1; margin-bottom: .8rem; }
-  .step-title { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: .5rem; }
-  .step-desc { color: var(--text-muted); font-size: .88rem; line-height: 1.7; font-weight: 300; }
-  .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 1.5rem; }
-  .feat-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px; padding: 1.8rem; transition: border-color .2s; }
-  .feat-card:hover { border-color: #333; }
-  .feat-icon { width: 42px; height: 42px; background: #1e1e1e; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; margin-bottom: .9rem; }
-  .feat-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: .45rem; }
-  .feat-desc { color: var(--text-muted); font-size: .87rem; line-height: 1.7; font-weight: 300; }
-  .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-  .testi-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px; padding: 1.8rem; transition: border-color .2s; }
-  .testi-card:hover { border-color: #333; }
-  .stars { color: #ffbe00; font-size: .85rem; margin-bottom: .9rem; letter-spacing: 2px; }
-  .testi-text { font-size: .92rem; line-height: 1.75; color: #ccc; margin-bottom: 1.2rem; font-weight: 300; font-style: italic; }
-  .testi-author { display: flex; align-items: center; gap: 10px; }
-  .avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; flex-shrink: 0; }
-  .av-a{background:#2d1a4a;color:#b48fe0} .av-b{background:#1a2e1a;color:#72c472} .av-d{background:#1a1e2e;color:#7290e0}
-  .author-name { font-size: .88rem; font-weight: 500; }
-  .author-handle { font-size: .78rem; color: var(--text-muted); }
-  .faq-list { max-width: 720px; margin: 0 auto; }
-  .faq-item { border-bottom: 1px solid var(--border); padding: 1.4rem 0; cursor: pointer; }
-  .faq-q { display: flex; justify-content: space-between; align-items: center; font-weight: 500; font-size: .97rem; gap: 1rem; }
-  .faq-arrow { color: var(--text-muted); font-size: 1.3rem; transition: transform .25s; flex-shrink: 0; line-height: 1; }
-  .faq-a { font-size: .88rem; color: var(--text-muted); line-height: 1.75; max-height: 0; overflow: hidden; transition: max-height .3s ease, padding-top .3s; font-weight: 300; }
-  .faq-item.open .faq-a { max-height: 200px; padding-top: .9rem; }
-  .faq-item.open .faq-arrow { transform: rotate(45deg); }
-  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+  
+  .pricing-grid-mockup { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 5rem; }
   .price-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px; padding: 2rem; position: relative; transition: border-color .2s; }
   .price-card:hover { border-color: #333; }
   .price-card.featured { border-color: var(--accent); }
@@ -109,23 +68,7 @@
   .btn-plan:hover { background: #1a1a1a; }
   .btn-plan.featured-btn { background: var(--accent); border-color: var(--accent); }
   .btn-plan.featured-btn:hover { opacity: .85; }
-  .cta-banner { background: var(--card-bg); border: 1px solid var(--border); border-radius: 24px; padding: 4rem 2rem; text-align: center; max-width: 1100px; margin: 0 auto 5rem; }
-  .cta-banner h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800; letter-spacing: -1px; margin-bottom: 1rem; }
-  .cta-banner p { color: var(--text-muted); margin-bottom: 2rem; font-weight: 300; }
-  .legal-section { display: none; padding: 4rem 5%; max-width: 800px; margin: 0 auto; }
-  .legal-section.active { display: block; }
-  .legal-section h2 { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; margin-bottom: 2rem; }
-  .legal-section h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 .6rem; }
-  .legal-section p, .legal-section li { color: var(--text-muted); font-size: .9rem; line-height: 1.8; margin-bottom: .8rem; font-weight: 300; }
-  .legal-section ul { padding-left: 1.5rem; }
-  .back-btn { background: transparent; border: 1px solid var(--border); color: var(--text-muted); padding: .5rem 1.2rem; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: .85rem; cursor: pointer; margin-bottom: 2rem; transition: border-color .2s; }
-  .back-btn:hover { border-color: #555; }
-  #cookie-banner { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 16px; padding: 1.2rem 1.6rem; display: flex; align-items: center; gap: 1.5rem; max-width: 680px; width: 90%; z-index: 999; flex-wrap: wrap; }
-  #cookie-banner p { font-size: .83rem; color: var(--text-muted); line-height: 1.6; flex: 1; min-width: 200px; font-weight: 300; }
-  #cookie-banner p a { color: var(--accent); }
-  .cookie-btns { display: flex; gap: .6rem; flex-shrink: 0; }
-  .btn-cookie-accept { background: var(--accent); color: var(--white); border: none; padding: .5rem 1.2rem; border-radius: 100px; font-size: .82rem; cursor: pointer; font-family: 'DM Sans', sans-serif; }
-  .btn-cookie-reject { background: transparent; color: var(--text-muted); border: 1px solid #333; padding: .5rem 1.2rem; border-radius: 100px; font-size: .82rem; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+
   footer { border-top: 1px solid var(--border); padding: 3rem 5% 2rem; }
   .footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 2rem; max-width: 1100px; margin: 0 auto 2.5rem; }
   .footer-brand p { color: var(--text-muted); font-size: .85rem; margin-top: .8rem; line-height: 1.7; font-weight: 300; max-width: 240px; }
@@ -135,10 +78,16 @@
   .footer-col ul a { color: var(--text-muted); font-size: .85rem; transition: color .2s; }
   .footer-col ul a:hover { color: var(--white); }
   .footer-bottom { border-top: 1px solid var(--border); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; color: var(--text-muted); font-size: .8rem; flex-wrap: wrap; gap: .5rem; }
-  @media (max-width: 768px) { nav ul { display: none; } h1 { letter-spacing: -1px; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } #cookie-banner { bottom: 0; border-radius: 16px 16px 0 0; width: 100%; } }
-  @media (max-width: 480px) { .cta-group { flex-direction: column; align-items: center; } .footer-grid { grid-template-columns: 1fr; } .mockup-results { grid-template-columns: 1fr; } }
+  @media (max-width: 768px) { nav ul { display: none; } h1 { letter-spacing: -1px; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+  @media (max-width: 480px) { .cta-group { flex-direction: column; align-items: center; } .footer-grid { grid-template-columns: 1fr; } .pricing-grid-mockup { grid-template-columns: 1fr; } .mockup-results { grid-template-columns: 1fr; } }
   
-  /* MODALS & OVERLAYS */
+  #cookie-banner { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 16px; padding: 1.2rem 1.6rem; display: flex; align-items: center; gap: 1.5rem; max-width: 680px; width: 90%; z-index: 999; flex-wrap: wrap; }
+  #cookie-banner p { font-size: .83rem; color: var(--text-muted); line-height: 1.6; flex: 1; min-width: 200px; font-weight: 300; }
+  .cookie-btns { display: flex; gap: .6rem; flex-shrink: 0; }
+  .btn-cookie-accept { background: var(--accent); color: var(--white); border: none; padding: .5rem 1.2rem; border-radius: 100px; font-size: .82rem; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+  .btn-cookie-reject { background: transparent; color: var(--text-muted); border: 1px solid #333; padding: .5rem 1.2rem; border-radius: 100px; font-size: .82rem; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+
+  /* MODALS */
   #modal-overlay, #profile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(6px); z-index: 1000; align-items: center; justify-content: center; }
   #modal-overlay.active, #profile-overlay.active { display: flex; }
   .modal-box, .profile-box { background: #111; border: 1px solid #2a2a2a; border-radius: 20px; padding: 2.2rem; width: 90%; max-width: 420px; position: relative; }
@@ -170,22 +119,13 @@
   .dash-card h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 1.2rem; }
   .dash-form-field { margin-bottom: .9rem; }
   .dash-form-field label { display: block; font-size: .75rem; color: #888; margin-bottom: .3rem; }
-  .dash-form-field input[type=text], .dash-form-field textarea, .dash-form-field select { width: 100%; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; color: #f5f3ee; padding: .6rem .9rem; font-family: 'DM Sans', sans-serif; font-size: .88rem; outline: none; transition: border-color .2s; resize: vertical; }
+  .dash-form-field input[type=text], .dash-form-field select { width: 100%; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; color: #f5f3ee; padding: .6rem .9rem; font-family: 'DM Sans', sans-serif; font-size: .88rem; outline: none; transition: border-color .2s; }
   .dash-form-field input:focus, .dash-form-field select:focus { border-color: #ff3c3c; }
   .btn-dash-publish { width: 100%; background: #ff3c3c; border: none; color: #f5f3ee; padding: .8rem; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .92rem; font-weight: 500; cursor: pointer; transition: opacity .2s; }
   .btn-dash-publish:hover { opacity: .85; }
   .btn-dash-publish:disabled { opacity: .5; cursor: not-allowed; }
   .dash-error { color: #ff6b6b; font-size: .8rem; margin-bottom: .6rem; min-height: 1em; }
   
-  /* PERFIL MODAL */
-  .dash-profile-header { display: flex; align-items: center; gap: 1.2rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #1e1e1e; }
-  .dash-profile-avatar { width: 70px; height: 70px; border-radius: 50%; background: #2d1a4a; color: #b48fe0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.5rem; background-size: cover; background-position: center; flex-shrink: 0; cursor: pointer; position: relative; overflow: hidden; }
-  .dash-profile-avatar:hover::after { content: '📷'; position: absolute; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; font-size: 24px; }
-  .dash-profile-plan { font-size: .78rem; padding: .2rem .6rem; border-radius: 100px; background: rgba(255,60,60,0.1); color: var(--accent); border: 1px solid rgba(255,60,60,0.3); display: inline-block; margin-top: .3rem; }
-  .btn-dash-secondary { width: 100%; background: transparent; border: 1px solid #2a2a2a; color: #f5f3ee; padding: .8rem; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .92rem; font-weight: 500; cursor: pointer; transition: all .2s; margin-top: .5rem; }
-  .btn-dash-secondary:hover { background: #1a1a1a; border-color: #555; }
-  .dash-success { color: #4cff72; font-size: .85rem; margin-top: .5rem; }
-
   .ai-results-grid { display: none; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 1.5rem; }
   @media(min-width: 768px) { .ai-results-grid { grid-template-columns: 1fr 1fr 1fr; } }
   .ai-card { background: #111; border: 1px solid #1e1e1e; border-radius: 18px; padding: 1.5rem; display: flex; flex-direction: column; }
@@ -199,6 +139,15 @@
   .history-item { background: #1a1a1a; border-radius: 10px; padding: .9rem 1rem; margin-bottom: .6rem; }
   .history-file { font-size: .88rem; font-weight: 500; margin-bottom: .2rem; }
   .history-meta { font-size: .75rem; color: #888; }
+
+  /* PERFIL MODAL */
+  .dash-profile-header { display: flex; align-items: center; gap: 1.2rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #1e1e1e; }
+  .dash-profile-avatar { width: 70px; height: 70px; border-radius: 50%; background: #2d1a4a; color: #b48fe0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.5rem; background-size: cover; background-position: center; flex-shrink: 0; cursor: pointer; position: relative; overflow: hidden; }
+  .dash-profile-avatar:hover::after { content: '📷'; position: absolute; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; font-size: 24px; }
+  .dash-profile-plan { font-size: .78rem; padding: .2rem .6rem; border-radius: 100px; background: rgba(255,60,60,0.1); color: var(--accent); border: 1px solid rgba(255,60,60,0.3); display: inline-block; margin-top: .3rem; }
+  .btn-dash-secondary { width: 100%; background: transparent; border: 1px solid #2a2a2a; color: #f5f3ee; padding: .8rem; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .92rem; font-weight: 500; cursor: pointer; transition: all .2s; margin-top: .5rem; }
+  .btn-dash-secondary:hover { background: #1a1a1a; border-color: #555; }
+  .dash-success { color: #4cff72; font-size: .85rem; margin-top: .5rem; }
 </style>
 </head>
 <body>
@@ -208,7 +157,6 @@
   <ul>
     <li><a href="#" onclick="goToSection(event, 'como-funciona')">Cómo funciona</a></li>
     <li><a href="#" onclick="goToSection(event, 'caracteristicas')">Características</a></li>
-    <li><a href="#" onclick="goToSection(event, 'precios')">Precios</a></li>
     <li><a href="#" onclick="goToSection(event, 'faq')">FAQ</a></li>
   </ul>
   <button class="btn-nav" id="nav-btn-guest" onclick="openModal()">Iniciar sesión</button>
@@ -222,7 +170,6 @@
 </nav>
 
 <div id="main-content">
-  <!-- Landing Page sin cambios estructurales, solo precios actualizados -->
   <div class="hero">
     <div class="blob"></div>
     <div class="badge"><div class="badge-dot"></div> Impulsado por Inteligencia Artificial</div>
@@ -230,13 +177,13 @@
     <p class="hero-sub">Escribe de qué va tu video y nuestra IA genera los ganchos, captions y descripciones optimizadas para TikTok, Instagram y YouTube en segundos.</p>
     <div class="cta-group">
       <a href="#" class="btn-primary" onclick="openModal()">Empezar ahora</a>
-      <a href="#como-funciona" class="btn-secondary">Ver cómo funciona</a>
     </div>
     <div class="platforms-strip">
       <div class="plat-pill"><svg class="plat-icon" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.21a8.25 8.25 0 004.83 1.56V7.32a4.85 4.85 0 01-1.06-.63z"/></svg>TikTok</div>
       <div class="plat-pill"><svg class="plat-icon" viewBox="0 0 24 24"><rect width="24" height="24" fill="#ff0000" rx="5"/><polygon points="9.5,7 9.5,17 17,12" fill="white"/></svg>YouTube</div>
       <div class="plat-pill"><svg class="plat-icon" viewBox="0 0 24 24"><defs><linearGradient id="ig" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f09433"/><stop offset="25%" stop-color="#e6683c"/><stop offset="50%" stop-color="#dc2743"/><stop offset="75%" stop-color="#cc2366"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs><rect width="24" height="24" rx="6" fill="url(#ig)"/><rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="white" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="none" stroke="white" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="white"/></svg>Instagram</div>
     </div>
+    
     <div class="mockup-wrap">
       <div class="mockup-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
       <div class="mockup-body">
@@ -249,61 +196,8 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <section style="padding-top:0">
-    <div class="stats-row">
-      <div class="stat-card"><div class="stat-num">+5k</div><div class="stat-label">Creadores activos</div></div>
-      <div class="stat-card"><div class="stat-num">150k+</div><div class="stat-label">Posts generados</div></div>
-      <div class="stat-card"><div class="stat-num">10s</div><div class="stat-label">Tiempo de generación</div></div>
-      <div class="stat-card"><div class="stat-num">4.9★</div><div class="stat-label">Valoración media</div></div>
-    </div>
-  </section>
-
-  <section id="como-funciona">
-    <div class="section-label">Cómo funciona</div>
-    <h2 class="section-title">Simple, rápido<br>y sin complicaciones</h2>
-    <div class="steps-grid">
-      <div class="step-card"><div class="step-num">01</div><div class="step-title">Escribe tu idea</div><div class="step-desc">Dinos de qué trata tu video. No hace falta que sea perfecto, una frase es suficiente para que la IA empiece a trabajar.</div></div>
-      <div class="step-card"><div class="step-num">02</div><div class="step-title">Elige el tono</div><div class="step-desc">Selecciona cómo quieres que suene tu contenido: divertido, educativo, polémico, serio... La IA adaptará el vocabulario a tu estilo.</div></div>
-      <div class="step-card"><div class="step-num">03</div><div class="step-title">La IA hace la magia</div><div class="step-desc">En 10 segundos, MultiPost crea el gancho perfecto para TikTok, el caption estético para Instagram y el título SEO para YouTube.</div></div>
-      <div class="step-card"><div class="step-num">04</div><div class="step-title">Copia y publica</div><div class="step-desc">Copia los textos con un clic y pégalos en tus redes sociales cuando subas el video. Ahorra 30 minutos en cada publicación.</div></div>
-    </div>
-  </section>
-
-  <section id="caracteristicas">
-    <div class="section-label">Características</div>
-    <h2 class="section-title">Todo lo que<br>un creador necesita</h2>
-    <div class="feat-grid">
-      <div class="feat-card"><div class="feat-icon">⚡</div><div class="feat-title">Generación simultánea</div><div class="feat-desc">Un solo clic te da los textos adaptados a la psicología y algoritmo de las tres plataformas al mismo tiempo.</div></div>
-      <div class="feat-card"><div class="feat-icon">🪝</div><div class="feat-title">Ganchos virales (Hooks)</div><div class="feat-desc">La IA está entrenada para crear los primeros 3 segundos de texto que evitan que el usuario haga scroll en TikTok o Reels.</div></div>
-      <div class="feat-card"><div class="feat-icon">✏️</div><div class="feat-title">Copywriting experto</div><div class="feat-desc">No solo genera texto, crea estructura: emojis, saltos de línea, llamados a la acción y hashtags de nicho.</div></div>
-      <div class="feat-card"><div class="feat-icon">🔍</div><div class="feat-title">SEO para YouTube</div><div class="feat-desc">Títulos diseñados para rankear en el buscador de YouTube y descripciones con las palabras clave exactas.</div></div>
-      <div class="feat-card"><div class="feat-icon">🎨</div><div class="feat-title">Tono personalizable</div><div class="feat-desc">Desde un tono corporativo y serio hasta uno lleno de slang de Gen Z. Tú controlas la personalidad de tu marca.</div></div>
-      <div class="feat-card"><div class="feat-icon">📋</div><div class="feat-title">Copiar al portapapeles</div><div class="feat-desc">Botones de copiar en un clic integrados en la interfaz para que solo tengas que pegar el texto en tu móvil o PC.</div></div>
-    </div>
-  </section>
-
-  <section id="faq" style="text-align:center">
-    <div class="section-label">FAQ</div>
-    <h2 class="section-title center">Preguntas frecuentes</h2>
-    <div class="faq-list" style="text-align:left">
-      <div class="faq-item"><div class="faq-q">¿MultiPost sube el vídeo por mí a las redes sociales? <span class="faq-arrow">+</span></div><div class="faq-a">No. MultiPost genera los textos (ganchos, títulos, descripciones) para que los copies y pegues tú al subir tu video. Esto hace que la herramienta sea 100% fiable.</div></div>
-      <div class="faq-item"><div class="faq-q">¿Qué información necesito darle a la IA? <span class="faq-arrow">+</span></div><div class="faq-a">Solo necesitas escribir de qué trata tu video y elegir el tono. La IA hace el resto.</div></div>
-      <div class="faq-item"><div class="faq-q">¿Puedo editar los textos que genera? <span class="faq-arrow">+</span></div><div class="faq-a">¡Por supuesto! Los textos se generan dentro de cajas que puedes modificar libreto antes de copiarlos.</div></div>
-      <div class="faq-item"><div class="faq-q">¿Puedo cancelar mi suscripción? <span class="faq-arrow">+</span></div><div class="faq-a">Sí, puedes cancelar cuando quieras desde tu panel de Stripe, sin penalizaciones.</div></div>
-    </div>
-  </section>
-
-  <section id="precios" style="text-align:center">
-    <div class="section-label">Precios</div>
-    <h2 class="section-title center">Planes para cada creador</h2>
-    <div class="pricing-grid">
-      <div class="price-card">
-        <div class="plan-name">Gratis</div><div class="plan-price">€0 <span>/ mes</span></div><div class="plan-desc">Para probar sin compromiso</div>
-        <ul class="plan-features"><li>3 Multipost al mes</li><li>3 plataformas</li><li>Tonos básicos</li></ul>
-        <button class="btn-plan" onclick="openModal()">Empezar gratis</button>
-      </div>
+    <div class="pricing-grid-mockup">
       <div class="price-card featured">
         <div class="featured-badge">Más popular</div>
         <div class="plan-name">Pro</div><div class="plan-price">7,99€ <span>/ mes</span></div><div class="plan-desc">Para creadores activos</div>
@@ -316,21 +210,11 @@
         <button class="btn-plan" onclick="window.open('https://buy.stripe.com/00w4gzg00f87bpW3Rm3gk00','_blank')">Contactar ventas</button>
       </div>
     </div>
-  </section>
-
-  <div style="padding:0 5%">
-    <div class="cta-banner">
-      <h2>¿Listo para dejar de<br>pensar qué escribir?</h2>
-      <p>Únete a miles de creadores que usan IA para multiplicar su alcance en redes sociales.</p>
-      <a href="#" class="btn-primary" style="font-size:1rem;padding:.9rem 2.5rem" onclick="openModal()">Empezar gratis — sin tarjeta</a>
-    </div>
   </div>
 
   <footer>
     <div class="footer-grid">
       <div class="footer-brand"><div class="logo">Multi<span>Post</span></div><p>La forma más rápida de generar textos virales para TikTok, YouTube e Instagram con Inteligencia Artificial.</p></div>
-      <div class="footer-col"><h4>Producto</h4><ul><li><a href="#" onclick="goToSection(event, 'como-funciona')">Cómo funciona</a></li><li><a href="#" onclick="goToSection(event, 'precios')">Precios</a></li><li><a href="#" onclick="goToSection(event, 'faq')">FAQ</a></li></ul></div>
-      <div class="footer-col"><h4>Empresa</h4><ul><li><a href="#" onclick="showLegal('about');return false">Sobre nosotros</a></li><li><a href="#" onclick="showLegal('contacto');return false">Contacto</a></li></ul></div>
       <div class="footer-col"><h4>Legal</h4><ul><li><a href="#" onclick="showLegal('privacidad');return false">Privacidad</a></li><li><a href="#" onclick="showLegal('terminos');return false">Términos</a></li></ul></div>
     </div>
     <div class="footer-bottom">
@@ -340,7 +224,6 @@
   </footer>
 </div>
 
-<!-- LEGALES CORTADOS POR ESPACIO -->
 <div class="legal-section" id="page-privacidad"><button class="back-btn" onclick="hideLegal()">← Volver</button><h2>Política de Privacidad</h2><p>Recogemos tu correo de Google para prestar el servicio de IA y gestionar tu cuenta.</p></div>
 <div class="legal-section" id="page-terminos"><button class="back-btn" onclick="hideLegal()">← Volver</button><h2>Términos y Condiciones</h2><p>MultiPost genera textos con IA. El usuario es responsable del contenido que publica en sus redes.</p></div>
 <div class="legal-section" id="page-about"><button class="back-btn" onclick="hideLegal()">← Volver</button><h2>Sobre nosotros</h2><p>MultiPost nació en Bilbao. Asistente de copywriting definitivo para creadores.</p></div>
@@ -354,12 +237,11 @@
   </div>
 </div>
 
-<!-- MODAL LOGIN GOOGLE -->
 <div id="modal-overlay">
   <div class="modal-box" style="max-width: 400px; text-align: center;">
     <button class="modal-close" onclick="closeModal()">✕</button>
     <div class="modal-logo" style="margin-bottom: 2rem;">Multi<span>Post</span></div>
-    <p style="color: #888; margin-bottom: 1.5rem; font-size: .9rem;">Inicia sesión de forma segura con tu cuenta de Google. No almacenamos contraseñas.</p>
+    <p style="color: #888; margin-bottom: 1.5rem; font-size: .9rem;">Inicia sesión con Google. Sin contraseñas inventadas.</p>
     <button class="btn-google" onclick="loginWithGoogle()">
       <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12V4h2.5c2.5 0 5 2.5 5 6v12.5c0 2.5-2.5 5-5 5H7c-2.5 0-5-2.5-5-5V10c0-3.5 2.5-6 5-6h5.56c.13-.72.2-1.47.2-2.25z" fill="#4285F4"/><path d="M5.84 14.09c-.22-.66-.35-1.21-.35-1.86 0-1.68 1.02-3.09 2.47-3.09h5.5v3.95h-5.5c0 1.68-1.02 3.09-2.47 3.09z" fill="#34A853"/><path d="M12 8.5v5h2.5c2.5 0 5 2.5 5 6v6c0 2.5-2.5 5-5 5H9.5c-2.5 0-5-2.5-5-5v-6c0-2.5 2.5-5 5-5H12z" fill="#FBBC05"/></svg>
       Continuar con Google
@@ -368,12 +250,10 @@
   </div>
 </div>
 
-<!-- MODAL PERFIL -->
 <div id="profile-overlay">
   <div class="profile-box">
     <button class="profile-close" onclick="closeProfile()">✕</button>
     <h3 style="font-family:'Syne',sans-serif; font-size:1.2rem; margin-bottom:1.5rem;">⚙️ Mi Perfil</h3>
-    
     <div class="dash-profile-header">
       <div class="dash-profile-avatar" id="settings-avatar" onclick="document.getElementById('avatar-input').click()">MP</div>
       <input type="file" id="avatar-input" accept="image/png, image/jpeg, image/webp" style="display:none;" onchange="handleAvatarUpload(event)">
@@ -383,7 +263,6 @@
         <div class="dash-profile-plan" id="settings-plan-badge">Plan: Gratis</div>
       </div>
     </div>
-    
     <form onsubmit="handleSaveProfile(event)">
       <div class="dash-form-field">
         <label>NOMBRE DE USUARIO</label>
@@ -401,7 +280,6 @@
       <h2>Generador de Contenido</h2>
       <p>Escribe tu idea y obtén los textos perfectos para cada red social.</p>
     </div>
-    
     <div class="dash-grid">
       <div class="dash-card">
         <h3>✨ Nueva generación</h3>
@@ -440,10 +318,9 @@
 </div>
 
 <script>
-// CONFIG SUPABASE PARA LOGIN GOOGLE
-const SUPABASE_URL = 'https://xwbreyqsgujjxqwjtrbi.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFub255bW91cyIsImlhdCI6MTcxOTg3NzQzNCwiZXhwIjoxMDM1NDQ3NDM0fQ.Q8r0d8YZy0HFsU4U_vTIPFr7b_MpIhXy3KV-3H2dY'; // Anon Key pública
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+var SUPABASE_URL = 'https://xwbreyqsgujjxqwjtrbi.supabase.co';
+var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI6ImFyBlZiIsInJlZiIsInR5cCI6ImF1uY2lkIjoic3VwYmFzImlhdCI6MTcxOTg3NzQzNCwiZXhwIjoxMDM1NDQ3NDM0fQ.Q8r0d8YZy0HFsU4U_vTIPFr7b_MpIhXy3KV-3H2dY';
+var supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 function openModal() { document.getElementById('modal-overlay').classList.add('active'); document.body.style.overflow = 'hidden'; }
 function closeModal() { document.getElementById('modal-overlay').classList.remove('active'); document.body.style.overflow = ''; document.getElementById('login-error').textContent = ''; }
@@ -456,16 +333,16 @@ document.getElementById('profile-overlay').addEventListener('click', function(e)
 function loginWithGoogle() {
   document.getElementById('login-error').textContent = '';
   supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: 'https://multipost.cc' } })
-  .catch(err => { document.getElementById('login-error').textContent = 'Error al conectar con Google. Intenta de nuevo.'; });
+  .catch(err => { document.getElementById('login-error').textContent = 'Error al conectar con Google.'; });
 }
 
 function handleAvatarUpload(e) {
-  const file = e.target.files[0];
+  var file = e.target.files[0];
   if (!file) return;
   if (file.size > 2 * 1024 * 1024) { alert("La imagen es muy grande. Máximo 2MB."); return; }
-  const reader = new FileReader();
+  var reader = new FileReader();
   reader.onload = function(ev) {
-    var session = JSON.parse(localStorage.getItem('mp_session')||'null');
+    var session = JSON.parse(localStorage.getItem('mp_session') || null;
     if(session) {
       session.avatar = ev.target.result;
       localStorage.setItem('mp_session', JSON.stringify(session));
@@ -479,14 +356,14 @@ function handleSaveProfile(e) {
   e.preventDefault();
   var name = document.getElementById('settings-name').value.trim();
   if(!name) return;
-  var session = JSON.parse(localStorage.getItem('mp_session')||'null');
+  var session = JSON.parse(localStorage.getItem('mp_session') || null);
   if(session) {
     session.name = name;
     localStorage.setItem('mp_session', JSON.stringify(session));
     document.getElementById('settings-name-display').textContent = session.name;
     document.getElementById('nav-name').textContent = session.name;
     document.getElementById('profile-success').style.display = 'block';
-    setTimeout(() => document.getElementById('profile-success').style.display = 'none', 3000);
+    setTimeout(function() { document.getElementById('profile-success').style.display = 'none'; }, 3000);
   }
 }
 
@@ -505,23 +382,23 @@ function updateAvatars(session) {
 
 function goToSection(e, id) {
   e.preventDefault();
-  document.getElementById('dashboard').style.display='none';
-  document.getElementById('main-content').style.display='block';
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('main-content').style.display = 'block';
   setTimeout(function() { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }, 50);
 }
 
 function showDashboard() {
-  var session=JSON.parse(localStorage.getItem('mp_session')||'null');
+  var session = JSON.parse(localStorage.getItem('mp_session') || null;
   if (!session) return;
-  document.getElementById('main-content').style.display='none';
-  document.getElementById('dashboard').style.display='block';
-  document.getElementById('nav-btn-guest').style.display='none';
-  document.getElementById('nav-user-menu').style.display='flex';
-  document.getElementById('nav-name').textContent=session.name;
-  document.getElementById('nav-email').textContent=session.email;
-  document.getElementById('settings-name-display').textContent=session.name;
-  document.getElementById('settings-email-display').textContent=session.email;
-  document.getElementById('settings-name').value=session.name;
+  document.getElementById('main-content').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  document.getElementById('nav-btn-guest').style.display = 'none';
+  document.getElementById('nav-user-menu').style.display = 'flex';
+  document.getElementById('nav-name').textContent = session.name;
+  document.getElementById('nav-email').textContent = session.email;
+  document.getElementById('settings-name-display').textContent = session.name;
+  document.getElementById('settings-email-display').textContent = session.email;
+  document.getElementById('settings-name').value = session.name;
   var planText = session.plan ? session.plan.charAt(0).toUpperCase() + session.plan.slice(1) : 'Gratis';
   document.getElementById('settings-plan-badge').textContent = 'Plan: ' + planText;
   updateAvatars(session);
@@ -532,10 +409,14 @@ function showDashboard() {
 function logout() {
   localStorage.removeItem('mp_session');
   supabase.auth.signOut();
-  document.getElementById('nav-btn-guest').style.display='block';
-  document.getElementById('nav-user-menu').style.display='none';
-  document.getElementById('main-content').style.display='block';
-  document.getElementById('dashboard').style.display='none';
+  document.getElementById('nav-btn-guest').style.display = 'block';
+  document.getElementById('nav-user-menu').style.display = 'none';
+  function ocultarTodo() {
+    document.getElementById('main-content').style.display = 'block';
+    document.getElementById('dashboard').style.display = 'none';
+  }
+  ocultarTodo();
+  window.scrollTo(0,0);
 }
 
 async function handleGenerateAI(e) {
@@ -561,89 +442,86 @@ async function handleGenerateAI(e) {
     document.getElementById('res-yt-title').innerText = data.youtube.title;
     document.getElementById('res-yt-desc').innerText = data.youtube.description;
     document.getElementById('ai-results').style.display = 'grid';
-    var session = JSON.parse(localStorage.getItem('mp_session')||'null');
+    var session = JSON.parse(localStorage.getItem('mp_session') || null;
     if(session) {
-      var posts = JSON.parse(localStorage.getItem('mp_ai_posts_'+session.email)||'[]');
+      var posts = JSON.parse(localStorage.getItem('mp_ai_posts_'+session.email) || '[]');
       posts.unshift({ topic: topic, tone: tone, date: new Date().toLocaleString('es-ES') });
       if(posts.length > 20) posts.pop();
       localStorage.setItem('mp_ai_posts_'+session.email, JSON.stringify(posts));
       renderHistory();
     }
   } catch(err) { errEl.textContent = 'Error: ' + (err.message || 'Error de conexión'); }
-  finally { btn.disabled = false; btn.textContent = 'Generar textos con IA →'; }
+  function复原Btn() { btn.disabled = false; btn.textContent = 'Generar textos con IA →'; }
+  setTimeout(restaurarBtn, 10000);
 }
 
 function copyText(e, platform) {
   var text = '';
-  if(platform === 'tiktok') { text = `Gancho: ${document.getElementById('res-tiktok-hook').innerText}\n\nTexto en pantalla: ${document.getElementById('res-tiktok-screen').innerText}\n\nCaption:\n${document.getElementById('res-tiktok-caption').innerText}\n\n${document.getElementById('res-tiktok-tags').innerText}`; }
-  else if(platform === 'instagram') { text = `${document.getElementById('res-ig-caption').innerText}\n\n${document.getElementById('res-ig-tags').innerText}`; }
-  else if(platform === 'youtube') { text = `Título: ${document.getElementById('res-yt-title').innerText}\n\nDescripción:\n${document.getElementById('res-yt-desc').innerText}`; }
+  if(platform === 'tiktok') { 
+    text = 'Gancho: ' + document.getElementById('res-tiktok-hook').innerText + '\n\nTexto en pantalla: ' + document.getElementById('res-tiktok-screen').innerText + '\n\nCaption:\n' + document.getElementById('res-tiktok-caption').innerText + '\n\n' + document.getElementById('res-tiktok-tags').innerText; 
+  } else if(platform === 'instagram') { 
+    text = document.getElementById('res-ig-caption').innerText + '\n\n' + document.getElementById('res-ig-tags').innerText; 
+  } else if(platform === 'youtube') { 
+    text = 'Título: ' + document.getElementById('res-yt-title').innerText + '\n\nDescripción:\n' + document.getElementById('res-yt-desc').innerText; 
+  }
   navigator.clipboard.writeText(text).then(function() {
-    var btn = e.target; btn.innerText = '✅ ¡Copiado!'; btn.classList.add('copied');
-    setTimeout(function() { btn.innerText = 'Copiar todo'; btn.classList.remove('copied'); }, 2000);
+    var btn = e.target; btn.innerText = '✅ ¡Copiado!'; btn.classList.add('copiado');
+    setTimeout(function() { btn.innerText = 'Copiar todo'; btn.classList.remove('copiado'); }, 2000);
   });
 }
 
 function renderHistory() {
-  var session = JSON.parse(localStorage.getItem('mp_session')||'null');
+  var session = JSON.parse(localStorage.getItem('mp_session') || null;
   if (!session) return;
-  var posts = JSON.parse(localStorage.getItem('mp_ai_posts_'+session.email)||'[]');
+  var posts = JSON.parse(localStorage.getItem('mp_ai_posts_'+session.email) || '[]';
   var el = document.getElementById('dash-history');
   if (!el) return;
-  if (posts.length===0) { el.innerHTML='<p style="color:#888;font-size:.85rem">Aún no has generado ningún texto.</p>'; return; }
-  el.innerHTML = posts.map(function(p){ return '<div class="history-item"><div class="history-file">💡 '+p.topic+'</div><div class="history-meta">Tono: '+p.tone+' &nbsp;·&nbsp; '+p.date+'</div></div>'; }).join('');
+  if (posts.length===0) { el.innerHTML = '<p style="color:#888;font-size:.85rem">Aún no has generado ningún texto.</p>'; return; }
+  el.innerHTML = posts.map(function(p){ 
+    return '<div class="history-item"><div class="history-file">💡 '+p.topic+'</div><div class="history-meta">Tono: '+p.tone+' &nbsp;·&nbsp; '+p.date+'</div></div>'; 
+  }).join('');
 }
 
-document.querySelectorAll('.faq-item').forEach(function(item){ item.querySelector('.faq-q').addEventListener('click',function(){ var isOpen=item.classList.contains('open'); document.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open');}); if (!isOpen) item.classList.add('open'); }); });
+function showLegal(page) {
+  document.getElementById('main-content').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'none';
+  document.querySelectorAll('.legal-section').forEach(function(s){ s.classList.remove('active'); });
+  var target = document.getElementById('page-'+page);
+  if (target) target.classList.add('active');
+  window.scrollTo(0,0);
+}
 
-function showLegal(page){ document.getElementById('main-content').style.display='none'; document.getElementById('dashboard').style.display='none'; document.querySelectorAll('.legal-section').forEach(function(s){s.classList.remove('active');}); var target=document.getElementById('page-'+page); if (target) target.classList.add('active'); window.scrollTo(0,0); }
-function hideLegal(){ document.querySelectorAll('.legal-section').forEach(function(s){s.classList.remove('active');}); var session=JSON.parse(localStorage.getItem('mp_session')||'null'); if (session){document.getElementById('dashboard').style.display='block';} else{document.getElementById('main-content').style.display='block';} window.scrollTo(0,0); }
+function hideLegal() {
+  document.querySelectorAll('.legal-section').forEach(function(s){ s.classList.remove('active'); });
+  var session = JSON.parse(localStorage.getItem('mp_session') || null);
+  if(session) { document.getElementById('dashboard').style.display = 'block'; } 
+  else { document.getElementById('main-content').style.display = 'block'; }
+  window.scrollTo(0,0);
+}
 
-function closeCookie(){ document.getElementById('cookie-banner').style.display='none'; localStorage.setItem('mp_cookie','1'); }
-if (localStorage.getItem('mp_cookie')){ document.getElementById('cookie-banner').style.display='none'; }
+function closeCookie() { document.getElementById('cookie-banner').style.display = 'none'; localStorage.setItem('mp_cookie','1'); }
+if (localStorage.getItem('mp_cookie')) { document.getElementById('cookie-banner').display = 'none'; }
 
-// AUTENTICACIÓN AUTOMÁTICA AL CARGAR (Captura el token de Google)
-window.addEventListener('DOMContentLoaded', async function() {
-  // 1. Comprobar si venimos de un callback de Google OAuth
-  const hashParams = new URLSearchParams(window.location.hash.substring(1));
-  const accessToken = hashParams.get('access_token');
-  
-  if (accessToken) {
-    // Limpiar la URL
+window.addEventListener('DOMContentLoaded', function() {
+  var hashParams = new URLSearchParams(window.location.hash.substring(1));
+  var accessToken = hashParams.get('access_token');
+  if(accessToken) {
     window.history.replaceState({}, document.title, window.location.pathname);
-    
-    try {
-      const { data: { user } } = await supabase.auth.getUser(accessToken);
-      const sessionData = {
-        name: user.user_metadata?.full_name || user.email.split('@')[0],
+    supabase.auth.getUser(accessToken).then(function(data) {
+      var user = data.data.user;
+      var sessionData = {
+        name: user.user_metadata.full_name || user.email.split('@')[0],
         email: user.email,
-        plan: 'Gratis' // Por defecto
+        plan: 'Gratis'
       };
       localStorage.setItem('mp_session', JSON.stringify(sessionData));
       showDashboard();
-    } catch (err) {
-      console.error("Error getting user:", err);
-      supabase.auth.signOut();
-    }
+    }).catch(function() { supabase.auth.signOut(); });
     return;
   }
 
-  // 2. Comprobar si ya hay sesión guardada (Token persistente de Supabase)
-  const { data: { session: existingSession } } = await supabase.auth.getSession();
-  if (existingSession) {
-    const sessionData = {
-      name: existingSession.user.user_metadata?.full_name || existingSession.user.email.split('@')[0],
-      email: existingSession.user.email,
-      plan: 'Gratis'
-    };
-    localStorage.setItem('mp_session', JSON.stringify(sessionData));
-    showDashboard();
-    return;
-  }
-
-  // 3. Si no hay sesión ni token, revisar LocalStorage por compatibilidad antigua
-  var session = JSON.parse(localStorage.getItem('mp_session')||'null');
-  if (session) showDashboard();
+  var session = JSON.parse(localStorage.getItem('mp_session') || null;
+  if(session) showDashboard();
 });
 </script>
 </body>
