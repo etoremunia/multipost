@@ -390,17 +390,11 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// ═══════════════════════════════════════════
-//  SUPABASE REST API - Sin CDN, sin dependencias
-// ═══════════════════════════════════════════
 var SB_URL = 'https://xwbreyqsgujjxqwjtrbi.supabase.co';
 var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3YnJleXFzZ3Vqanhxd2p0cmJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5MTU2NTQsImV4cCI6MjA5MTQ5MTY1NH0.HWw89AP7p7DmEPuy_UUhdt5nQzrSlzT3x8pc7R5S2Zo';
 
 var currentUser = null;
 
-// ═══════════════════════════════════════════
-//  Init
-// ═══════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', function() {
   if (!localStorage.getItem('cookiesAccepted')) {
     document.getElementById('cookie-banner').classList.add('visible');
@@ -408,9 +402,6 @@ document.addEventListener('DOMContentLoaded', function() {
   handleOAuthRedirect();
 });
 
-// ═══════════════════════════════════════════
-//  Toast
-// ═══════════════════════════════════════════
 function showToast(msg, duration, isError) {
   duration = duration || 2500;
   var t = document.getElementById('toast');
@@ -419,17 +410,11 @@ function showToast(msg, duration, isError) {
   setTimeout(function() { t.className = 'toast'; }, duration);
 }
 
-// ═══════════════════════════════════════════
-//  Cookies
-// ═══════════════════════════════════════════
 function closeCookie() {
   localStorage.setItem('cookiesAccepted', 'true');
   document.getElementById('cookie-banner').classList.remove('visible');
 }
 
-// ═══════════════════════════════════════════
-//  FAQ
-// ═══════════════════════════════════════════
 function toggleFaq(el) {
   var item = el.parentElement;
   var wasOpen = item.classList.contains('open');
@@ -437,9 +422,6 @@ function toggleFaq(el) {
   if (!wasOpen) item.classList.add('open');
 }
 
-// ═══════════════════════════════════════════
-//  Modal
-// ═══════════════════════════════════════════
 function openModal() {
   document.getElementById('modal-overlay').classList.add('active');
   document.getElementById('login-error').textContent = '';
@@ -454,9 +436,6 @@ document.getElementById('modal-overlay').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
 
-// ═══════════════════════════════════════════
-//  Perfil
-// ═══════════════════════════════════════════
 function openProfile() {
   if (!currentUser) return;
   document.getElementById('settings-name').value = currentUser.name || '';
@@ -483,57 +462,37 @@ document.getElementById('profile-overlay').addEventListener('click', function(e)
   if (e.target === this) closeProfile();
 });
 
-// ═══════════════════════════════════════════
-//  AUTH - LOGIN CON GOOGLE (REST API directa)
-// ═══════════════════════════════════════════
 function loginWithGoogle() {
   var redirectUrl = window.location.origin + window.location.pathname;
   var authUrl = SB_URL + '/auth/v1/authorize'
     + '?provider=google'
     + '&redirect_to=' + encodeURIComponent(redirectUrl)
-    + '&client_id=' + SB_KEY;
+    + '&apikey=' + SB_KEY;
   window.location.href = authUrl;
 }
 
-// ═══════════════════════════════════════════
-//  AUTH - PROCESAR REDIRECT DE GOOGLE
-// ═══════════════════════════════════════════
 async function handleOAuthRedirect() {
-  // Leer tokens del hash de la URL (Supabase los pone ahí)
   var hash = window.location.hash;
   if (!hash || hash.indexOf('access_token') === -1) {
-    // No viene de redirect, verificar sesión existente
     await checkExistingSession();
     return;
   }
-
   var params = new URLSearchParams(hash.substring(1));
   var accessToken = params.get('access_token');
   var refreshToken = params.get('refresh_token');
-
   if (!accessToken) {
     await checkExistingSession();
     return;
   }
-
-  // Guardar tokens
   localStorage.setItem('sb_tokens', JSON.stringify({
     access_token: accessToken,
     refresh_token: refreshToken
   }));
-
-  // Limpiar el hash de la URL
   window.history.replaceState(null, '', window.location.pathname + window.location.search);
-
-  // Obtener datos del usuario
   await fetchUserAndLogin(accessToken);
 }
 
-// ═══════════════════════════════════════════
-//  AUTH - VERIFICAR SESIÓN EXISTENTE
-// ═══════════════════════════════════════════
 async function checkExistingSession() {
-  // Primero cargar datos rápidos de localStorage
   var saved = localStorage.getItem('user');
   if (saved) {
     try {
@@ -541,8 +500,6 @@ async function checkExistingSession() {
       updateUIForLoggedInUser();
     } catch(e) { localStorage.removeItem('user'); }
   }
-
-  // Luego verificar con Supabase
   var tokens = localStorage.getItem('sb_tokens');
   if (!tokens) {
     if (currentUser) {
@@ -552,7 +509,6 @@ async function checkExistingSession() {
     }
     return;
   }
-
   try {
     var tokensObj = JSON.parse(tokens);
     await fetchUserAndLogin(tokensObj.access_token);
@@ -564,9 +520,6 @@ async function checkExistingSession() {
   }
 }
 
-// ═══════════════════════════════════════════
-//  AUTH - OBTENER DATOS DEL USUARIO
-// ═══════════════════════════════════════════
 async function fetchUserAndLogin(accessToken) {
   try {
     var response = await fetch(SB_URL + '/auth/v1/user', {
@@ -576,19 +529,15 @@ async function fetchUserAndLogin(accessToken) {
         'apikey': SB_KEY
       }
     });
-
     if (!response.ok) {
-      // Token inválido o expirado
       localStorage.removeItem('sb_tokens');
       localStorage.removeItem('user');
       currentUser = null;
       updateUIForLoggedOutUser();
       return;
     }
-
     var user = await response.json();
     var meta = user.user_metadata || {};
-
     currentUser = {
       id: user.id,
       email: user.email,
@@ -596,7 +545,6 @@ async function fetchUserAndLogin(accessToken) {
       avatar: meta.avatar_url || meta.picture || null,
       plan: 'Gratis'
     };
-
     localStorage.setItem('user', JSON.stringify(currentUser));
     updateUIForLoggedInUser();
     showDashboard();
@@ -606,9 +554,6 @@ async function fetchUserAndLogin(accessToken) {
   }
 }
 
-// ═══════════════════════════════════════════
-//  AUTH - LOGOUT
-// ═══════════════════════════════════════════
 async function logout() {
   var tokens = localStorage.getItem('sb_tokens');
   if (tokens) {
@@ -631,9 +576,6 @@ async function logout() {
   showToast('Sesión cerrada');
 }
 
-// ═══════════════════════════════════════════
-//  UI updates
-// ═══════════════════════════════════════════
 function updateUIForLoggedInUser() {
   document.getElementById('nav-btn-guest').style.display = 'none';
   document.getElementById('nav-user-menu').style.display = 'flex';
@@ -659,16 +601,13 @@ function updateUIForLoggedOutUser() {
 function updateHeroCta() {
   var cta = document.getElementById('hero-cta');
   if (currentUser) {
-    cta.innerHTML = '<button class="btn-primary" onclick="showDashboard()">Ir al generador →</button>' +
-                    '<button class="btn-secondary-outline" onclick="showMainContent()">Ver landing</button>';
+    cta.innerHTML = '<button class="btn-primary" onclick="showDashboard()">Ir al generador →</button>'
+      + '<button class="btn-secondary-outline" onclick="showMainContent()">Ver landing</button>';
   } else {
     cta.innerHTML = '<button class="btn-primary" onclick="openModal()">Empezar ahora</button>';
   }
 }
 
-// ═══════════════════════════════════════════
-//  Navegación
-// ═══════════════════════════════════════════
 function showDashboard() {
   document.getElementById('main-content').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
@@ -715,9 +654,6 @@ function handlePlanClick(plan) {
   if (urls[plan]) window.location.href = urls[plan];
 }
 
-// ═══════════════════════════════════════════
-//  Perfil: guardar nombre
-// ═══════════════════════════════════════════
 function handleSaveProfile(event) {
   event.preventDefault();
   var newName = document.getElementById('settings-name').value.trim();
@@ -734,9 +670,6 @@ function handleSaveProfile(event) {
   }
 }
 
-// ═══════════════════════════════════════════
-//  Perfil: subir avatar
-// ═══════════════════════════════════════════
 function handleAvatarUpload(event) {
   var file = event.target.files[0];
   if (!file) return;
@@ -756,9 +689,6 @@ function handleAvatarUpload(event) {
   reader.readAsDataURL(file);
 }
 
-// ═══════════════════════════════════════════
-//  Generación IA (mock)
-// ═══════════════════════════════════════════
 function handleGenerateAI(event) {
   event.preventDefault();
   var topic = document.getElementById('ai-topic').value.trim();
@@ -790,22 +720,19 @@ function handleGenerateAI(event) {
   }, 2000);
 }
 
-// ═══════════════════════════════════════════
-//  Copiar texto
-// ═══════════════════════════════════════════
 function copyText(btn, platform) {
   var textToCopy = '';
   if (platform === 'tiktok') {
     textToCopy = 'GANCHO:\n' + document.getElementById('res-tiktok-hook').textContent +
-                 '\n\nTEXTO EN PANTALLA:\n' + document.getElementById('res-tiktok-screen').textContent +
-                 '\n\nCAPTION:\n' + document.getElementById('res-tiktok-caption').textContent +
-                 '\n\nHASHTAGS:\n' + document.getElementById('res-tiktok-tags').textContent;
+      '\n\nTEXTO EN PANTALLA:\n' + document.getElementById('res-tiktok-screen').textContent +
+      '\n\nCAPTION:\n' + document.getElementById('res-tiktok-caption').textContent +
+      '\n\nHASHTAGS:\n' + document.getElementById('res-tiktok-tags').textContent;
   } else if (platform === 'instagram') {
     textToCopy = document.getElementById('res-ig-caption').textContent + '\n\n' + document.getElementById('res-ig-tags').textContent;
   } else if (platform === 'youtube') {
     textToCopy = 'TÍTULO:\n' + document.getElementById('res-yt-title').textContent +
-                 '\n\nDESCRIPCIÓN:\n' + document.getElementById('res-yt-desc').textContent +
-                 '\n\nHASHTAGS:\n' + document.getElementById('res-yt-tags').textContent;
+      '\n\nDESCRIPCIÓN:\n' + document.getElementById('res-yt-desc').textContent +
+      '\n\nHASHTAGS:\n' + document.getElementById('res-yt-tags').textContent;
   }
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(textToCopy).then(function() { copySuccess(btn); }).catch(function() { copyFallback(textToCopy, btn); });
