@@ -9,7 +9,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root { --black: #0a0a0a; --white: #f5f3ee; --accent: #ff3c3c; --card-bg: #111111; --text-muted: #888; --border: #1e1e1e; }
@@ -17,10 +16,10 @@
   body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; overflow-x: hidden; min-height: 100vh; }
   a { color: inherit; text-decoration: none; }
   nav { display: flex; justify-content: space-between; align-items: center; padding: 1.4rem 5%; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(10,10,10,0.93); backdrop-filter: blur(14px); z-index: 100; }
-  .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; letter-spacing: -0.5px; }
+  .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; letter-spacing: -0.5px; cursor: pointer; }
   .logo span { color: var(--accent); }
   nav ul { display: flex; gap: 1.8rem; list-style: none; }
-  nav ul a { color: var(--text-muted); font-size: 0.88rem; transition: color .2s; cursor: pointer; }
+  nav ul a { color: var(--text-muted); font-size: .88rem; transition: color .2s; }
   nav ul a:hover { color: var(--white); }
   .btn-nav { background: var(--accent); color: var(--white); border: none; padding: .6rem 1.4rem; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer; font-size: .88rem; transition: opacity .2s; }
   .btn-nav:hover { opacity: .85; }
@@ -36,6 +35,8 @@
   .cta-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; }
   .btn-primary { background: var(--accent); color: var(--white); border: none; padding: .9rem 2.2rem; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 500; cursor: pointer; transition: opacity .2s, transform .15s; display: inline-block; }
   .btn-primary:hover { opacity: .85; transform: scale(.98); }
+  .btn-secondary-outline { background: transparent; color: var(--white); border: 1px solid #333; padding: .9rem 2.2rem; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all .2s; display: inline-block; }
+  .btn-secondary-outline:hover { background: #1a1a1a; border-color: #555; }
   .platforms-strip { display: flex; justify-content: center; align-items: center; margin-bottom: 3.5rem; flex-wrap: wrap; gap: .5rem; }
   .plat-pill { display: flex; align-items: center; gap: 10px; padding: .7rem 1.4rem; border: 1px solid #222; border-radius: 100px; font-weight: 500; font-size: .95rem; }
   .plat-icon { width: 20px; height: 20px; }
@@ -45,12 +46,39 @@
   .dot-r{background:#ff5f57}.dot-y{background:#febc2e}.dot-g{background:#28c840}
   .mockup-body { padding: 1.8rem; }
   .mockup-input { width: 100%; background: #0a0a0a; border: 1px solid #2a2a2a; border-radius: 10px; color: #f5f3ee; padding: .8rem 1rem; font-family: 'DM Sans', sans-serif; font-size: .9rem; margin-bottom: 1rem; outline: none; }
-  .mockup-btn { width: 100%; background: var(--accent); color: var(--white); border: none; padding: .8rem; border-radius: 10px; font-size: .9rem; font-weight: 500; cursor: default; margin-bottom: 1.5rem; }
+  .mockup-btn { width: 100%; background: var(--accent); color: var(--white); border: none; padding: .8rem; border-radius: 10px; font-size: .9rem; font-weight: 500; cursor: not-allowed; margin-bottom: 1.5rem; opacity: .5; }
   .mockup-results { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .8rem; }
   .mockup-res-box { background: #0a0a0a; border-radius: 8px; height: 80px; border: 1px solid #1a1a1a; position: relative; overflow: hidden; }
   .mockup-res-box::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent); transform: translateX(-100%); animation: shine 2s infinite; }
   @keyframes shine { 100% { transform: translateX(100%); } }
   .mockup-label { font-size: .7rem; color: #555; text-align: center; margin-top: .4rem; }
+
+  /* Secciones del landing */
+  .landing-section { max-width: 900px; margin: 0 auto; padding: 5rem 5%; }
+  .landing-section h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800; letter-spacing: -1px; margin-bottom: 1rem; }
+  .landing-section .section-sub { color: var(--text-muted); font-size: .95rem; margin-bottom: 2.5rem; max-width: 560px; line-height: 1.7; font-weight: 300; }
+  .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .step-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 1.8rem; text-align: center; transition: border-color .2s; }
+  .step-card:hover { border-color: #333; }
+  .step-num { font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; color: var(--accent); margin-bottom: .8rem; }
+  .step-card h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: .5rem; }
+  .step-card p { color: var(--text-muted); font-size: .85rem; line-height: 1.6; font-weight: 300; }
+  .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .feature-item { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; display: flex; align-items: flex-start; gap: 1rem; transition: border-color .2s; }
+  .feature-item:hover { border-color: #333; }
+  .feature-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: .1rem; }
+  .feature-item h3 { font-family: 'Syne', sans-serif; font-size: .92rem; font-weight: 700; margin-bottom: .3rem; }
+  .feature-item p { color: var(--text-muted); font-size: .82rem; line-height: 1.6; font-weight: 300; }
+  .faq-list { display: flex; flex-direction: column; gap: .8rem; }
+  .faq-item { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  .faq-question { padding: 1.2rem 1.5rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: 'Syne', sans-serif; font-weight: 700; font-size: .92rem; transition: background .2s; user-select: none; }
+  .faq-question:hover { background: #161616; }
+  .faq-arrow { transition: transform .3s; color: var(--text-muted); font-size: .8rem; }
+  .faq-item.open .faq-arrow { transform: rotate(180deg); }
+  .faq-answer { max-height: 0; overflow: hidden; transition: max-height .35s ease, padding .35s ease; }
+  .faq-item.open .faq-answer { max-height: 300px; }
+  .faq-answer-inner { padding: 0 1.5rem 1.2rem; color: var(--text-muted); font-size: .85rem; line-height: 1.7; font-weight: 300; }
+
   .pricing-grid-mockup { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 5rem; }
   .price-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px; padding: 2rem; position: relative; transition: border-color .2s; }
   .price-card:hover { border-color: #333; }
@@ -76,9 +104,10 @@
   .footer-col ul a { color: var(--text-muted); font-size: .85rem; transition: color .2s; cursor: pointer; }
   .footer-col ul a:hover { color: var(--white); }
   .footer-bottom { border-top: 1px solid var(--border); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; color: var(--text-muted); font-size: .8rem; flex-wrap: wrap; gap: .5rem; }
-  @media (max-width: 768px) { nav ul { display: none; } h1 { letter-spacing: -1px; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+  @media (max-width: 768px) { nav ul { display: none; } h1 { letter-spacing: -1px; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } .steps-grid { grid-template-columns: 1fr; } .features-grid { grid-template-columns: 1fr; } }
   @media (max-width: 480px) { .cta-group { flex-direction: column; align-items: center; } .footer-grid { grid-template-columns: 1fr; } .pricing-grid-mockup { grid-template-columns: 1fr; } .mockup-results { grid-template-columns: 1fr; } }
-  #cookie-banner { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 16px; padding: 1.2rem 1.6rem; display: flex; align-items: center; gap: 1.5rem; max-width: 680px; width: 90%; z-index: 999; flex-wrap: wrap; }
+  #cookie-banner { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 16px; padding: 1.2rem 1.6rem; display: none; align-items: center; gap: 1.5rem; max-width: 680px; width: 90%; z-index: 999; flex-wrap: wrap; }
+  #cookie-banner.visible { display: flex; }
   #cookie-banner p { font-size: .83rem; color: var(--text-muted); line-height: 1.6; flex: 1; min-width: 200px; font-weight: 300; }
   #cookie-banner p a { color: var(--accent); }
   .cookie-btns { display: flex; gap: .6rem; flex-shrink: 0; }
@@ -133,9 +162,6 @@
   .btn-copy { width: 100%; background: transparent; border: 1px solid #333; color: #fff; padding: .6rem; border-radius: 8px; font-family: 'DM Sans'; font-size: .82rem; cursor: pointer; margin-top: auto; transition: all .2s; }
   .btn-copy:hover { background: #222; border-color: #555; }
   .btn-copy.copied { background: #1a3a1a; border-color: #4cff72; color: #4cff72; }
-  .history-item { background: #1a1a1a; border-radius: 10px; padding: .9rem 1rem; margin-bottom: .6rem; }
-  .history-file { font-size: .88rem; font-weight: 500; margin-bottom: .2rem; }
-  .history-meta { font-size: .75rem; color: #888; }
 
   .dash-profile-header { display: flex; align-items: center; gap: 1.2rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #1e1e1e; }
   .dash-profile-avatar { width: 70px; height: 70px; border-radius: 50%; background: #2d1a4a; color: #b48fe0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.5rem; background-size: cover; background-position: center; flex-shrink:0; cursor:pointer; position:relative; overflow:hidden; }
@@ -150,16 +176,20 @@
   .legal-section p { color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem; }
   .back-btn { background: transparent; border: 1px solid #2a2a2a; color: var(--text-muted); padding: .6rem 1.2rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: .88rem; cursor: pointer; transition: all .2s; margin-bottom: 2rem; }
   .back-btn:hover { background: #1a1a1a; color: var(--white); border-color: #555; }
+
+  /* Toast notification */
+  .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px); background: #1a3a1a; border: 1px solid #4cff72; color: #4cff72; padding: .7rem 1.4rem; border-radius: 10px; font-size: .85rem; z-index: 9999; transition: transform .35s ease; pointer-events: none; }
+  .toast.show { transform: translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="logo">Multi<span>Post</span></div>
-  <ul>
-    <li><a href="#" onclick="goToSection(event, 'como-funciona')">Cómo funciona</a></li>
-    <li><a href="#" onclick="goToSection(event, 'caracteristicas')">Características</a></li>
-    <li><a href="#" onclick="goToSection(event, 'faq')">FAQ</a></li>
+  <div class="logo" onclick="handleLogoClick()">Multi<span>Post</span></div>
+  <ul id="nav-links-landing">
+    <li><a href="#como-funciona">Cómo funciona</a></li>
+    <li><a href="#caracteristicas">Características</a></li>
+    <li><a href="#faq">FAQ</a></li>
   </ul>
   <button class="btn-nav" id="nav-btn-guest" onclick="openModal()">Iniciar sesión</button>
   <div id="nav-user-menu" style="display:none; align-items:center; gap:.5rem;">
@@ -177,8 +207,8 @@
     <div class="badge"><div class="badge-dot"></div> Impulsado por Inteligencia Artificial</div>
     <h1>Una idea.<br><span class="line2">Tres plataformas.</span><br>Textos perfectos.</h1>
     <p class="hero-sub">Escribe de qué va tu video y nuestra IA genera los ganchos, captions y descripciones optimizados para TikTok, Instagram y YouTube en segundos.</p>
-    <div class="cta-group">
-      <button class="btn-primary" onclick="openModal()">Empezar ahora</button>
+    <div class="cta-group" id="hero-cta">
+      <button class="btn-primary" id="hero-btn-main" onclick="handleHeroCta()">Empezar ahora</button>
     </div>
     <div class="platforms-strip">
       <div class="plat-pill"><svg class="plat-icon" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.21a8.25 8.25 0 004.83 1.56V7.32a4.85 4.85 0 01-1.06-.63z"/></svg>TikTok</div>
@@ -190,7 +220,7 @@
       <div class="mockup-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
       <div class="mockup-body">
         <input type="text" class="mockup-input" placeholder="Ej: Cómo hacer la tortilla de patatas perfecta" disabled>
-        <button class="mockup-btn">Generar Multipost con IA ✨</button>
+        <button class="mockup-btn" disabled>Generar Multipost con IA ✨</button>
         <div class="mockup-results">
           <div><div class="mockup-res-box"></div><div class="mockup-label">TikTok</div></div>
           <div><div class="mockup-res-box"></div><div class="mockup-label">YouTube</div></div>
@@ -198,8 +228,86 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="pricing-grid-mockup">
+  <!-- SECCIÓN: Cómo funciona -->
+  <section class="landing-section" id="como-funciona">
+    <h2>¿Cómo funciona?</h2>
+    <p class="section-sub">De tu idea a tres textos publicables en menos de 10 segundos. Sin experiencia en copywriting.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <h3>Escribe tu idea</h3>
+        <p>Describe de qué va tu video en una frase. No hace falta que sea perfecto.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <h3>La IA trabaja</h3>
+        <p>Nuestro modelo genera ganchos, captions y descripciones optimizados para cada plataforma.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <h3>Copia y publica</h3>
+        <p>Copía cada texto con un clic y pégalo directamente en TikTok, Instagram o YouTube.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: Características -->
+  <section class="landing-section" id="caracteristicas">
+    <h2>Características</h2>
+    <p class="section-sub">Todo lo que necesitas para crear contenido que conecte, sin complicaciones.</p>
+    <div class="features-grid">
+      <div class="feature-item">
+        <div class="feature-icon">⚡</div>
+        <div>
+          <h3>Generación en 10 segundos</h3>
+          <p>No esperes minutos. Escribe tu idea y obtén resultados al instante.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🎯</div>
+        <div>
+          <h3>Optimizado por plataforma</h3>
+          <p>Cada texto sigue las mejores prácticas de TikTok, Instagram y YouTube.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🎨</div>
+        <div>
+          <h3>5 tonos de voz</h3>
+          <p>Divertido, educativo, serio, polémico o motivador. Elige el que encaje con tu marca.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📋</div>
+        <div>
+          <h3>Copiar con un clic</h3>
+          <p>Un botón para copiar todo el contenido de cada plataforma al portapapeles.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🔄</div>
+        <div>
+          <h3>Generaciones ilimitadas</h3>
+          <p>Con el plan Pro puedes generar todo el contenido que necesites sin límites.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">💾</div>
+        <div>
+          <h3>Historial completo</h3>
+          <p>Accede a todas tus generaciones anteriores desde tu panel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: Precios -->
+  <section class="landing-section" id="precios">
+    <h2>Precios simples</h2>
+    <p class="section-sub">Sin sorpresas, sin letras pequeñas. Elige tu plan y empieza a crear.</p>
+    <div class="pricing-grid-mockup" style="margin-bottom:0;">
       <div class="price-card featured">
         <div class="featured-badge">Más popular</div>
         <div class="plan-name">Pro</div>
@@ -211,7 +319,7 @@
           <li>Todos los tonos de voz</li>
           <li>Historial de generaciones</li>
         </ul>
-        <button class="btn-plan featured-btn" onclick="window.open('https://buy.stripe.com/14A9AT3debVVcu0drW3gk01','_blank')">Empezar con Pro</button>
+        <button class="btn-plan featured-btn" onclick="handlePlanClick('pro')">Empezar con Pro</button>
       </div>
       <div class="price-card">
         <div class="plan-name">Agencia</div>
@@ -223,10 +331,34 @@
           <li>Hasta 10 usuarios</li>
           <li>API de integración</li>
         </ul>
-        <button class="btn-plan" onclick="window.open('https://buy.stripe.com/00w4gzg00f87bpW3Rm3gk00','_blank')">Contactar ventas</button>
+        <button class="btn-plan" onclick="handlePlanClick('agencia')">Contactar ventas</button>
       </div>
     </div>
-  </div>
+  </section>
+
+  <!-- SECCIÓN: FAQ -->
+  <section class="landing-section" id="faq">
+    <h2>Preguntas frecuentes</h2>
+    <p class="section-sub">Resolvemos tus dudas antes de que las tengas.</p>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">¿Las generaciones son realmente ilimitadas?<span class="faq-arrow">▼</span></div>
+        <div class="faq-answer"><div class="faq-answer-inner">Sí. Con el plan Pro puedes generar todo el contenido que quieras sin ningún tipo de límite diario o mensual.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">¿Puedo usar los textos generados comercialmente?<span class="faq-arrow">▼</span></div>
+        <div class="faq-answer"><div class="faq-answer-inner">Por supuesto. Los textos generados son tuyos y puedes usarlos en tus redes, clientes, proyectos comerciales, etc.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">¿En qué idioma genera el contenido?<span class="faq-arrow">▼</span></div>
+        <div class="faq-answer"><div class="faq-answer-inner">Actualmente generamos contenido en español. Estamos trabajando en añadir más idiomas próximamente.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">¿Puedo cancelar en cualquier momento?<span class="faq-arrow">▼</span></div>
+        <div class="faq-answer"><div class="faq-answer-inner">Sí, puedes cancelar tu suscripción cuando quieras desde tu perfil. Sin permanencias ni penalizaciones.</div></div>
+      </div>
+    </div>
+  </section>
 
   <footer>
     <div class="footer-grid">
@@ -237,15 +369,15 @@
       <div class="footer-col">
         <h4>Legal</h4>
         <ul>
-          <li><a href="#" onclick="showLegal('privacidad');return false">Privacidad</a></li>
-          <li><a href="#" onclick="showLegal('terminos');return false">Términos</a></li>
+          <li><a onclick="showLegal('privacidad')">Privacidad</a></li>
+          <li><a onclick="showLegal('terminos')">Términos</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Empresa</h4>
         <ul>
-          <li><a href="#" onclick="showLegal('about');return false">Sobre nosotros</a></li>
-          <li><a href="#" onclick="showLegal('contacto');return false">Contacto</a></li>
+          <li><a onclick="showLegal('about')">Sobre nosotros</a></li>
+          <li><a onclick="showLegal('contacto')">Contacto</a></li>
         </ul>
       </div>
     </div>
@@ -285,7 +417,7 @@
 </div>
 
 <div id="cookie-banner">
-  <p>Usamos cookies para mejorar tu experiencia. <a href="#" onclick="showLegal('privacidad');return false">Más información</a></p>
+  <p>Usamos cookies para mejorar tu experiencia. <a onclick="showLegal('privacidad')">Más información</a></p>
   <div class="cookie-btns">
     <button class="btn-cookie-reject" onclick="closeCookie()">Solo necesarias</button>
     <button class="btn-cookie-accept" onclick="closeCookie()">Aceptar todas</button>
@@ -297,7 +429,7 @@
     <button class="modal-close" onclick="closeModal()">✕</button>
     <div class="modal-logo" style="margin-bottom: 2rem;">Multi<span>Post</span></div>
     <p style="color: #888; margin-bottom: 1.5rem; font-size: .9rem;">Inicia sesión con Google. Sin contraseñas inventadas.</p>
-    <button class="btn-google" onclick="loginWithGoogle()">
+    <button class="btn-google" id="btn-google-login" onclick="loginWithGoogle()">
       <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
       Continuar con Google
     </button>
@@ -365,50 +497,88 @@
           <div class="ai-block"><label>Texto en pantalla</label><p id="res-tiktok-screen"></p></div>
           <div class="ai-block"><label>Caption</label><p id="res-tiktok-caption"></p></div>
           <div class="ai-block"><label>Hashtags</label><p id="res-tiktok-tags"></p></div>
-          <button class="btn-copy" onclick="copyText(event, 'tiktok')">Copiar todo</button>
+          <button class="btn-copy" onclick="copyText(this, 'tiktok')">Copiar todo</button>
         </div>
         <div class="ai-card" style="border-top: 3px solid #e1306c;">
           <h3>📸 Instagram</h3>
           <div class="ai-block"><label>Caption</label><p id="res-ig-caption"></p></div>
           <div class="ai-block"><label>Hashtags</label><p id="res-ig-tags"></p></div>
-          <button class="btn-copy" onclick="copyText(event, 'instagram')">Copiar todo</button>
+          <button class="btn-copy" onclick="copyText(this, 'instagram')">Copiar todo</button>
         </div>
         <div class="ai-card" style="border-top: 3px solid #ff0000;">
           <h3>📺 YouTube</h3>
           <div class="ai-block"><label>Título</label><p id="res-yt-title"></p></div>
           <div class="ai-block"><label>Descripción</label><p id="res-yt-desc"></p></div>
           <div class="ai-block"><label>Hashtags</label><p id="res-yt-tags"></p></div>
-          <button class="btn-copy" onclick="copyText(event, 'youtube')">Copiar todo</button>
+          <button class="btn-copy" onclick="copyText(this, 'youtube')">Copiar todo</button>
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<!-- Toast para feedback visual -->
+<div class="toast" id="toast"></div>
+
 <script>
-// Global state
+// =====================
+// Estado global
+// =====================
 let currentUser = null;
 
-// Initialize on page load
+// =====================
+// Init
+// =====================
 document.addEventListener('DOMContentLoaded', () => {
   checkAuth();
   
-  // Show cookie banner if not accepted
-  const cookieAccepted = localStorage.getItem('cookiesAccepted');
-  if (!cookieAccepted) {
-    document.getElementById('cookie-banner').style.display = 'flex';
+  // Cookie banner
+  if (!localStorage.getItem('cookiesAccepted')) {
+    document.getElementById('cookie-banner').classList.add('visible');
   }
 });
 
-// Cookie functions
-function closeCookie() {
-  localStorage.setItem('cookiesAccepted', 'true');
-  document.getElementById('cookie-banner').style.display = 'none';
+// =====================
+// Toast (feedback visual)
+// =====================
+function showToast(msg, duration) {
+  duration = duration || 2000;
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, duration);
 }
 
-// Modal functions
+// =====================
+// Cookies
+// =====================
+function closeCookie() {
+  localStorage.setItem('cookiesAccepted', 'true');
+  document.getElementById('cookie-banner').classList.remove('visible');
+}
+
+// =====================
+// FAQ accordion
+// =====================
+function toggleFaq(el) {
+  var item = el.parentElement;
+  var wasOpen = item.classList.contains('open');
+  // Cerrar todos
+  document.querySelectorAll('.faq-item').forEach(function(i) {
+    i.classList.remove('open');
+  });
+  // Abrir el clickeado si no estaba abierto
+  if (!wasOpen) {
+    item.classList.add('open');
+  }
+}
+
+// =====================
+// Modal login
+// =====================
 function openModal() {
   document.getElementById('modal-overlay').classList.add('active');
+  document.getElementById('login-error').textContent = '';
 }
 
 function closeModal() {
@@ -416,20 +586,29 @@ function closeModal() {
   document.getElementById('login-error').textContent = '';
 }
 
+// Cerrar modal al clic fuera
+document.getElementById('modal-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// =====================
+// Perfil
+// =====================
 function openProfile() {
   if (!currentUser) return;
   
   document.getElementById('settings-name').value = currentUser.name || '';
   document.getElementById('settings-name-display').textContent = currentUser.name || 'Usuario';
   document.getElementById('settings-email-display').textContent = currentUser.email || '';
-  document.getElementById('settings-plan-badge').textContent = `Plan: ${currentUser.plan || 'Gratis'}`;
+  document.getElementById('settings-plan-badge').textContent = 'Plan: ' + (currentUser.plan || 'Gratis');
   
+  var avatar = document.getElementById('settings-avatar');
   if (currentUser.avatar) {
-    document.getElementById('settings-avatar').style.backgroundImage = `url(${currentUser.avatar})`;
-    document.getElementById('settings-avatar').textContent = '';
+    avatar.style.backgroundImage = 'url(' + currentUser.avatar + ')';
+    avatar.textContent = '';
   } else {
-    const initials = (currentUser.name || 'MP').substring(0, 2).toUpperCase();
-    document.getElementById('settings-avatar').textContent = initials;
+    avatar.style.backgroundImage = 'none';
+    avatar.textContent = (currentUser.name || 'MP').substring(0, 2).toUpperCase();
   }
   
   document.getElementById('profile-overlay').classList.add('active');
@@ -440,25 +619,44 @@ function closeProfile() {
   document.getElementById('profile-success').style.display = 'none';
 }
 
-// Auth functions
+// Cerrar perfil al clic fuera
+document.getElementById('profile-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeProfile();
+});
+
+// =====================
+// Auth
+// =====================
 function loginWithGoogle() {
-  // Simulate Google login
-  const mockUser = {
-    id: 'user_' + Math.random().toString(36).substr(2, 9),
-    email: 'demo@multipost.cc',
-    name: 'Usuario Demo',
-    avatar: null,
-    plan: 'Pro'
-  };
-  
-  currentUser = mockUser;
-  localStorage.setItem('user', JSON.stringify(mockUser));
-  
-  updateUIForLoggedInUser();
-  closeModal();
-  
-  // Show dashboard
-  showDashboard();
+  var btn = document.getElementById('btn-google-login');
+  btn.disabled = true;
+  btn.textContent = 'Conectando...';
+  document.getElementById('login-error').textContent = '';
+
+  // Simulamos login (reemplazar por Supabase real)
+  setTimeout(function() {
+    var mockUser = {
+      id: 'user_' + Math.random().toString(36).substr(2, 9),
+      email: 'demo@multipost.cc',
+      name: 'Usuario Demo',
+      avatar: null,
+      plan: 'Pro'
+    };
+    
+    currentUser = mockUser;
+    localStorage.setItem('user', JSON.stringify(mockUser));
+    
+    updateUIForLoggedInUser();
+    closeModal();
+    
+    // Restablecer botón
+    btn.disabled = false;
+    btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:20px;height:20px"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg> Continuar con Google';
+    
+    // Llevar al dashboard
+    showDashboard();
+    showToast('¡Bienvenido, ' + mockUser.name + '!');
+  }, 800);
 }
 
 function logout() {
@@ -466,61 +664,90 @@ function logout() {
   localStorage.removeItem('user');
   updateUIForLoggedOutUser();
   showMainContent();
+  showToast('Sesión cerrada');
 }
 
 function checkAuth() {
-  const savedUser = localStorage.getItem('user');
-  if (savedUser) {
-    currentUser = JSON.parse(savedUser);
-    updateUIForLoggedInUser();
-    // Don't auto-show dashboard, keep on home
+  var saved = localStorage.getItem('user');
+  if (saved) {
+    try {
+      currentUser = JSON.parse(saved);
+      updateUIForLoggedInUser();
+    } catch(e) {
+      localStorage.removeItem('user');
+    }
   }
 }
 
 function updateUIForLoggedInUser() {
   document.getElementById('nav-btn-guest').style.display = 'none';
   document.getElementById('nav-user-menu').style.display = 'flex';
-  
-  const initials = (currentUser.name || 'MP').substring(0, 2).toUpperCase();
   document.getElementById('nav-name').textContent = currentUser.name || 'Usuario';
   document.getElementById('nav-email').textContent = currentUser.email || '';
   
+  var navAvatar = document.getElementById('nav-avatar');
   if (currentUser.avatar) {
-    document.getElementById('nav-avatar').style.backgroundImage = `url(${currentUser.avatar})`;
-    document.getElementById('nav-avatar').textContent = '';
+    navAvatar.style.backgroundImage = 'url(' + currentUser.avatar + ')';
+    navAvatar.textContent = '';
   } else {
-    document.getElementById('nav-avatar').textContent = initials;
+    navAvatar.style.backgroundImage = 'none';
+    navAvatar.textContent = (currentUser.name || 'MP').substring(0, 2).toUpperCase();
   }
+
+  // Cambiar CTA del hero si está logueado
+  updateHeroCta();
 }
 
 function updateUIForLoggedOutUser() {
   document.getElementById('nav-btn-guest').style.display = 'block';
   document.getElementById('nav-user-menu').style.display = 'none';
+  updateHeroCta();
 }
 
-// Navigation functions
+function updateHeroCta() {
+  var cta = document.getElementById('hero-cta');
+  if (currentUser) {
+    cta.innerHTML = '<button class="btn-primary" onclick="showDashboard()">Ir al generador →</button>' +
+                    '<button class="btn-secondary-outline" onclick="showMainContent()">Ver landing</button>';
+  } else {
+    cta.innerHTML = '<button class="btn-primary" onclick="openModal()">Empezar ahora</button>';
+  }
+}
+
+// =====================
+// Navegación
+// =====================
 function showDashboard() {
   document.getElementById('main-content').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
-  document.querySelectorAll('.legal-section').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.legal-section').forEach(function(el) { el.style.display = 'none'; });
+  document.getElementById('nav-links-landing').style.display = 'none';
+  window.scrollTo(0, 0);
 }
 
 function showMainContent() {
   document.getElementById('main-content').style.display = 'block';
   document.getElementById('dashboard').style.display = 'none';
-  document.querySelectorAll('.legal-section').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.legal-section').forEach(function(el) { el.style.display = 'none'; });
+  document.getElementById('nav-links-landing').style.display = 'flex';
+  window.scrollTo(0, 0);
 }
 
 function showLegal(page) {
+  // Cerrar overlays abiertos
+  closeModal();
+  closeCookie();
+  
   document.getElementById('main-content').style.display = 'none';
   document.getElementById('dashboard').style.display = 'none';
-  document.querySelectorAll('.legal-section').forEach(el => el.style.display = 'none');
+  document.getElementById('nav-links-landing').style.display = 'none';
+  document.querySelectorAll('.legal-section').forEach(function(el) { el.style.display = 'none'; });
   document.getElementById('page-' + page).style.display = 'block';
   window.scrollTo(0, 0);
 }
 
 function hideLegal() {
-  document.querySelectorAll('.legal-section').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.legal-section').forEach(function(el) { el.style.display = 'none'; });
   if (currentUser) {
     showDashboard();
   } else {
@@ -528,87 +755,132 @@ function hideLegal() {
   }
 }
 
-function goToSection(event, section) {
-  event.preventDefault();
-  // Scroll to section (placeholder - you can add actual sections)
-  console.log('Navigate to:', section);
+function handleLogoClick() {
+  if (currentUser) {
+    showDashboard();
+  } else {
+    showMainContent();
+  }
 }
 
-// Profile functions
+function handleHeroCta() {
+  if (currentUser) {
+    showDashboard();
+  } else {
+    openModal();
+  }
+}
+
+// Botones de planes
+function handlePlanClick(plan) {
+  if (!currentUser) {
+    openModal();
+    return;
+  }
+  var urls = {
+    pro: 'https://buy.stripe.com/14A9AT3debVVcu0drW3gk01',
+    agencia: 'https://buy.stripe.com/00w4gzg00f87bpW3Rm3gk00'
+  };
+  if (urls[plan]) {
+    window.location.href = urls[plan];
+  }
+}
+
+// =====================
+// Perfil: guardar nombre
+// =====================
 function handleSaveProfile(event) {
   event.preventDefault();
   
-  const newName = document.getElementById('settings-name').value;
+  var newName = document.getElementById('settings-name').value.trim();
+  if (!newName) return;
   
   if (currentUser) {
     currentUser.name = newName;
     localStorage.setItem('user', JSON.stringify(currentUser));
     updateUIForLoggedInUser();
+    document.getElementById('settings-name-display').textContent = newName;
+    
+    var avatar = document.getElementById('settings-avatar');
+    if (!currentUser.avatar) {
+      avatar.textContent = newName.substring(0, 2).toUpperCase();
+    }
     
     document.getElementById('profile-success').style.display = 'block';
-    setTimeout(() => {
+    setTimeout(function() {
       document.getElementById('profile-success').style.display = 'none';
     }, 3000);
   }
 }
 
+// =====================
+// Perfil: subir avatar
+// =====================
 function handleAvatarUpload(event) {
-  const file = event.target.files[0];
+  var file = event.target.files[0];
   if (!file) return;
   
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const avatarUrl = e.target.result;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var avatarUrl = e.target.result;
     
     if (currentUser) {
       currentUser.avatar = avatarUrl;
       localStorage.setItem('user', JSON.stringify(currentUser));
       
-      // Update all avatar displays
-      document.getElementById('nav-avatar').style.backgroundImage = `url(${avatarUrl})`;
+      document.getElementById('nav-avatar').style.backgroundImage = 'url(' + avatarUrl + ')';
       document.getElementById('nav-avatar').textContent = '';
-      document.getElementById('settings-avatar').style.backgroundImage = `url(${avatarUrl})`;
+      document.getElementById('settings-avatar').style.backgroundImage = 'url(' + avatarUrl + ')';
       document.getElementById('settings-avatar').textContent = '';
+      
+      showToast('Avatar actualizado');
     }
   };
   reader.readAsDataURL(file);
 }
 
-// AI Generation function
-async function handleGenerateAI(event) {
+// =====================
+// Generación IA (mock)
+// =====================
+function handleGenerateAI(event) {
   event.preventDefault();
   
-  const topic = document.getElementById('ai-topic').value;
-  const tone = document.getElementById('ai-tone').value;
-  const errorDiv = document.getElementById('dash-error');
-  const submitBtn = document.getElementById('ai-generate-btn');
+  var topic = document.getElementById('ai-topic').value.trim();
+  var tone = document.getElementById('ai-tone').value;
+  var errorDiv = document.getElementById('dash-error');
+  var submitBtn = document.getElementById('ai-generate-btn');
+  
+  if (!topic) {
+    errorDiv.textContent = 'Escribe de qué va tu video.';
+    return;
+  }
   
   errorDiv.textContent = '';
   submitBtn.disabled = true;
   submitBtn.textContent = 'Generando... ⏳';
   
-  // Simulate AI generation with mock data
-  setTimeout(() => {
-    // Mock AI results
-    const results = {
+  // Ocultar resultados anteriores
+  document.getElementById('div-resultados-ia').style.display = 'none';
+  
+  setTimeout(function() {
+    var results = {
       tiktok: {
-        hook: `¿${topic}? 🤯 Te cuento el secreto que nadie te dice...`,
-        screen: `${topic.toUpperCase()} ✨`,
-        caption: `${topic} y te va a cambiar la vida 🚀 (Tono: ${tone})`,
-        tags: '#viral #tips #tutorial #parati'
+        hook: '¿' + topic + '? 🤯 Te cuento el secreto que nadie te dice...',
+        screen: topic.toUpperCase() + ' ✨',
+        caption: topic + ' y te va a cambiar la vida 🚀 (Tono: ' + tone + ')',
+        tags: '#viral #tips #tutorial #parati #' + topic.split(' ')[0].toLowerCase().replace(/[^a-záéíóúñ]/g, '')
       },
       instagram: {
-        caption: `💡 ${topic}\n\n${tone === 'Divertido' ? '😂' : tone === 'Educativo' ? '📚' : '💼'} Hoy te comparto todo lo que necesitas saber sobre esto.\n\n¿Listo para el cambio? 👇`,
-        tags: '#instagram #contenido #tutorial #aprendizaje'
+        caption: '💡 ' + topic + '\n\nHoy te comparto todo lo que necesitas saber sobre esto.\n\n¿Listo para el cambio? 👇\n\n—\n#multipost #contenido #tutorial #aprendizaje #' + topic.split(' ')[0].toLowerCase().replace(/[^a-záéíóúñ]/g, ''),
+        tags: '#multipost #contenido #tutorial #aprendizaje #' + topic.split(' ')[0].toLowerCase().replace(/[^a-záéíóúñ]/g, '')
       },
       youtube: {
-        title: `${topic} | Guía Completa 2025`,
-        desc: `En este video te enseño todo sobre: ${topic}\n\n⏱️ TIMESTAMPS:\n0:00 - Introducción\n1:30 - Paso 1\n3:45 - Paso 2\n6:20 - Conclusión\n\n🔔 Suscríbete para más contenido`,
-        tags: '#youtube #tutorial #guia #${topic.split(' ')[0].toLowerCase()}'
+        title: topic + ' | Guía Completa 2025',
+        desc: 'En este video te enseño todo sobre: ' + topic + '\n\n⏱️ TIMESTAMPS:\n0:00 - Introducción\n1:30 - Paso 1\n3:45 - Paso 2\n6:20 - Conclusión\n\n🔔 Suscríbete para más contenido',
+        tags: '#youtube #tutorial #guia #' + topic.split(' ')[0].toLowerCase().replace(/[^a-záéíóúñ]/g, '')
       }
     };
     
-    // Populate results
     document.getElementById('res-tiktok-hook').textContent = results.tiktok.hook;
     document.getElementById('res-tiktok-screen').textContent = results.tiktok.screen;
     document.getElementById('res-tiktok-caption').textContent = results.tiktok.caption;
@@ -621,55 +893,85 @@ async function handleGenerateAI(event) {
     document.getElementById('res-yt-desc').textContent = results.youtube.desc;
     document.getElementById('res-yt-tags').textContent = results.youtube.tags;
     
-    // Show results
     document.getElementById('div-resultados-ia').style.display = 'grid';
     
     submitBtn.disabled = false;
     submitBtn.textContent = 'Generar textos con IA →';
     
-    // Scroll to results
     document.getElementById('div-resultados-ia').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    showToast('¡Textos generados!');
   }, 2000);
 }
 
-// Copy function
-function copyText(event, platform) {
-  const btn = event.target;
-  let textToCopy = '';
+// =====================
+// Copiar texto (con fallback para file://)
+// =====================
+function copyText(btn, platform) {
+  var textToCopy = '';
   
   if (platform === 'tiktok') {
-    const hook = document.getElementById('res-tiktok-hook').textContent;
-    const screen = document.getElementById('res-tiktok-screen').textContent;
-    const caption = document.getElementById('res-tiktok-caption').textContent;
-    const tags = document.getElementById('res-tiktok-tags').textContent;
-    textToCopy = `GANCHO:\n${hook}\n\nTEXTO EN PANTALLA:\n${screen}\n\nCAPTION:\n${caption}\n\nHASHTAGS:\n${tags}`;
+    textToCopy = 'GANCHO:\n' + document.getElementById('res-tiktok-hook').textContent +
+                 '\n\nTEXTO EN PANTALLA:\n' + document.getElementById('res-tiktok-screen').textContent +
+                 '\n\nCAPTION:\n' + document.getElementById('res-tiktok-caption').textContent +
+                 '\n\nHASHTAGS:\n' + document.getElementById('res-tiktok-tags').textContent;
   } else if (platform === 'instagram') {
-    const caption = document.getElementById('res-ig-caption').textContent;
-    const tags = document.getElementById('res-ig-tags').textContent;
-    textToCopy = `${caption}\n\n${tags}`;
+    textToCopy = document.getElementById('res-ig-caption').textContent +
+                 '\n\n' + document.getElementById('res-ig-tags').textContent;
   } else if (platform === 'youtube') {
-    const title = document.getElementById('res-yt-title').textContent;
-    const desc = document.getElementById('res-yt-desc').textContent;
-    const tags = document.getElementById('res-yt-tags').textContent;
-    textToCopy = `TÍTULO:\n${title}\n\nDESCRIPCIÓN:\n${desc}\n\nHASHTAGS:\n${tags}`;
+    textToCopy = 'TÍTULO:\n' + document.getElementById('res-yt-title').textContent +
+                 '\n\nDESCRIPCIÓN:\n' + document.getElementById('res-yt-desc').textContent +
+                 '\n\nHASHTAGS:\n' + document.getElementById('res-yt-tags').textContent;
   }
   
-  navigator.clipboard.writeText(textToCopy).then(() => {
-    btn.classList.add('copied');
-    btn.textContent = '✓ Copiado';
-    setTimeout(() => {
-      btn.classList.remove('copied');
-      btn.textContent = 'Copiar todo';
-    }, 2000);
-  });
+  // Método moderno (HTTPS / localhost)
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(textToCopy).then(function() {
+      copySuccess(btn);
+    }).catch(function() {
+      // Fallback si falla
+      copyFallback(textToCopy, btn);
+    });
+  } else {
+    // Fallback para file:// o navegadores antiguos
+    copyFallback(textToCopy, btn);
+  }
 }
 
-// Add click handler to logo to go to dashboard if logged in
-document.querySelector('.logo').addEventListener('click', () => {
-  if (currentUser) {
-    showDashboard();
-  } else {
-    showMainContent();
+function copyFallback(text, btn) {
+  var textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.style.position = 'fixed';
+  textarea.style.left = '-9999px';
+  textarea.style.top = '-9999px';
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+  try {
+    document.execCommand('copy');
+    copySuccess(btn);
+  } catch(e) {
+    showToast('No se pudo copiar. Selecciona el texto manualmente.');
+  }
+  document.body.removeChild(textarea);
+}
+
+function copySuccess(btn) {
+  btn.classList.add('copied');
+  btn.textContent = '✓ Copiado';
+  showToast('¡Copiado al portapapeles!');
+  setTimeout(function() {
+    btn.classList.remove('copied');
+    btn.textContent = 'Copiar todo';
+  }, 2000);
+}
+
+// =====================
+// Cerrar modales con Escape
+// =====================
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeModal();
+    closeProfile();
   }
 });
 </script>
