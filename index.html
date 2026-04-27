@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root { --black: #0a0a0a; --white: #f5f3ee; --accent: #ff3c3c; --card-bg: #111111; --text-muted: #888; --border: #1e1e1e; }
@@ -52,8 +53,6 @@
   .mockup-res-box::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent); transform: translateX(-100%); animation: shine 2s infinite; }
   @keyframes shine { 100% { transform: translateX(100%); } }
   .mockup-label { font-size: .7rem; color: #555; text-align: center; margin-top: .4rem; }
-
-  /* Secciones del landing */
   .landing-section { max-width: 900px; margin: 0 auto; padding: 5rem 5%; }
   .landing-section h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800; letter-spacing: -1px; margin-bottom: 1rem; }
   .landing-section .section-sub { color: var(--text-muted); font-size: .95rem; margin-bottom: 2.5rem; max-width: 560px; line-height: 1.7; font-weight: 300; }
@@ -78,7 +77,6 @@
   .faq-answer { max-height: 0; overflow: hidden; transition: max-height .35s ease, padding .35s ease; }
   .faq-item.open .faq-answer { max-height: 300px; }
   .faq-answer-inner { padding: 0 1.5rem 1.2rem; color: var(--text-muted); font-size: .85rem; line-height: 1.7; font-weight: 300; }
-
   .pricing-grid-mockup { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 5rem; }
   .price-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px; padding: 2rem; position: relative; transition: border-color .2s; }
   .price-card:hover { border-color: #333; }
@@ -124,9 +122,9 @@
   .modal-logo span { color: #ff3c3c; }
   .btn-google { width: 100%; background: #fff; color: #333; border: none; padding: .85rem; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .95rem; font-weight: 500; cursor: pointer; transition: opacity .2s; display: flex; align-items: center; justify-content: center; gap: .8rem; }
   .btn-google:hover { opacity: .85; }
+  .btn-google:disabled { opacity: .6; cursor: not-allowed; }
   .btn-google svg { width: 20px; height: 20px; }
   .modal-error { color: #ff6b6b; font-size: .8rem; margin-top: 1rem; text-align: center; }
-
   #dashboard { display: none; min-height: 100vh; }
   .dash-user { display: flex; align-items: center; gap: .8rem; cursor: pointer; padding: .4rem; border-radius: 12px; transition: background .2s; }
   .dash-user:hover { background: #1a1a1a; }
@@ -151,7 +149,6 @@
   .btn-dash-publish:hover { opacity: .85; }
   .btn-dash-publish:disabled { opacity: .5; cursor: not-allowed; background: #999; border-color: #888; color: #555; }
   .dash-error { color: #ff6b6b; font-size: .8rem; margin-bottom: .6rem; min-height: 1em; }
-  
   .ai-results-grid { display: none; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 1.5rem; }
   @media(min-width: 768px) { .ai-results-grid { grid-template-columns: 1fr 1fr 1fr; } }
   .ai-card { background: #111; border: 1px solid #1e1e1e; border-radius: 18px; padding: 1.5rem; display: flex; flex-direction: column; }
@@ -162,7 +159,6 @@
   .btn-copy { width: 100%; background: transparent; border: 1px solid #333; color: #fff; padding: .6rem; border-radius: 8px; font-family: 'DM Sans'; font-size: .82rem; cursor: pointer; margin-top: auto; transition: all .2s; }
   .btn-copy:hover { background: #222; border-color: #555; }
   .btn-copy.copied { background: #1a3a1a; border-color: #4cff72; color: #4cff72; }
-
   .dash-profile-header { display: flex; align-items: center; gap: 1.2rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #1e1e1e; }
   .dash-profile-avatar { width: 70px; height: 70px; border-radius: 50%; background: #2d1a4a; color: #b48fe0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.5rem; background-size: cover; background-position: center; flex-shrink:0; cursor:pointer; position:relative; overflow:hidden; }
   .dash-profile-avatar:hover::after { content: '📷'; position: absolute; inset:0; background: rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; font-size:24px; }
@@ -170,16 +166,14 @@
   .btn-dash-secondary { width: 100%; background: transparent; border: 1px solid #2a2a2a; color: #f5f3ee; padding: .8rem; border-radius: 10px; font-family: 'DM Sans'; font-size: .92rem; font-weight:500; cursor:pointer; transition:all .2s; margin-top: .5rem; }
   .btn-dash-secondary:hover { background:#1a1a1a; border-color:#555; }
   .dash-success { color:#4cff72; font-size:.85rem; margin-top:.5rem; display:none; }
-  
   .legal-section { display: none; padding: 4rem 5%; max-width: 800px; margin: 0 auto; }
   .legal-section h2 { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem; }
   .legal-section p { color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem; }
   .back-btn { background: transparent; border: 1px solid #2a2a2a; color: var(--text-muted); padding: .6rem 1.2rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: .88rem; cursor: pointer; transition: all .2s; margin-bottom: 2rem; }
   .back-btn:hover { background: #1a1a1a; color: var(--white); border-color: #555; }
-
-  /* Toast notification */
   .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px); background: #1a3a1a; border: 1px solid #4cff72; color: #4cff72; padding: .7rem 1.4rem; border-radius: 10px; font-size: .85rem; z-index: 9999; transition: transform .35s ease; pointer-events: none; }
   .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast.error { background: #3a1a1a; border-color: #ff6b6b; color: #ff6b6b; }
 </style>
 </head>
 <body>
@@ -215,7 +209,6 @@
       <div class="plat-pill"><svg class="plat-icon" viewBox="0 0 24 24"><rect width="24" height="24" fill="#ff0000" rx="5"/><polygon points="9.5,7 9.5,17 17,12" fill="white"/></svg>YouTube</div>
       <div class="plat-pill"><svg class="plat-icon" viewBox="0 0 24 24"><defs><linearGradient id="ig" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f09433"/><stop offset="25%" stop-color="#e6683c"/><stop offset="50%" stop-color="#dc2743"/><stop offset="75%" stop-color="#cc2366"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs><rect width="24" height="24" rx="6" fill="url(#ig)"/><rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="white" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="none" stroke="white" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="white"/></svg>Instagram</div>
     </div>
-    
     <div class="mockup-wrap">
       <div class="mockup-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
       <div class="mockup-body">
@@ -230,80 +223,29 @@
     </div>
   </div>
 
-  <!-- SECCIÓN: Cómo funciona -->
   <section class="landing-section" id="como-funciona">
     <h2>¿Cómo funciona?</h2>
     <p class="section-sub">De tu idea a tres textos publicables en menos de 10 segundos. Sin experiencia en copywriting.</p>
     <div class="steps-grid">
-      <div class="step-card">
-        <div class="step-num">01</div>
-        <h3>Escribe tu idea</h3>
-        <p>Describe de qué va tu video en una frase. No hace falta que sea perfecto.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">02</div>
-        <h3>La IA trabaja</h3>
-        <p>Nuestro modelo genera ganchos, captions y descripciones optimizados para cada plataforma.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">03</div>
-        <h3>Copia y publica</h3>
-        <p>Copía cada texto con un clic y pégalo directamente en TikTok, Instagram o YouTube.</p>
-      </div>
+      <div class="step-card"><div class="step-num">01</div><h3>Escribe tu idea</h3><p>Describe de qué va tu video en una frase. No hace falta que sea perfecto.</p></div>
+      <div class="step-card"><div class="step-num">02</div><h3>La IA trabaja</h3><p>Nuestro modelo genera ganchos, captions y descripciones optimizados para cada plataforma.</p></div>
+      <div class="step-card"><div class="step-num">03</div><h3>Copia y publica</h3><p>Copía cada texto con un clic y pégalo directamente en TikTok, Instagram o YouTube.</p></div>
     </div>
   </section>
 
-  <!-- SECCIÓN: Características -->
   <section class="landing-section" id="caracteristicas">
     <h2>Características</h2>
     <p class="section-sub">Todo lo que necesitas para crear contenido que conecte, sin complicaciones.</p>
     <div class="features-grid">
-      <div class="feature-item">
-        <div class="feature-icon">⚡</div>
-        <div>
-          <h3>Generación en 10 segundos</h3>
-          <p>No esperes minutos. Escribe tu idea y obtén resultados al instante.</p>
-        </div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon">🎯</div>
-        <div>
-          <h3>Optimizado por plataforma</h3>
-          <p>Cada texto sigue las mejores prácticas de TikTok, Instagram y YouTube.</p>
-        </div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon">🎨</div>
-        <div>
-          <h3>5 tonos de voz</h3>
-          <p>Divertido, educativo, serio, polémico o motivador. Elige el que encaje con tu marca.</p>
-        </div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon">📋</div>
-        <div>
-          <h3>Copiar con un clic</h3>
-          <p>Un botón para copiar todo el contenido de cada plataforma al portapapeles.</p>
-        </div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon">🔄</div>
-        <div>
-          <h3>Generaciones ilimitadas</h3>
-          <p>Con el plan Pro puedes generar todo el contenido que necesites sin límites.</p>
-        </div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon">💾</div>
-        <div>
-          <h3>Historial completo</h3>
-          <p>Accede a todas tus generaciones anteriores desde tu panel.</p>
-        </div>
-      </div>
+      <div class="feature-item"><div class="feature-icon">⚡</div><div><h3>Generación en 10 segundos</h3><p>No esperes minutos. Escribe tu idea y obtén resultados al instante.</p></div></div>
+      <div class="feature-item"><div class="feature-icon">🎯</div><div><h3>Optimizado por plataforma</h3><p>Cada texto sigue las mejores prácticas de TikTok, Instagram y YouTube.</p></div></div>
+      <div class="feature-item"><div class="feature-icon">🎨</div><div><h3>5 tonos de voz</h3><p>Divertido, educativo, serio, polémico o motivador. Elige el que encaje con tu marca.</p></div></div>
+      <div class="feature-item"><div class="feature-icon">📋</div><div><h3>Copiar con un clic</h3><p>Un botón para copiar todo el contenido de cada plataforma al portapapeles.</p></div></div>
+      <div class="feature-item"><div class="feature-icon">🔄</div><div><h3>Generaciones ilimitadas</h3><p>Con el plan Pro puedes generar todo el contenido que necesites sin límites.</p></div></div>
+      <div class="feature-item"><div class="feature-icon">💾</div><div><h3>Historial completo</h3><p>Accede a todas tus generaciones anteriores desde tu panel.</p></div></div>
     </div>
   </section>
 
-  <!-- SECCIÓN: Precios -->
   <section class="landing-section" id="precios">
     <h2>Precios simples</h2>
     <p class="section-sub">Sin sorpresas, sin letras pequeñas. Elige tu plan y empieza a crear.</p>
@@ -313,108 +255,44 @@
         <div class="plan-name">Pro</div>
         <div class="plan-price">7,99€ <span>/ mes</span></div>
         <div class="plan-desc">Para creadores activos</div>
-        <ul class="plan-features">
-          <li>Multipost ilimitados</li>
-          <li>3 plataformas</li>
-          <li>Todos los tonos de voz</li>
-          <li>Historial de generaciones</li>
-        </ul>
+        <ul class="plan-features"><li>Multipost ilimitados</li><li>3 plataformas</li><li>Todos los tonos de voz</li><li>Historial de generaciones</li></ul>
         <button class="btn-plan featured-btn" onclick="handlePlanClick('pro')">Empezar con Pro</button>
       </div>
       <div class="price-card">
         <div class="plan-name">Agencia</div>
         <div class="plan-price">29,99€ <span>/ mes</span></div>
         <div class="plan-desc">Para equipos y agencias</div>
-        <ul class="plan-features">
-          <li>Multipost ilimitados</li>
-          <li>Cuentas múltiples</li>
-          <li>Hasta 10 usuarios</li>
-          <li>API de integración</li>
-        </ul>
+        <ul class="plan-features"><li>Multipost ilimitados</li><li>Cuentas múltiples</li><li>Hasta 10 usuarios</li><li>API de integración</li></ul>
         <button class="btn-plan" onclick="handlePlanClick('agencia')">Contactar ventas</button>
       </div>
     </div>
   </section>
 
-  <!-- SECCIÓN: FAQ -->
   <section class="landing-section" id="faq">
     <h2>Preguntas frecuentes</h2>
     <p class="section-sub">Resolvemos tus dudas antes de que las tengas.</p>
     <div class="faq-list">
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">¿Las generaciones son realmente ilimitadas?<span class="faq-arrow">▼</span></div>
-        <div class="faq-answer"><div class="faq-answer-inner">Sí. Con el plan Pro puedes generar todo el contenido que quieras sin ningún tipo de límite diario o mensual.</div></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">¿Puedo usar los textos generados comercialmente?<span class="faq-arrow">▼</span></div>
-        <div class="faq-answer"><div class="faq-answer-inner">Por supuesto. Los textos generados son tuyos y puedes usarlos en tus redes, clientes, proyectos comerciales, etc.</div></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">¿En qué idioma genera el contenido?<span class="faq-arrow">▼</span></div>
-        <div class="faq-answer"><div class="faq-answer-inner">Actualmente generamos contenido en español. Estamos trabajando en añadir más idiomas próximamente.</div></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">¿Puedo cancelar en cualquier momento?<span class="faq-arrow">▼</span></div>
-        <div class="faq-answer"><div class="faq-answer-inner">Sí, puedes cancelar tu suscripción cuando quieras desde tu perfil. Sin permanencias ni penalizaciones.</div></div>
-      </div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">¿Las generaciones son realmente ilimitadas?<span class="faq-arrow">▼</span></div><div class="faq-answer"><div class="faq-answer-inner">Sí. Con el plan Pro puedes generar todo el contenido que quieras sin ningún tipo de límite diario o mensual.</div></div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">¿Puedo usar los textos generados comercialmente?<span class="faq-arrow">▼</span></div><div class="faq-answer"><div class="faq-answer-inner">Por supuesto. Los textos generados son tuyos y puedes usarlos en tus redes, clientes, proyectos comerciales, etc.</div></div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">¿En qué idioma genera el contenido?<span class="faq-arrow">▼</span></div><div class="faq-answer"><div class="faq-answer-inner">Actualmente generamos contenido en español. Estamos trabajando en añadir más idiomas próximamente.</div></div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">¿Puedo cancelar en cualquier momento?<span class="faq-arrow">▼</span></div><div class="faq-answer"><div class="faq-answer-inner">Sí, puedes cancelar tu suscripción cuando quieras desde tu perfil. Sin permanencias ni penalizaciones.</div></div></div>
     </div>
   </section>
 
   <footer>
     <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="logo">Multi<span>Post</span></div>
-        <p>La forma más rápida de generar textos virales para TikTok, YouTube e Instagram con Inteligencia Artificial.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Legal</h4>
-        <ul>
-          <li><a onclick="showLegal('privacidad')">Privacidad</a></li>
-          <li><a onclick="showLegal('terminos')">Términos</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Empresa</h4>
-        <ul>
-          <li><a onclick="showLegal('about')">Sobre nosotros</a></li>
-          <li><a onclick="showLegal('contacto')">Contacto</a></li>
-        </ul>
-      </div>
+      <div class="footer-brand"><div class="logo">Multi<span>Post</span></div><p>La forma más rápida de generar textos virales para TikTok, YouTube e Instagram con Inteligencia Artificial.</p></div>
+      <div class="footer-col"><h4>Legal</h4><ul><li><a onclick="showLegal('privacidad')">Privacidad</a></li><li><a onclick="showLegal('terminos')">Términos</a></li></ul></div>
+      <div class="footer-col"><h4>Empresa</h4><ul><li><a onclick="showLegal('about')">Sobre nosotros</a></li><li><a onclick="showLegal('contacto')">Contacto</a></li></ul></div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2025 MultiPost Technologies S.L. · Bilbao, España</span>
-      <span>Hecho con ♥ para creadores</span>
-    </div>
+    <div class="footer-bottom"><span>© 2025 MultiPost Technologies S.L. · Bilbao, España</span><span>Hecho con ♥ para creadores</span></div>
   </footer>
 </div>
 
-<div class="legal-section" id="page-privacidad">
-  <button class="back-btn" onclick="hideLegal()">← Volver</button>
-  <h2>Política de Privacidad</h2>
-  <p>Recogemos tu correo de Google para prestar el servicio de IA y gestionar tu cuenta.</p>
-  <p>Tus datos están protegidos y nunca los compartimos con terceros sin tu consentimiento.</p>
-</div>
-
-<div class="legal-section" id="page-terminos">
-  <button class="back-btn" onclick="hideLegal()">← Volver</button>
-  <h2>Términos y Condiciones</h2>
-  <p>MultiPost genera textos con IA. El usuario es el único responsable del contenido que publica en sus redes.</p>
-  <p>Al usar este servicio, aceptas nuestros términos de uso y política de privacidad.</p>
-</div>
-
-<div class="legal-section" id="page-about">
-  <button class="back-btn" onclick="hideLegal()">← Volver</button>
-  <h2>Sobre nosotros</h2>
-  <p>MultiPost nació en Bilbao con la misión de hacer el copywriting más accesible para creadores de contenido.</p>
-  <p>Somos el asistente de copywriting definitivo para creadores que quieren maximizar su impacto en redes sociales.</p>
-</div>
-
-<div class="legal-section" id="page-contacto">
-  <button class="back-btn" onclick="hideLegal()">← Volver</button>
-  <h2>Contacto</h2>
-  <p>¿Tienes preguntas o sugerencias? Escríbenos a:</p>
-  <p><strong>hola@multipost.cc</strong></p>
-</div>
+<div class="legal-section" id="page-privacidad"><button class="back-btn" onclick="hideLegal()">← Volver</button><h2>Política de Privacidad</h2><p>Recogemos tu correo de Google para prestar el servicio de IA y gestionar tu cuenta.</p><p>Tus datos están protegidos y nunca los compartimos con terceros sin tu consentimiento.</p></div>
+<div class="legal-section" id="page-terminos"><button class="back-btn" onclick="hideLegal()">← Volver</button><h2>Términos y Condiciones</h2><p>MultiPost genera textos con IA. El usuario es el único responsable del contenido que publica en sus redes.</p><p>Al usar este servicio, aceptas nuestros términos de uso y política de privacidad.</p></div>
+<div class="legal-section" id="page-about"><button class="back-btn" onclick="hideLegal()">← Volver</button><h2>Sobre nosotros</h2><p>MultiPost nació en Bilbao con la misión de hacer el copywriting más accesible para creadores de contenido.</p><p>Somos el asistente de copywriting definitivo para creadores que quieren maximizar su impacto en redes sociales.</p></div>
+<div class="legal-section" id="page-contacto"><button class="back-btn" onclick="hideLegal()">← Volver</button><h2>Contacto</h2><p>¿Tienes preguntas o sugerencias? Escríbenos a:</p><p><strong>hola@multipost.cc</strong></p></div>
 
 <div id="cookie-banner">
   <p>Usamos cookies para mejorar tu experiencia. <a onclick="showLegal('privacidad')">Más información</a></p>
@@ -451,10 +329,7 @@
       </div>
     </div>
     <form onsubmit="handleSaveProfile(event)">
-      <div class="dash-form-field">
-        <label>NOMBRE DE USUARIO</label>
-        <input type="text" id="settings-name" placeholder="Tu nombre público" required>
-      </div>
+      <div class="dash-form-field"><label>NOMBRE DE USUARIO</label><input type="text" id="settings-name" placeholder="Tu nombre público" required></div>
       <div class="dash-success" id="profile-success">✅ Perfil actualizado.</div>
       <button type="submit" class="btn-dash-secondary">Guardar cambios</button>
     </form>
@@ -471,10 +346,7 @@
       <div class="dash-card">
         <h3>✨ Nueva generación</h3>
         <form onsubmit="handleGenerateAI(event)">
-          <div class="dash-form-field">
-            <label>¿DE QUÉ VA TU VIDEO?</label>
-            <input type="text" id="ai-topic" placeholder="Ej: Cómo ganar dinero con IA sin ser programador" required>
-          </div>
+          <div class="dash-form-field"><label>¿DE QUÉ VA TU VIDEO?</label><input type="text" id="ai-topic" placeholder="Ej: Cómo ganar dinero con IA sin ser programador" required></div>
           <div class="dash-form-field">
             <label>TONO DEL CONTENIDO</label>
             <select id="ai-tone">
@@ -489,7 +361,6 @@
           <button type="submit" class="btn-dash-publish" id="ai-generate-btn">Generar textos con IA →</button>
         </form>
       </div>
-
       <div class="ai-results-grid" id="div-resultados-ia">
         <div class="ai-card" style="border-top: 3px solid #fff;">
           <h3>🎵 TikTok</h3>
@@ -517,65 +388,72 @@
   </div>
 </div>
 
-<!-- Toast para feedback visual -->
 <div class="toast" id="toast"></div>
 
 <script>
-// =====================
-// Estado global
-// =====================
-let currentUser = null;
+// ══════════════════════════════════════
+//  SUPABASE - Tus credenciales reales
+// ══════════════════════════════════════
+var SUPABASE_URL = 'https://xwbreyqsgujjxqwjtrbi.supabase.co';
+var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3YnJleXFzZ3Vqanhxd2p0cmJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5MTU2NTQsImV4cCI6MjA5MTQ5MTY1NH0.HWw89AP7p7DmEPuy_UUhdt5nQzrSlzT3x8pc7R5S2Zo';
 
-// =====================
-// Init
-// =====================
-document.addEventListener('DOMContentLoaded', () => {
-  checkAuth();
-  
-  // Cookie banner
+var supabase = null;
+var supabaseReady = false;
+
+try {
+  supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  supabaseReady = true;
+} catch(e) {
+  console.error('Error al inicializar Supabase:', e);
+}
+
+// ══════════════════════════════════════
+//  Estado global
+// ══════════════════════════════════════
+var currentUser = null;
+
+// ══════════════════════════════════════
+//  Init
+// ══════════════════════════════════════
+document.addEventListener('DOMContentLoaded', function() {
   if (!localStorage.getItem('cookiesAccepted')) {
     document.getElementById('cookie-banner').classList.add('visible');
   }
+  checkAuth();
 });
 
-// =====================
-// Toast (feedback visual)
-// =====================
-function showToast(msg, duration) {
-  duration = duration || 2000;
+// ══════════════════════════════════════
+//  Toast
+// ══════════════════════════════════════
+function showToast(msg, duration, isError) {
+  duration = duration || 2500;
   var t = document.getElementById('toast');
   t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(function() { t.classList.remove('show'); }, duration);
+  t.className = 'toast show' + (isError ? ' error' : '');
+  setTimeout(function() { t.className = 'toast'; }, duration);
 }
 
-// =====================
-// Cookies
-// =====================
+// ══════════════════════════════════════
+//  Cookies
+// ══════════════════════════════════════
 function closeCookie() {
   localStorage.setItem('cookiesAccepted', 'true');
   document.getElementById('cookie-banner').classList.remove('visible');
 }
 
-// =====================
-// FAQ accordion
-// =====================
+// ══════════════════════════════════════
+//  FAQ
+// ══════════════════════════════════════
 function toggleFaq(el) {
   var item = el.parentElement;
   var wasOpen = item.classList.contains('open');
-  // Cerrar todos
-  document.querySelectorAll('.faq-item').forEach(function(i) {
-    i.classList.remove('open');
-  });
-  // Abrir el clickeado si no estaba abierto
-  if (!wasOpen) {
-    item.classList.add('open');
-  }
+  document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+  if (!wasOpen) item.classList.add('open');
 }
 
-// =====================
-// Modal login
-// =====================
+// ══════════════════════════════════════
+//  Modal login
+// ══════════════════════════════════════
 function openModal() {
   document.getElementById('modal-overlay').classList.add('active');
   document.getElementById('login-error').textContent = '';
@@ -584,24 +462,24 @@ function openModal() {
 function closeModal() {
   document.getElementById('modal-overlay').classList.remove('active');
   document.getElementById('login-error').textContent = '';
+  var btn = document.getElementById('btn-google-login');
+  btn.disabled = false;
+  btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:20px;height:20px"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg> Continuar con Google';
 }
 
-// Cerrar modal al clic fuera
 document.getElementById('modal-overlay').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
 
-// =====================
-// Perfil
-// =====================
+// ══════════════════════════════════════
+//  Perfil
+// ══════════════════════════════════════
 function openProfile() {
   if (!currentUser) return;
-  
   document.getElementById('settings-name').value = currentUser.name || '';
   document.getElementById('settings-name-display').textContent = currentUser.name || 'Usuario';
   document.getElementById('settings-email-display').textContent = currentUser.email || '';
   document.getElementById('settings-plan-badge').textContent = 'Plan: ' + (currentUser.plan || 'Gratis');
-  
   var avatar = document.getElementById('settings-avatar');
   if (currentUser.avatar) {
     avatar.style.backgroundImage = 'url(' + currentUser.avatar + ')';
@@ -610,7 +488,6 @@ function openProfile() {
     avatar.style.backgroundImage = 'none';
     avatar.textContent = (currentUser.name || 'MP').substring(0, 2).toUpperCase();
   }
-  
   document.getElementById('profile-overlay').classList.add('active');
 }
 
@@ -619,47 +496,43 @@ function closeProfile() {
   document.getElementById('profile-success').style.display = 'none';
 }
 
-// Cerrar perfil al clic fuera
 document.getElementById('profile-overlay').addEventListener('click', function(e) {
   if (e.target === this) closeProfile();
 });
 
-// =====================
-// Auth
-// =====================
+// ══════════════════════════════════════
+//  AUTH CON SUPABASE (REAL)
+// ══════════════════════════════════════
 function loginWithGoogle() {
+  if (!supabaseReady) {
+    document.getElementById('login-error').textContent = 'Error: Supabase no está conectado.';
+    return;
+  }
+
   var btn = document.getElementById('btn-google-login');
   btn.disabled = true;
-  btn.textContent = 'Conectando...';
+  btn.textContent = 'Conectando con Google...';
   document.getElementById('login-error').textContent = '';
 
-  // Simulamos login (reemplazar por Supabase real)
-  setTimeout(function() {
-    var mockUser = {
-      id: 'user_' + Math.random().toString(36).substr(2, 9),
-      email: 'demo@multipost.cc',
-      name: 'Usuario Demo',
-      avatar: null,
-      plan: 'Pro'
-    };
-    
-    currentUser = mockUser;
-    localStorage.setItem('user', JSON.stringify(mockUser));
-    
-    updateUIForLoggedInUser();
-    closeModal();
-    
-    // Restablecer botón
+  supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: window.location.origin + window.location.pathname
+    }
+  }).then(function(result) {
+    if (result.error) throw result.error;
+  }).catch(function(err) {
+    console.error('Error login Google:', err);
+    document.getElementById('login-error').textContent = 'Error: ' + (err.message || 'No se pudo conectar con Google.');
     btn.disabled = false;
     btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:20px;height:20px"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg> Continuar con Google';
-    
-    // Llevar al dashboard
-    showDashboard();
-    showToast('¡Bienvenido, ' + mockUser.name + '!');
-  }, 800);
+  });
 }
 
-function logout() {
+async function logout() {
+  if (supabaseReady) {
+    try { await supabase.auth.signOut(); } catch(e) {}
+  }
   currentUser = null;
   localStorage.removeItem('user');
   updateUIForLoggedOutUser();
@@ -667,24 +540,81 @@ function logout() {
   showToast('Sesión cerrada');
 }
 
-function checkAuth() {
+async function checkAuth() {
+  // Datos rápidos de localStorage mientras carga Supabase
   var saved = localStorage.getItem('user');
   if (saved) {
     try {
       currentUser = JSON.parse(saved);
       updateUIForLoggedInUser();
+    } catch(e) { localStorage.removeItem('user'); }
+  }
+
+  // Verificar sesión real con Supabase
+  if (supabaseReady) {
+    try {
+      var result = await supabase.auth.getSession();
+      if (result.data.session) {
+        var session = result.data.session;
+        var meta = session.user.user_metadata || {};
+        var userData = {
+          id: session.user.id,
+          email: session.user.email,
+          name: meta.full_name || meta.name || session.user.email.split('@')[0],
+          avatar: meta.avatar_url || meta.picture || null,
+          plan: 'Gratis'
+        };
+
+        // Intentar leer plan de tabla profiles (no falla si no existe)
+        try {
+          var profileResult = await supabase
+            .from('profiles')
+            .select('plan, display_name, avatar_url')
+            .eq('id', session.user.id)
+            .single();
+          if (profileResult.data) {
+            if (profileResult.data.plan) userData.plan = profileResult.data.plan;
+            if (profileResult.data.display_name) userData.name = profileResult.data.display_name;
+            if (profileResult.data.avatar_url) userData.avatar = profileResult.data.avatar_url;
+          }
+        } catch(e) {}
+
+        currentUser = userData;
+        localStorage.setItem('user', JSON.stringify(userData));
+        updateUIForLoggedInUser();
+      } else {
+        if (currentUser) {
+          currentUser = null;
+          localStorage.removeItem('user');
+          updateUIForLoggedOutUser();
+        }
+      }
     } catch(e) {
-      localStorage.removeItem('user');
+      console.error('Error checkAuth:', e);
     }
   }
 }
 
+// Detectar cierre de sesión en otra pestaña
+if (supabaseReady) {
+  supabase.auth.onAuthStateChange(function(event) {
+    if (event === 'SIGNED_OUT') {
+      currentUser = null;
+      localStorage.removeItem('user');
+      updateUIForLoggedOutUser();
+      showMainContent();
+    }
+  });
+}
+
+// ══════════════════════════════════════
+//  UI updates
+// ══════════════════════════════════════
 function updateUIForLoggedInUser() {
   document.getElementById('nav-btn-guest').style.display = 'none';
   document.getElementById('nav-user-menu').style.display = 'flex';
   document.getElementById('nav-name').textContent = currentUser.name || 'Usuario';
   document.getElementById('nav-email').textContent = currentUser.email || '';
-  
   var navAvatar = document.getElementById('nav-avatar');
   if (currentUser.avatar) {
     navAvatar.style.backgroundImage = 'url(' + currentUser.avatar + ')';
@@ -693,8 +623,6 @@ function updateUIForLoggedInUser() {
     navAvatar.style.backgroundImage = 'none';
     navAvatar.textContent = (currentUser.name || 'MP').substring(0, 2).toUpperCase();
   }
-
-  // Cambiar CTA del hero si está logueado
   updateHeroCta();
 }
 
@@ -714,9 +642,9 @@ function updateHeroCta() {
   }
 }
 
-// =====================
-// Navegación
-// =====================
+// ══════════════════════════════════════
+//  Navegación
+// ══════════════════════════════════════
 function showDashboard() {
   document.getElementById('main-content').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
@@ -734,10 +662,8 @@ function showMainContent() {
 }
 
 function showLegal(page) {
-  // Cerrar overlays abiertos
   closeModal();
   closeCookie();
-  
   document.getElementById('main-content').style.display = 'none';
   document.getElementById('dashboard').style.display = 'none';
   document.getElementById('nav-links-landing').style.display = 'none';
@@ -748,167 +674,151 @@ function showLegal(page) {
 
 function hideLegal() {
   document.querySelectorAll('.legal-section').forEach(function(el) { el.style.display = 'none'; });
-  if (currentUser) {
-    showDashboard();
-  } else {
-    showMainContent();
-  }
+  if (currentUser) { showDashboard(); } else { showMainContent(); }
 }
 
 function handleLogoClick() {
-  if (currentUser) {
-    showDashboard();
-  } else {
-    showMainContent();
-  }
+  if (currentUser) { showDashboard(); } else { showMainContent(); }
 }
 
 function handleHeroCta() {
-  if (currentUser) {
-    showDashboard();
-  } else {
-    openModal();
-  }
+  if (currentUser) { showDashboard(); } else { openModal(); }
 }
 
-// Botones de planes
 function handlePlanClick(plan) {
-  if (!currentUser) {
-    openModal();
-    return;
-  }
+  if (!currentUser) { openModal(); return; }
   var urls = {
     pro: 'https://buy.stripe.com/14A9AT3debVVcu0drW3gk01',
     agencia: 'https://buy.stripe.com/00w4gzg00f87bpW3Rm3gk00'
   };
-  if (urls[plan]) {
-    window.location.href = urls[plan];
-  }
+  if (urls[plan]) window.location.href = urls[plan];
 }
 
-// =====================
-// Perfil: guardar nombre
-// =====================
+// ══════════════════════════════════════
+//  Perfil: guardar nombre
+// ══════════════════════════════════════
 function handleSaveProfile(event) {
   event.preventDefault();
-  
   var newName = document.getElementById('settings-name').value.trim();
   if (!newName) return;
-  
+
   if (currentUser) {
     currentUser.name = newName;
     localStorage.setItem('user', JSON.stringify(currentUser));
     updateUIForLoggedInUser();
     document.getElementById('settings-name-display').textContent = newName;
-    
     var avatar = document.getElementById('settings-avatar');
-    if (!currentUser.avatar) {
-      avatar.textContent = newName.substring(0, 2).toUpperCase();
+    if (!currentUser.avatar) avatar.textContent = newName.substring(0, 2).toUpperCase();
+
+    if (supabaseReady) {
+      supabase.from('profiles').upsert({
+        id: currentUser.id,
+        display_name: newName,
+        email: currentUser.email
+      }).catch(function() {});
     }
-    
+
     document.getElementById('profile-success').style.display = 'block';
-    setTimeout(function() {
-      document.getElementById('profile-success').style.display = 'none';
-    }, 3000);
+    setTimeout(function() { document.getElementById('profile-success').style.display = 'none'; }, 3000);
   }
 }
 
-// =====================
-// Perfil: subir avatar
-// =====================
+// ══════════════════════════════════════
+//  Perfil: subir avatar
+// ══════════════════════════════════════
 function handleAvatarUpload(event) {
   var file = event.target.files[0];
   if (!file) return;
-  
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    var avatarUrl = e.target.result;
-    
-    if (currentUser) {
+
+  if (supabaseReady && currentUser) {
+    var filePath = 'avatars/' + currentUser.id + '/' + Date.now() + '_' + file.name;
+    showToast('Subiendo imagen...');
+
+    supabase.storage.from('avatars').upload(filePath, file).then(function(uploadResult) {
+      if (uploadResult.error) throw uploadResult.error;
+      return supabase.storage.from('avatars').getPublicUrl(filePath);
+    }).then(function(publicUrlResult) {
+      var avatarUrl = publicUrlResult.data.publicUrl;
       currentUser.avatar = avatarUrl;
       localStorage.setItem('user', JSON.stringify(currentUser));
-      
       document.getElementById('nav-avatar').style.backgroundImage = 'url(' + avatarUrl + ')';
       document.getElementById('nav-avatar').textContent = '';
       document.getElementById('settings-avatar').style.backgroundImage = 'url(' + avatarUrl + ')';
       document.getElementById('settings-avatar').textContent = '';
-      
+      supabase.from('profiles').upsert({ id: currentUser.id, avatar_url: avatarUrl }).catch(function() {});
       showToast('Avatar actualizado');
+    }).catch(function(err) {
+      console.error('Error subiendo avatar:', err);
+      uploadAvatarLocal(file);
+    });
+  } else {
+    uploadAvatarLocal(file);
+  }
+}
+
+function uploadAvatarLocal(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var avatarUrl = e.target.result;
+    if (currentUser) {
+      currentUser.avatar = avatarUrl;
+      localStorage.setItem('user', JSON.stringify(currentUser));
+      document.getElementById('nav-avatar').style.backgroundImage = 'url(' + avatarUrl + ')';
+      document.getElementById('nav-avatar').textContent = '';
+      document.getElementById('settings-avatar').style.backgroundImage = 'url(' + avatarUrl + ')';
+      document.getElementById('settings-avatar').textContent = '';
+      showToast('Avatar guardado localmente');
     }
   };
   reader.readAsDataURL(file);
 }
 
-// =====================
-// Generación IA (mock)
-// =====================
+// ══════════════════════════════════════
+//  Generación IA (mock)
+// ══════════════════════════════════════
 function handleGenerateAI(event) {
   event.preventDefault();
-  
   var topic = document.getElementById('ai-topic').value.trim();
   var tone = document.getElementById('ai-tone').value;
   var errorDiv = document.getElementById('dash-error');
   var submitBtn = document.getElementById('ai-generate-btn');
-  
-  if (!topic) {
-    errorDiv.textContent = 'Escribe de qué va tu video.';
-    return;
-  }
-  
+
+  if (!topic) { errorDiv.textContent = 'Escribe de qué va tu video.'; return; }
+
   errorDiv.textContent = '';
   submitBtn.disabled = true;
   submitBtn.textContent = 'Generando... ⏳';
-  
-  // Ocultar resultados anteriores
   document.getElementById('div-resultados-ia').style.display = 'none';
-  
+
   setTimeout(function() {
-    var results = {
-      tiktok: {
-        hook: '¿' + topic + '? 🤯 Te cuento el secreto que nadie te dice...',
-        screen: topic.toUpperCase() + ' ✨',
-        caption: topic + ' y te va a cambiar la vida 🚀 (Tono: ' + tone + ')',
-        tags: '#viral #tips #tutorial #parati #' + topic.split(' ')[0].toLowerCase().replace(/[^a-záéíóúñ]/g, '')
-      },
-      instagram: {
-        caption: '💡 ' + topic + '\n\nHoy te comparto todo lo que necesitas saber sobre esto.\n\n¿Listo para el cambio? 👇\n\n—\n#multipost #contenido #tutorial #aprendizaje #' + topic.split(' ')[0].toLowerCase().replace(/[^a-záéíóúñ]/g, ''),
-        tags: '#multipost #contenido #tutorial #aprendizaje #' + topic.split(' ')[0].toLowerCase().replace(/[^a-záéíóúñ]/g, '')
-      },
-      youtube: {
-        title: topic + ' | Guía Completa 2025',
-        desc: 'En este video te enseño todo sobre: ' + topic + '\n\n⏱️ TIMESTAMPS:\n0:00 - Introducción\n1:30 - Paso 1\n3:45 - Paso 2\n6:20 - Conclusión\n\n🔔 Suscríbete para más contenido',
-        tags: '#youtube #tutorial #guia #' + topic.split(' ')[0].toLowerCase().replace(/[^a-záéíóúñ]/g, '')
-      }
-    };
-    
-    document.getElementById('res-tiktok-hook').textContent = results.tiktok.hook;
-    document.getElementById('res-tiktok-screen').textContent = results.tiktok.screen;
-    document.getElementById('res-tiktok-caption').textContent = results.tiktok.caption;
-    document.getElementById('res-tiktok-tags').textContent = results.tiktok.tags;
-    
-    document.getElementById('res-ig-caption').textContent = results.instagram.caption;
-    document.getElementById('res-ig-tags').textContent = results.instagram.tags;
-    
-    document.getElementById('res-yt-title').textContent = results.youtube.title;
-    document.getElementById('res-yt-desc').textContent = results.youtube.desc;
-    document.getElementById('res-yt-tags').textContent = results.youtube.tags;
-    
+    var safeTag = topic.split(' ')[0].toLowerCase().replace(/[^a-záéíóúñ]/g, '');
+    var toneEmoji = { 'Divertido': '😂', 'Educativo': '📚', 'Serio y Profesional': '💼', 'Polémico': '🔥', 'Motivador': '💪' };
+
+    document.getElementById('res-tiktok-hook').textContent = '¿' + topic + '? 🤯 Te cuento el secreto que nadie te dice...';
+    document.getElementById('res-tiktok-screen').textContent = topic.toUpperCase() + ' ✨';
+    document.getElementById('res-tiktok-caption').textContent = topic + ' y te va a cambiar la vida 🚀 (Tono: ' + tone + ')';
+    document.getElementById('res-tiktok-tags').textContent = '#viral #tips #tutorial #parati #' + safeTag;
+
+    document.getElementById('res-ig-caption').textContent = '💡 ' + topic + '\n\n' + (toneEmoji[tone] || '📝') + ' Hoy te comparto todo lo que necesitas saber sobre esto.\n\n¿Listo para el cambio? 👇\n\n—\n#multipost #contenido #tutorial #' + safeTag;
+    document.getElementById('res-ig-tags').textContent = '#multipost #contenido #tutorial #aprendizaje #' + safeTag;
+
+    document.getElementById('res-yt-title').textContent = topic + ' | Guía Completa 2025';
+    document.getElementById('res-yt-desc').textContent = 'En este video te enseño todo sobre: ' + topic + '\n\n⏱️ TIMESTAMPS:\n0:00 - Introducción\n1:30 - Paso 1\n3:45 - Paso 2\n6:20 - Conclusión\n\n🔔 Suscríbete para más contenido';
+    document.getElementById('res-yt-tags').textContent = '#youtube #tutorial #guia #' + safeTag;
+
     document.getElementById('div-resultados-ia').style.display = 'grid';
-    
     submitBtn.disabled = false;
     submitBtn.textContent = 'Generar textos con IA →';
-    
     document.getElementById('div-resultados-ia').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     showToast('¡Textos generados!');
   }, 2000);
 }
 
-// =====================
-// Copiar texto (con fallback para file://)
-// =====================
+// ══════════════════════════════════════
+//  Copiar texto
+// ══════════════════════════════════════
 function copyText(btn, platform) {
   var textToCopy = '';
-  
   if (platform === 'tiktok') {
     textToCopy = 'GANCHO:\n' + document.getElementById('res-tiktok-hook').textContent +
                  '\n\nTEXTO EN PANTALLA:\n' + document.getElementById('res-tiktok-screen').textContent +
@@ -922,57 +832,36 @@ function copyText(btn, platform) {
                  '\n\nDESCRIPCIÓN:\n' + document.getElementById('res-yt-desc').textContent +
                  '\n\nHASHTAGS:\n' + document.getElementById('res-yt-tags').textContent;
   }
-  
-  // Método moderno (HTTPS / localhost)
   if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(textToCopy).then(function() {
-      copySuccess(btn);
-    }).catch(function() {
-      // Fallback si falla
-      copyFallback(textToCopy, btn);
-    });
+    navigator.clipboard.writeText(textToCopy).then(function() { copySuccess(btn); }).catch(function() { copyFallback(textToCopy, btn); });
   } else {
-    // Fallback para file:// o navegadores antiguos
     copyFallback(textToCopy, btn);
   }
 }
 
 function copyFallback(text, btn) {
-  var textarea = document.createElement('textarea');
-  textarea.value = text;
-  textarea.style.position = 'fixed';
-  textarea.style.left = '-9999px';
-  textarea.style.top = '-9999px';
-  document.body.appendChild(textarea);
-  textarea.focus();
-  textarea.select();
-  try {
-    document.execCommand('copy');
-    copySuccess(btn);
-  } catch(e) {
-    showToast('No se pudo copiar. Selecciona el texto manualmente.');
-  }
-  document.body.removeChild(textarea);
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
+  document.body.appendChild(ta);
+  ta.focus(); ta.select();
+  try { document.execCommand('copy'); copySuccess(btn); }
+  catch(e) { showToast('No se pudo copiar', 2000, true); }
+  document.body.removeChild(ta);
 }
 
 function copySuccess(btn) {
   btn.classList.add('copied');
   btn.textContent = '✓ Copiado';
   showToast('¡Copiado al portapapeles!');
-  setTimeout(function() {
-    btn.classList.remove('copied');
-    btn.textContent = 'Copiar todo';
-  }, 2000);
+  setTimeout(function() { btn.classList.remove('copied'); btn.textContent = 'Copiar todo'; }, 2000);
 }
 
-// =====================
-// Cerrar modales con Escape
-// =====================
+// ══════════════════════════════════════
+//  Cerrar modales con Escape
+// ══════════════════════════════════════
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    closeModal();
-    closeProfile();
-  }
+  if (e.key === 'Escape') { closeModal(); closeProfile(); }
 });
 </script>
 
