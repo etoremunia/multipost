@@ -9,7 +9,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root { --black: #0a0a0a; --white: #f5f3ee; --accent: #ff3c3c; --card-bg: #111111; --text-muted: #888; --border: #1e1e1e; }
@@ -391,40 +390,27 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// ══════════════════════════════════════
-//  SUPABASE - Tus credenciales reales
-// ══════════════════════════════════════
-var SUPABASE_URL = 'https://xwbreyqsgujjxqwjtrbi.supabase.co';
-var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3YnJleXFzZ3Vqanhxd2p0cmJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5MTU2NTQsImV4cCI6MjA5MTQ5MTY1NH0.HWw89AP7p7DmEPuy_UUhdt5nQzrSlzT3x8pc7R5S2Zo';
+// ═══════════════════════════════════════════
+//  SUPABASE REST API - Sin CDN, sin dependencias
+// ═══════════════════════════════════════════
+var SB_URL = 'https://xwbreyqsgujjxqwjtrbi.supabase.co';
+var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3YnJleXFzZ3Vqanhxd2p0cmJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5MTU2NTQsImV4cCI6MjA5MTQ5MTY1NH0.HWw89AP7p7DmEPuy_UUhdt5nQzrSlzT3x8pc7R5S2Zo';
 
-var supabase = null;
-var supabaseReady = false;
-
-try {
-  supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  supabaseReady = true;
-} catch(e) {
-  console.error('Error al inicializar Supabase:', e);
-}
-
-// ══════════════════════════════════════
-//  Estado global
-// ══════════════════════════════════════
 var currentUser = null;
 
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
 //  Init
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', function() {
   if (!localStorage.getItem('cookiesAccepted')) {
     document.getElementById('cookie-banner').classList.add('visible');
   }
-  checkAuth();
+  handleOAuthRedirect();
 });
 
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
 //  Toast
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
 function showToast(msg, duration, isError) {
   duration = duration || 2500;
   var t = document.getElementById('toast');
@@ -433,17 +419,17 @@ function showToast(msg, duration, isError) {
   setTimeout(function() { t.className = 'toast'; }, duration);
 }
 
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
 //  Cookies
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
 function closeCookie() {
   localStorage.setItem('cookiesAccepted', 'true');
   document.getElementById('cookie-banner').classList.remove('visible');
 }
 
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
 //  FAQ
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
 function toggleFaq(el) {
   var item = el.parentElement;
   var wasOpen = item.classList.contains('open');
@@ -451,9 +437,9 @@ function toggleFaq(el) {
   if (!wasOpen) item.classList.add('open');
 }
 
-// ══════════════════════════════════════
-//  Modal login
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
+//  Modal
+// ═══════════════════════════════════════════
 function openModal() {
   document.getElementById('modal-overlay').classList.add('active');
   document.getElementById('login-error').textContent = '';
@@ -462,18 +448,15 @@ function openModal() {
 function closeModal() {
   document.getElementById('modal-overlay').classList.remove('active');
   document.getElementById('login-error').textContent = '';
-  var btn = document.getElementById('btn-google-login');
-  btn.disabled = false;
-  btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:20px;height:20px"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg> Continuar con Google';
 }
 
 document.getElementById('modal-overlay').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
 
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
 //  Perfil
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
 function openProfile() {
   if (!currentUser) return;
   document.getElementById('settings-name').value = currentUser.name || '';
@@ -500,48 +483,57 @@ document.getElementById('profile-overlay').addEventListener('click', function(e)
   if (e.target === this) closeProfile();
 });
 
-// ══════════════════════════════════════
-//  AUTH CON SUPABASE (REAL)
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
+//  AUTH - LOGIN CON GOOGLE (REST API directa)
+// ═══════════════════════════════════════════
 function loginWithGoogle() {
-  if (!supabaseReady) {
-    document.getElementById('login-error').textContent = 'Error: Supabase no está conectado.';
+  var redirectUrl = window.location.origin + window.location.pathname;
+  var authUrl = SB_URL + '/auth/v1/authorize'
+    + '?provider=google'
+    + '&redirect_to=' + encodeURIComponent(redirectUrl)
+    + '&client_id=' + SB_KEY;
+  window.location.href = authUrl;
+}
+
+// ═══════════════════════════════════════════
+//  AUTH - PROCESAR REDIRECT DE GOOGLE
+// ═══════════════════════════════════════════
+async function handleOAuthRedirect() {
+  // Leer tokens del hash de la URL (Supabase los pone ahí)
+  var hash = window.location.hash;
+  if (!hash || hash.indexOf('access_token') === -1) {
+    // No viene de redirect, verificar sesión existente
+    await checkExistingSession();
     return;
   }
 
-  var btn = document.getElementById('btn-google-login');
-  btn.disabled = true;
-  btn.textContent = 'Conectando con Google...';
-  document.getElementById('login-error').textContent = '';
+  var params = new URLSearchParams(hash.substring(1));
+  var accessToken = params.get('access_token');
+  var refreshToken = params.get('refresh_token');
 
-  supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: {
-      redirectTo: window.location.origin + window.location.pathname
-    }
-  }).then(function(result) {
-    if (result.error) throw result.error;
-  }).catch(function(err) {
-    console.error('Error login Google:', err);
-    document.getElementById('login-error').textContent = 'Error: ' + (err.message || 'No se pudo conectar con Google.');
-    btn.disabled = false;
-    btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:20px;height:20px"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg> Continuar con Google';
-  });
-}
-
-async function logout() {
-  if (supabaseReady) {
-    try { await supabase.auth.signOut(); } catch(e) {}
+  if (!accessToken) {
+    await checkExistingSession();
+    return;
   }
-  currentUser = null;
-  localStorage.removeItem('user');
-  updateUIForLoggedOutUser();
-  showMainContent();
-  showToast('Sesión cerrada');
+
+  // Guardar tokens
+  localStorage.setItem('sb_tokens', JSON.stringify({
+    access_token: accessToken,
+    refresh_token: refreshToken
+  }));
+
+  // Limpiar el hash de la URL
+  window.history.replaceState(null, '', window.location.pathname + window.location.search);
+
+  // Obtener datos del usuario
+  await fetchUserAndLogin(accessToken);
 }
 
-async function checkAuth() {
-  // Datos rápidos de localStorage mientras carga Supabase
+// ═══════════════════════════════════════════
+//  AUTH - VERIFICAR SESIÓN EXISTENTE
+// ═══════════════════════════════════════════
+async function checkExistingSession() {
+  // Primero cargar datos rápidos de localStorage
   var saved = localStorage.getItem('user');
   if (saved) {
     try {
@@ -550,66 +542,98 @@ async function checkAuth() {
     } catch(e) { localStorage.removeItem('user'); }
   }
 
-  // Verificar sesión real con Supabase
-  if (supabaseReady) {
-    try {
-      var result = await supabase.auth.getSession();
-      if (result.data.session) {
-        var session = result.data.session;
-        var meta = session.user.user_metadata || {};
-        var userData = {
-          id: session.user.id,
-          email: session.user.email,
-          name: meta.full_name || meta.name || session.user.email.split('@')[0],
-          avatar: meta.avatar_url || meta.picture || null,
-          plan: 'Gratis'
-        };
-
-        // Intentar leer plan de tabla profiles (no falla si no existe)
-        try {
-          var profileResult = await supabase
-            .from('profiles')
-            .select('plan, display_name, avatar_url')
-            .eq('id', session.user.id)
-            .single();
-          if (profileResult.data) {
-            if (profileResult.data.plan) userData.plan = profileResult.data.plan;
-            if (profileResult.data.display_name) userData.name = profileResult.data.display_name;
-            if (profileResult.data.avatar_url) userData.avatar = profileResult.data.avatar_url;
-          }
-        } catch(e) {}
-
-        currentUser = userData;
-        localStorage.setItem('user', JSON.stringify(userData));
-        updateUIForLoggedInUser();
-      } else {
-        if (currentUser) {
-          currentUser = null;
-          localStorage.removeItem('user');
-          updateUIForLoggedOutUser();
-        }
-      }
-    } catch(e) {
-      console.error('Error checkAuth:', e);
-    }
-  }
-}
-
-// Detectar cierre de sesión en otra pestaña
-if (supabaseReady) {
-  supabase.auth.onAuthStateChange(function(event) {
-    if (event === 'SIGNED_OUT') {
+  // Luego verificar con Supabase
+  var tokens = localStorage.getItem('sb_tokens');
+  if (!tokens) {
+    if (currentUser) {
       currentUser = null;
       localStorage.removeItem('user');
       updateUIForLoggedOutUser();
-      showMainContent();
     }
-  });
+    return;
+  }
+
+  try {
+    var tokensObj = JSON.parse(tokens);
+    await fetchUserAndLogin(tokensObj.access_token);
+  } catch(e) {
+    localStorage.removeItem('sb_tokens');
+    localStorage.removeItem('user');
+    currentUser = null;
+    updateUIForLoggedOutUser();
+  }
 }
 
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
+//  AUTH - OBTENER DATOS DEL USUARIO
+// ═══════════════════════════════════════════
+async function fetchUserAndLogin(accessToken) {
+  try {
+    var response = await fetch(SB_URL + '/auth/v1/user', {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + accessToken,
+        'apikey': SB_KEY
+      }
+    });
+
+    if (!response.ok) {
+      // Token inválido o expirado
+      localStorage.removeItem('sb_tokens');
+      localStorage.removeItem('user');
+      currentUser = null;
+      updateUIForLoggedOutUser();
+      return;
+    }
+
+    var user = await response.json();
+    var meta = user.user_metadata || {};
+
+    currentUser = {
+      id: user.id,
+      email: user.email,
+      name: meta.full_name || meta.name || user.email.split('@')[0],
+      avatar: meta.avatar_url || meta.picture || null,
+      plan: 'Gratis'
+    };
+
+    localStorage.setItem('user', JSON.stringify(currentUser));
+    updateUIForLoggedInUser();
+    showDashboard();
+    showToast('¡Bienvenido, ' + currentUser.name + '!');
+  } catch(e) {
+    console.error('Error fetching user:', e);
+  }
+}
+
+// ═══════════════════════════════════════════
+//  AUTH - LOGOUT
+// ═══════════════════════════════════════════
+async function logout() {
+  var tokens = localStorage.getItem('sb_tokens');
+  if (tokens) {
+    try {
+      var tokensObj = JSON.parse(tokens);
+      await fetch(SB_URL + '/auth/v1/logout', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + tokensObj.access_token,
+          'apikey': SB_KEY
+        }
+      });
+    } catch(e) {}
+  }
+  currentUser = null;
+  localStorage.removeItem('sb_tokens');
+  localStorage.removeItem('user');
+  updateUIForLoggedOutUser();
+  showMainContent();
+  showToast('Sesión cerrada');
+}
+
+// ═══════════════════════════════════════════
 //  UI updates
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
 function updateUIForLoggedInUser() {
   document.getElementById('nav-btn-guest').style.display = 'none';
   document.getElementById('nav-user-menu').style.display = 'flex';
@@ -642,9 +666,9 @@ function updateHeroCta() {
   }
 }
 
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
 //  Navegación
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
 function showDashboard() {
   document.getElementById('main-content').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
@@ -687,21 +711,17 @@ function handleHeroCta() {
 
 function handlePlanClick(plan) {
   if (!currentUser) { openModal(); return; }
-  var urls = {
-    pro: 'https://buy.stripe.com/14A9AT3debVVcu0drW3gk01',
-    agencia: 'https://buy.stripe.com/00w4gzg00f87bpW3Rm3gk00'
-  };
+  var urls = { pro: 'https://buy.stripe.com/14A9AT3debVVcu0drW3gk01', agencia: 'https://buy.stripe.com/00w4gzg00f87bpW3Rm3gk00' };
   if (urls[plan]) window.location.href = urls[plan];
 }
 
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
 //  Perfil: guardar nombre
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
 function handleSaveProfile(event) {
   event.preventDefault();
   var newName = document.getElementById('settings-name').value.trim();
   if (!newName) return;
-
   if (currentUser) {
     currentUser.name = newName;
     localStorage.setItem('user', JSON.stringify(currentUser));
@@ -709,54 +729,17 @@ function handleSaveProfile(event) {
     document.getElementById('settings-name-display').textContent = newName;
     var avatar = document.getElementById('settings-avatar');
     if (!currentUser.avatar) avatar.textContent = newName.substring(0, 2).toUpperCase();
-
-    if (supabaseReady) {
-      supabase.from('profiles').upsert({
-        id: currentUser.id,
-        display_name: newName,
-        email: currentUser.email
-      }).catch(function() {});
-    }
-
     document.getElementById('profile-success').style.display = 'block';
     setTimeout(function() { document.getElementById('profile-success').style.display = 'none'; }, 3000);
   }
 }
 
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
 //  Perfil: subir avatar
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
 function handleAvatarUpload(event) {
   var file = event.target.files[0];
   if (!file) return;
-
-  if (supabaseReady && currentUser) {
-    var filePath = 'avatars/' + currentUser.id + '/' + Date.now() + '_' + file.name;
-    showToast('Subiendo imagen...');
-
-    supabase.storage.from('avatars').upload(filePath, file).then(function(uploadResult) {
-      if (uploadResult.error) throw uploadResult.error;
-      return supabase.storage.from('avatars').getPublicUrl(filePath);
-    }).then(function(publicUrlResult) {
-      var avatarUrl = publicUrlResult.data.publicUrl;
-      currentUser.avatar = avatarUrl;
-      localStorage.setItem('user', JSON.stringify(currentUser));
-      document.getElementById('nav-avatar').style.backgroundImage = 'url(' + avatarUrl + ')';
-      document.getElementById('nav-avatar').textContent = '';
-      document.getElementById('settings-avatar').style.backgroundImage = 'url(' + avatarUrl + ')';
-      document.getElementById('settings-avatar').textContent = '';
-      supabase.from('profiles').upsert({ id: currentUser.id, avatar_url: avatarUrl }).catch(function() {});
-      showToast('Avatar actualizado');
-    }).catch(function(err) {
-      console.error('Error subiendo avatar:', err);
-      uploadAvatarLocal(file);
-    });
-  } else {
-    uploadAvatarLocal(file);
-  }
-}
-
-function uploadAvatarLocal(file) {
   var reader = new FileReader();
   reader.onload = function(e) {
     var avatarUrl = e.target.result;
@@ -767,45 +750,38 @@ function uploadAvatarLocal(file) {
       document.getElementById('nav-avatar').textContent = '';
       document.getElementById('settings-avatar').style.backgroundImage = 'url(' + avatarUrl + ')';
       document.getElementById('settings-avatar').textContent = '';
-      showToast('Avatar guardado localmente');
+      showToast('Avatar actualizado');
     }
   };
   reader.readAsDataURL(file);
 }
 
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
 //  Generación IA (mock)
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
 function handleGenerateAI(event) {
   event.preventDefault();
   var topic = document.getElementById('ai-topic').value.trim();
   var tone = document.getElementById('ai-tone').value;
   var errorDiv = document.getElementById('dash-error');
   var submitBtn = document.getElementById('ai-generate-btn');
-
   if (!topic) { errorDiv.textContent = 'Escribe de qué va tu video.'; return; }
-
   errorDiv.textContent = '';
   submitBtn.disabled = true;
   submitBtn.textContent = 'Generando... ⏳';
   document.getElementById('div-resultados-ia').style.display = 'none';
-
   setTimeout(function() {
     var safeTag = topic.split(' ')[0].toLowerCase().replace(/[^a-záéíóúñ]/g, '');
     var toneEmoji = { 'Divertido': '😂', 'Educativo': '📚', 'Serio y Profesional': '💼', 'Polémico': '🔥', 'Motivador': '💪' };
-
     document.getElementById('res-tiktok-hook').textContent = '¿' + topic + '? 🤯 Te cuento el secreto que nadie te dice...';
     document.getElementById('res-tiktok-screen').textContent = topic.toUpperCase() + ' ✨';
     document.getElementById('res-tiktok-caption').textContent = topic + ' y te va a cambiar la vida 🚀 (Tono: ' + tone + ')';
     document.getElementById('res-tiktok-tags').textContent = '#viral #tips #tutorial #parati #' + safeTag;
-
     document.getElementById('res-ig-caption').textContent = '💡 ' + topic + '\n\n' + (toneEmoji[tone] || '📝') + ' Hoy te comparto todo lo que necesitas saber sobre esto.\n\n¿Listo para el cambio? 👇\n\n—\n#multipost #contenido #tutorial #' + safeTag;
     document.getElementById('res-ig-tags').textContent = '#multipost #contenido #tutorial #aprendizaje #' + safeTag;
-
     document.getElementById('res-yt-title').textContent = topic + ' | Guía Completa 2025';
     document.getElementById('res-yt-desc').textContent = 'En este video te enseño todo sobre: ' + topic + '\n\n⏱️ TIMESTAMPS:\n0:00 - Introducción\n1:30 - Paso 1\n3:45 - Paso 2\n6:20 - Conclusión\n\n🔔 Suscríbete para más contenido';
     document.getElementById('res-yt-tags').textContent = '#youtube #tutorial #guia #' + safeTag;
-
     document.getElementById('div-resultados-ia').style.display = 'grid';
     submitBtn.disabled = false;
     submitBtn.textContent = 'Generar textos con IA →';
@@ -814,9 +790,9 @@ function handleGenerateAI(event) {
   }, 2000);
 }
 
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
 //  Copiar texto
-// ══════════════════════════════════════
+// ═══════════════════════════════════════════
 function copyText(btn, platform) {
   var textToCopy = '';
   if (platform === 'tiktok') {
@@ -825,8 +801,7 @@ function copyText(btn, platform) {
                  '\n\nCAPTION:\n' + document.getElementById('res-tiktok-caption').textContent +
                  '\n\nHASHTAGS:\n' + document.getElementById('res-tiktok-tags').textContent;
   } else if (platform === 'instagram') {
-    textToCopy = document.getElementById('res-ig-caption').textContent +
-                 '\n\n' + document.getElementById('res-ig-tags').textContent;
+    textToCopy = document.getElementById('res-ig-caption').textContent + '\n\n' + document.getElementById('res-ig-tags').textContent;
   } else if (platform === 'youtube') {
     textToCopy = 'TÍTULO:\n' + document.getElementById('res-yt-title').textContent +
                  '\n\nDESCRIPCIÓN:\n' + document.getElementById('res-yt-desc').textContent +
@@ -834,9 +809,7 @@ function copyText(btn, platform) {
   }
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(textToCopy).then(function() { copySuccess(btn); }).catch(function() { copyFallback(textToCopy, btn); });
-  } else {
-    copyFallback(textToCopy, btn);
-  }
+  } else { copyFallback(textToCopy, btn); }
 }
 
 function copyFallback(text, btn) {
@@ -845,8 +818,7 @@ function copyFallback(text, btn) {
   ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
   document.body.appendChild(ta);
   ta.focus(); ta.select();
-  try { document.execCommand('copy'); copySuccess(btn); }
-  catch(e) { showToast('No se pudo copiar', 2000, true); }
+  try { document.execCommand('copy'); copySuccess(btn); } catch(e) { showToast('No se pudo copiar', 2000, true); }
   document.body.removeChild(ta);
 }
 
@@ -857,9 +829,6 @@ function copySuccess(btn) {
   setTimeout(function() { btn.classList.remove('copied'); btn.textContent = 'Copiar todo'; }, 2000);
 }
 
-// ══════════════════════════════════════
-//  Cerrar modales con Escape
-// ══════════════════════════════════════
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') { closeModal(); closeProfile(); }
 });
