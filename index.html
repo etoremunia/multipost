@@ -22,7 +22,7 @@
   .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; letter-spacing: -0.5px; }
   .logo span { color: var(--accent); }
   nav ul { display: flex; gap: 1.8rem; list-style: none; }
-  nav ul a { color: var(--text-muted); font-size: 0.88rem; transition: color .2s; }
+  nav ul a { color: var(--text-muted); font-size: 0.88rem; transition: color .2s; cursor: pointer; }
   nav ul a:hover { color: var(--white); }
   .btn-nav { background: var(--accent); color: var(--white); border: none; padding: .6rem 1.4rem; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer; font-size: .88rem; transition: opacity .2s; }
   .btn-nav:hover { opacity: .85; }
@@ -136,7 +136,7 @@
   .footer-col ul a:hover { color: var(--white); }
   .footer-bottom { border-top: 1px solid var(--border); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; color: var(--text-muted); font-size: .8rem; flex-wrap: wrap; gap: .5rem; }
   @media (max-width: 768px) { nav ul { display: none; } h1 { letter-spacing: -1px; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } #cookie-banner { bottom: 0; border-radius: 16px 16px 0 0; width: 100%; } }
-  @media (max-width: 480px) { .cta-group { flex-direction: column; align-items: center; } .footer-grid { grid-template-columns: 1fr; } .mockup-results { grid-template-columns: 1fr; } }
+  @media (max-width: 480px) { .cta-group { flex-direction: column; align-items: center; } .footer-grid { grid-template-columns: 1fr; } .mockup-results { grid-template-columns: 1fr; } .dash-profile-header { flex-direction: column; text-align: center; } }
   #modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(6px); z-index: 1000; align-items: center; justify-content: center; }
   #modal-overlay.active { display: flex; }
   .modal-box { background: #111; border: 1px solid #2a2a2a; border-radius: 20px; padding: 2.2rem; width: 90%; max-width: 420px; position: relative; }
@@ -164,7 +164,7 @@
   
   #dashboard { display: none; min-height: 100vh; }
   .dash-user { display: flex; align-items: center; gap: .8rem; }
-  .dash-avatar { width: 36px; height: 36px; border-radius: 50%; background: #2d1a4a; color: #b48fe0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; }
+  .dash-avatar { width: 36px; height: 36px; border-radius: 50%; background: #2d1a4a; color: #b48fe0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; background-size: cover; background-position: center; }
   .dash-user-info { font-size: .85rem; }
   .dash-user-info strong { display: block; color: #f5f3ee; }
   .dash-user-info small { color: #888; }
@@ -184,7 +184,15 @@
   .btn-dash-publish { width: 100%; background: #ff3c3c; border: none; color: #f5f3ee; padding: .8rem; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .92rem; font-weight: 500; cursor: pointer; transition: opacity .2s; }
   .btn-dash-publish:hover { opacity: .85; }
   .btn-dash-publish:disabled { opacity: .5; cursor: not-allowed; }
+  .btn-dash-secondary { width: 100%; background: transparent; border: 1px solid #2a2a2a; color: #f5f3ee; padding: .8rem; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .92rem; font-weight: 500; cursor: pointer; transition: all .2s; }
+  .btn-dash-secondary:hover { background: #1a1a1a; border-color: #555; }
   .dash-error { color: #ff6b6b; font-size: .8rem; margin-bottom: .6rem; min-height: 1em; }
+  .dash-success { color: #4cff72; font-size: .85rem; margin-bottom: .6rem; }
+  
+  .dash-profile-header { display: flex; align-items: center; gap: 1.2rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #1e1e1e; }
+  .dash-profile-avatar { width: 70px; height: 70px; border-radius: 50%; background: #2d1a4a; color: #b48fe0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.5rem; background-size: cover; background-position: center; flex-shrink: 0; }
+  .dash-profile-plan { font-size: .78rem; padding: .2rem .6rem; border-radius: 100px; background: rgba(255,60,60,0.1); color: var(--accent); border: 1px solid rgba(255,60,60,0.3); display: inline-block; margin-top: .3rem; }
+
   .ai-results-grid { display: none; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 1.5rem; }
   @media(min-width: 768px) { .ai-results-grid { grid-template-columns: 1fr 1fr 1fr; } }
   .ai-card { background: #111; border: 1px solid #1e1e1e; border-radius: 18px; padding: 1.5rem; display: flex; flex-direction: column; }
@@ -205,10 +213,10 @@
 <nav>
   <div class="logo">Multi<span>Post</span></div>
   <ul>
-    <li><a href="#como-funciona">Cómo funciona</a></li>
-    <li><a href="#caracteristicas">Características</a></li>
-    <li><a href="#precios">Precios</a></li>
-    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#" onclick="goToSection(event, 'como-funciona')">Cómo funciona</a></li>
+    <li><a href="#" onclick="goToSection(event, 'caracteristicas')">Características</a></li>
+    <li><a href="#" onclick="goToSection(event, 'precios')">Precios</a></li>
+    <li><a href="#" onclick="goToSection(event, 'faq')">FAQ</a></li>
   </ul>
   <button class="btn-nav" id="nav-btn-guest" onclick="openModal()">Registrarse / Iniciar sesión</button>
   <div id="nav-user-menu" style="display:none; align-items:center; gap:.8rem;">
@@ -282,16 +290,6 @@
     </div>
   </section>
 
-  <section id="testimonios">
-    <div class="section-label">Testimonios</div>
-    <h2 class="section-title">Lo que dicen<br>nuestros usuarios</h2>
-    <div class="testi-grid">
-      <div class="testi-card"><div class="stars">★★★★★</div><div class="testi-text">"Lo que más me costaba era pensar el texto para cada red. Ahora con MultiPost escribo una frase y en 10 segundos tengo todo. Publico el triple de rápido."</div><div class="testi-author"><div class="avatar av-a">AR</div><div><div class="author-name">Alejandro Rivas</div><div class="author-handle">@alejandro.creates · 180k seguidores</div></div></div></div>
-      <div class="testi-card"><div class="stars">★★★★★</div><div class="testi-text">"Los ganchos que genera para TikTok son brutales. Desde que uso la herramienta, mi tiempo de retención subió un 20% porque ahora empiezo los videos con fuerza."</div><div class="testi-author"><div class="avatar av-b">SG</div><div><div class="author-name">Sara Gómez</div><div class="author-handle">@saragomez.fit · 92k seguidores</div></div></div></div>
-      <div class="testi-card"><div class="stars">★★★★★</div><div class="testi-text">"Gestiono 6 cuentas de clientes y esto me ahorra horas de trabajo a la semana. El plan Agencia es un robo."</div><div class="testi-author"><div class="avatar av-d">PV</div><div><div class="author-name">Paula Vidal</div><div class="author-handle">Social Media Manager · Agencia Pixel</div></div></div></div>
-    </div>
-  </section>
-
   <section id="faq" style="text-align:center">
     <div class="section-label">FAQ</div>
     <h2 class="section-title center">Preguntas frecuentes</h2>
@@ -337,7 +335,7 @@
   <footer>
     <div class="footer-grid">
       <div class="footer-brand"><div class="logo">Multi<span>Post</span></div><p>La forma más rápida de generar textos virales para TikTok, YouTube e Instagram con Inteligencia Artificial.</p></div>
-      <div class="footer-col"><h4>Producto</h4><ul><li><a href="#como-funciona">Cómo funciona</a></li><li><a href="#caracteristicas">Características</a></li><li><a href="#precios">Precios</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+      <div class="footer-col"><h4>Producto</h4><ul><li><a href="#" onclick="goToSection(event, 'como-funciona')">Cómo funciona</a></li><li><a href="#" onclick="goToSection(event, 'caracteristicas')">Características</a></li><li><a href="#" onclick="goToSection(event, 'precios')">Precios</a></li><li><a href="#" onclick="goToSection(event, 'faq')">FAQ</a></li></ul></div>
       <div class="footer-col"><h4>Empresa</h4><ul><li><a href="#" onclick="showLegal('about');return false">Sobre nosotros</a></li><li><a href="#" onclick="showLegal('contacto');return false">Contacto</a></li><li><a href="#">Blog</a></li><li><a href="#">Afiliados</a></li></ul></div>
       <div class="footer-col"><h4>Legal</h4><ul><li><a href="#" onclick="showLegal('privacidad');return false">Política de privacidad</a></li><li><a href="#" onclick="showLegal('terminos');return false">Términos y condiciones</a></li><li><a href="#" onclick="showLegal('cookies');return false">Política de cookies</a></li><li><a href="#" onclick="showLegal('aviso');return false">Aviso legal</a></li></ul></div>
     </div>
@@ -444,10 +442,39 @@
 <div id="dashboard">
   <div class="dash-body">
     <div class="dash-header">
-      <h2>Generador de Contenido</h2>
-      <p>Escribe tu idea y obtén los textos perfectos para cada red social.</p>
+      <h2>Mi panel</h2>
+      <p>Gestiona tu perfil y genera contenido para tus redes.</p>
     </div>
+    
     <div class="dash-grid">
+      
+      <!-- NUEVA TARJETA DE PERFIL -->
+      <div class="dash-card">
+        <h3>⚙️ Mi Perfil</h3>
+        <div class="dash-profile-header">
+          <div class="dash-profile-avatar" id="settings-avatar">MP</div>
+          <div>
+            <div id="settings-name-display" style="font-weight:700; font-size:1.2rem; margin-bottom:.2rem;">Usuario</div>
+            <div id="settings-email-display" style="font-size:.85rem; color:#888;">user@email.com</div>
+            <div class="dash-profile-plan" id="settings-plan-badge">Plan: Gratis</div>
+          </div>
+        </div>
+        <form onsubmit="handleSaveProfile(event)">
+          <div class="dash-form-field">
+            <label>NOMBRE DE USUARIO</label>
+            <input type="text" id="settings-name" placeholder="Tu nombre público" required>
+          </div>
+          <div class="dash-form-field">
+            <label>FOTO DE PERFIL (URL)</label>
+            <input type="text" id="settings-avatar-url" placeholder="https://ejemplo.com/tu-foto.jpg">
+          </div>
+          <div class="dash-error" id="profile-error"></div>
+          <div class="dash-success" id="profile-success" style="display:none;">✅ Perfil actualizado correctamente.</div>
+          <button type="submit" class="btn-dash-secondary">Guardar cambios</button>
+        </form>
+      </div>
+
+      <!-- TARJETA DE IA -->
       <div class="dash-card">
         <h3>✨ Nueva generación</h3>
         <form onsubmit="handleGenerateAI(event)">
@@ -561,6 +588,65 @@ function handleLogin(e) {
   .catch(function(){errEl.textContent='Error de conexión.';});
 }
 
+function goToSection(e, id) {
+  e.preventDefault();
+  document.getElementById('dashboard').style.display='none';
+  document.getElementById('main-content').style.display='block';
+  setTimeout(function() {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }, 50);
+}
+
+function handleSaveProfile(e) {
+  e.preventDefault();
+  var name = document.getElementById('settings-name').value.trim();
+  var avatarUrl = document.getElementById('settings-avatar-url').value.trim();
+  var errEl = document.getElementById('profile-error');
+  var sucEl = document.getElementById('profile-success');
+  
+  errEl.textContent = '';
+  sucEl.style.display = 'none';
+
+  if(!name) { errEl.textContent = 'El nombre no puede estar vacío.'; return; }
+
+  var session = JSON.parse(localStorage.getItem('mp_session')||'null');
+  if(session) {
+    session.name = name;
+    if(avatarUrl) session.avatar = avatarUrl;
+    else session.avatar = ''; // Limpia la foto si borran el campo
+    localStorage.setItem('mp_session', JSON.stringify(session));
+    
+    // Actualizar UI
+    document.getElementById('settings-name-display').textContent = session.name;
+    sucEl.style.display = 'block';
+    updateAvatars(session);
+  }
+}
+
+function updateAvatars(session) {
+  var navAvatarEl = document.getElementById('nav-avatar');
+  var settingsAvatarEl = document.getElementById('settings-avatar');
+  var initials = session.name.split(' ').map(function(w){return w[0];}).slice(0,2).join('').toUpperCase();
+
+  if(session.avatar && session.avatar !== '') {
+    navAvatarEl.style.backgroundImage = 'url('+session.avatar+')';
+    navAvatarEl.style.color = 'transparent';
+    navAvatarEl.innerText = '';
+    
+    settingsAvatarEl.style.backgroundImage = 'url('+session.avatar+')';
+    settingsAvatarEl.style.color = 'transparent';
+    settingsAvatarEl.innerText = '';
+  } else {
+    navAvatarEl.style.backgroundImage = 'none';
+    navAvatarEl.style.color = '#b48fe0';
+    navAvatarEl.innerText = initials;
+    
+    settingsAvatarEl.style.backgroundImage = 'none';
+    settingsAvatarEl.style.color = '#b48fe0';
+    settingsAvatarEl.innerText = initials;
+  }
+}
+
 function showDashboard() {
   var session=JSON.parse(localStorage.getItem('mp_session')||'null');
   if (!session) return;
@@ -568,10 +654,19 @@ function showDashboard() {
   document.getElementById('dashboard').style.display='block';
   document.getElementById('nav-btn-guest').style.display='none';
   document.getElementById('nav-user-menu').style.display='flex';
+  
+  // Rellenar datos de perfil
   document.getElementById('nav-name').textContent=session.name;
   document.getElementById('nav-email').textContent=session.email;
-  var initials=session.name.split(' ').map(function(w){return w[0];}).slice(0,2).join('').toUpperCase();
-  document.getElementById('nav-avatar').textContent=initials;
+  document.getElementById('settings-name-display').textContent=session.name;
+  document.getElementById('settings-email-display').textContent=session.email;
+  document.getElementById('settings-name').value=session.name;
+  document.getElementById('settings-avatar-url').value = session.avatar ? session.avatar : '';
+  
+  var planText = session.plan ? session.plan.charAt(0).toUpperCase() + session.plan.slice(1) : 'Gratis';
+  document.getElementById('settings-plan-badge').textContent = 'Plan: ' + planText;
+  
+  updateAvatars(session);
   renderHistory();
   window.scrollTo(0,0);
 }
