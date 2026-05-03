@@ -363,7 +363,6 @@
       <p>Escribe tu idea y obtén los textos perfectos para cada red social.</p>
     </div>
 
-    <!-- Banner del plan actual -->
     <div class="dash-plan-banner" id="dash-plan-banner">
       <h4>⚡ Plan actual: <span id="dash-plan-name">Gratis · Ilimitado</span></h4>
       <p>Tienes generaciones ilimitados. <strong>Sube a Pro</strong> para desbloquear funciones premium.</p>
@@ -420,9 +419,16 @@
 
 <script>
 var SB_URL = 'https://xwbreyqsgujjxqwjtrbi.supabase.co';
-var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3YnJleXFzZ3Vqanhxd2p0cmJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5NjU0OSIsImV4cCI6MjA5MTQ5MTY1NH0.HWw89AP7p7DmEPuy_UUhdt5nQzrSlzT3x8pc7R5S2Zo';
+var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3YnJleXFzZ3Vqanhxd2p0cmJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5NjU0OSwiZXhwIjoyMDkxNDkxNjU0fQ.HWw89AP7p7DmEPuy_UUhdt5nQzrSlzT3x8pc7R5S2Zo';
 
 var currentUser = null;
+
+function forceCleanSession() {
+  currentUser = null;
+  localStorage.removeItem('sb_tokens');
+  localStorage.removeItem('user');
+  updateUIForLoggedOutUser();
+}
 
 document.addEventListener('DOMContentLoaded', function() {
   if (!localStorage.getItem('cookiesAccepted')) {
@@ -522,30 +528,18 @@ async function handleOAuthRedirect() {
 }
 
 async function checkExistingSession() {
-  var saved = localStorage.getItem('user');
-  if (saved) {
-    try {
-      currentUser = JSON.parse(saved);
-      updateUIForLoggedInUser();
-    } catch(e) { localStorage.removeItem('user'); }
-  }
   var tokens = localStorage.getItem('sb_tokens');
+
   if (!tokens) {
-    if (currentUser) {
-      currentUser = null;
-      localStorage.removeItem('user');
-      updateUIForLoggedOutUser();
-    }
+    forceCleanSession();
     return;
   }
+
   try {
     var tokensObj = JSON.parse(tokens);
     await fetchUserAndLogin(tokensObj.access_token);
   } catch(e) {
-    localStorage.removeItem('sb_tokens');
-    localStorage.removeItem('user');
-    currentUser = null;
-    updateUIForLoggedOutUser();
+    forceCleanSession();
   }
 }
 
@@ -558,17 +552,15 @@ async function fetchUserAndLogin(accessToken) {
         'apikey': SB_KEY
       }
     });
+
     if (!response.ok) {
-      localStorage.removeItem('sb_tokens');
-      localStorage.removeItem('user');
-      currentUser = null;
-      updateUIForLoggedOutUser();
+      forceCleanSession();
       return;
     }
+
     var user = await response.json();
     var meta = user.user_metadata || {};
 
-    // Intentar cargar perfil guardado
     var plan = 'Gratis';
     var displayName = null;
     var avatarUrl = null;
@@ -602,8 +594,10 @@ async function fetchUserAndLogin(accessToken) {
     updateUIForLoggedInUser();
     showDashboard();
     showToast('¡Bienvenido, ' + currentUser.name + '!');
+
   } catch(e) {
     console.error('Error fetching user:', e);
+    forceCleanSession();
   }
 }
 
@@ -621,10 +615,7 @@ async function logout() {
       });
     } catch(e) {}
   }
-  currentUser = null;
-  localStorage.removeItem('sb_tokens');
-  localStorage.removeItem('user');
-  updateUIForLoggedOutUser();
+  forceCleanSession();
   showMainContent();
   showToast('Sesión cerrada');
 }
@@ -643,7 +634,6 @@ function updateUIForLoggedInUser() {
     navAvatar.textContent = (currentUser.name || 'MP').substring(0, 2).toUpperCase();
   }
 
-  // Dashboard: banner del plan
   var planBanner = document.getElementById('dash-plan-banner');
   if (planBanner) {
     var isPro = currentUser.plan && currentUser.plan.toLowerCase() !== 'gratis';
@@ -734,7 +724,6 @@ async function handleSaveProfile(event) {
 
   var saved = false;
 
-  // 1. Guardar en localStorage inmediato para que la UI se actualice rápido
   currentUser.name = newName;
   localStorage.setItem('user', JSON.stringify(currentUser));
   updateUIForLoggedInUser();
@@ -742,7 +731,6 @@ async function handleSaveProfile(event) {
   var avatar = document.getElementById('settings-avatar');
   if (!currentUser.avatar) avatar.textContent = newName.substring(0, 2).toUpperCase();
 
-  // 2. Intentar guardar en Supabase
   if (currentUser.id) {
     try {
       var tokens = localStorage.getItem('sb_tokens');
