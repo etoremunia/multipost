@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root { --black: #0a0a0a; --white: #f5f3ee; --accent: #ff3c3c; --card-bg: #111111; --text-muted: #888; --border: #1e1e1e; --green: #4cff72; }
+  :root { --black: #0a0a0a; --white: #f5f3ee; --accent: #ff3c3c; --card-bg: #111111; --text-muted: #888; --border: #1e1e1e; }
   html { scroll-behavior: smooth; }
   body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; overflow-x: hidden; min-height: 100vh; }
   a { color: inherit; text-decoration: none; }
@@ -27,7 +27,7 @@
   .blob { position: absolute; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle, rgba(255,60,60,0.07) 0%, transparent 70%); top: -100px; left: 50%; transform: translateX(-50%); pointer-events: none; animation: blobmove 8s ease-in-out infinite alternate; }
   @keyframes blobmove { from{transform: translateX(-50%) scale(1)} to{transform: translateX(-50%) scale(1.1)} }
   .badge { display: inline-flex; align-items: center; gap: 8px; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 100px; padding: .4rem 1rem; font-size: .78rem; color: var(--text-muted); margin-bottom: 1.8rem; }
-  .badge-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+  .badge-dot { width: 7px; height: 7px; border-radius: 50%; background: #4cff72; animation: pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
   h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.6rem, 7vw, 5rem); font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 1.4rem; }
   h1 .line2 { color: var(--accent); }
@@ -45,7 +45,7 @@
   .dot { width: 10px; height: 10px; border-radius: 50%; }
   .dot-r{background:#ff5f57}.dot-y{background:#febc2e}.dot-g{background:#28c840}
   .mockup-body { padding: 1.8rem; }
-  .mockup-input { width: 100%; background: #0a0a0a; border: 1px solid #2a2a2a; border-radius: 10px; color: var(--f5f3ee); padding: .8rem 1rem; font-family: 'DM Sans', sans-serif; font-size: .9rem; margin-bottom: 1rem; outline: none; }
+  .mockup-input { width: 100%; background: #0a0a0a; border: 1px solid #2a2a2a; border-radius: 10px; color: #f5f3ee; padding: .8rem 1rem; font-family: 'DM Sans', sans-serif; font-size: .9rem; margin-bottom: 1rem; outline: none; }
   .mockup-btn { width: 100%; background: var(--accent); color: var(--white); border: none; padding: .8rem; border-radius: 10px; font-size: .9rem; font-weight: 500; cursor: not-allowed; margin-bottom: 1.5rem; opacity: .5; }
   .mockup-results { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .8rem; }
   .mockup-res-box { background: #0a0a0a; border-radius: 8px; height: 80px; border: 1px solid #1a1a1a; position: relative; overflow: hidden; }
@@ -76,10 +76,7 @@
   .faq-answer { max-height: 0; overflow: hidden; transition: max-height .35s ease, padding .35s ease; }
   .faq-item.open .faq-answer { max-height: 300px; }
   .faq-answer-inner { padding: 0 1.5rem 1.2rem; color: var(--text-muted); font-size: .85rem; line-height: 1.7; font-weight: 300; }
-  .pricing-section { max-width: 900px; margin: 0 auto; padding: 5rem 5%; }
-  .pricing-section h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800; letter-spacing: -1px; margin-bottom: 1rem; }
-  .pricing-section .section-sub { color: var(--text-muted); font-size: .95rem; margin-bottom: 2.5rem; max-width: 560px; line-height: 1.7; font-weight: 300; }
-  .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 3rem; }
+  .pricing-grid-mockup { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 5rem; }
   .price-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px; padding: 2rem; position: relative; transition: border-color .2s; }
   .price-card:hover { border-color: #333; }
   .price-card.featured { border-color: var(--accent); }
@@ -91,14 +88,10 @@
   .plan-features { list-style: none; margin-bottom: 1.6rem; }
   .plan-features li { font-size: .86rem; color: var(--text-muted); padding: .38rem 0; border-bottom: 1px solid #1a1a1a; display: flex; align-items: center; gap: 8px; }
   .plan-features li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
-  .plan-features li.disabled { opacity: .35; text-decoration: line-through; }
-  .plan-features li.unlimited::before { background: var(--green); }
   .btn-plan { width: 100%; background: transparent; border: 1px solid #2a2a2a; color: var(--white); padding: .75rem; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .88rem; cursor: pointer; transition: background .2s; }
   .btn-plan:hover { background: #1a1a1a; }
   .btn-plan.featured-btn { background: var(--accent); border-color: var(--accent); }
   .btn-plan.featured-btn:hover { opacity: .85; }
-  .btn-plan.current-plan { background: rgba(76,255,114,0.1); border-color: rgba(76,255,114,0.3); color: var(--green); cursor: default; }
-  .current-plan-label { display: block; text-align: center; font-size: .75rem; margin-top: .5rem; color: var(--green); }
   footer { border-top: 1px solid var(--border); padding: 3rem 5% 2rem; }
   .footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 2rem; max-width: 1100px; margin: 0 auto 2.5rem; }
   .footer-brand p { color: var(--text-muted); font-size: .85rem; margin-top: .8rem; line-height: 1.7; font-weight: 300; max-width: 240px; }
@@ -108,8 +101,8 @@
   .footer-col ul a { color: var(--text-muted); font-size: .85rem; transition: color .2s; cursor: pointer; }
   .footer-col ul a:hover { color: var(--white); }
   .footer-bottom { border-top: 1px solid var(--border); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; color: var(--text-muted); font-size: .8rem; flex-wrap: wrap; gap: .5rem; }
-  @media (max-width: 768px) { nav ul { display: none; } h1 { letter-spacing: -1px; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } .steps-grid { grid-template-columns: 1fr; } .features-grid { grid-template-columns: 1fr; } .pricing-grid { grid-template-columns: 1fr; } }
-  @media (max-width: 480px) { .cta-group { flex-direction: column; align-items: center; } .footer-grid { grid-template-columns: 1fr; } .mockup-results { grid-template-columns: 1fr; } }
+  @media (max-width: 768px) { nav ul { display: none; } h1 { letter-spacing: -1px; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } .steps-grid { grid-template-columns: 1fr; } .features-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 480px) { .cta-group { flex-direction: column; align-items: center; } .footer-grid { grid-template-columns: 1fr; } .pricing-grid-mockup { grid-template-columns: 1fr; } .mockup-results { grid-template-columns: 1fr; } }
   #cookie-banner { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 16px; padding: 1.2rem 1.6rem; display: none; align-items: center; gap: 1.5rem; max-width: 680px; width: 90%; z-index: 999; flex-wrap: wrap; }
   #cookie-banner.visible { display: flex; }
   #cookie-banner p { font-size: .83rem; color: var(--text-muted); line-height: 1.6; flex: 1; min-width: 200px; font-weight: 300; }
@@ -128,6 +121,7 @@
   .modal-logo span { color: #ff3c3c; }
   .btn-google { width: 100%; background: #fff; color: #333; border: none; padding: .85rem; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .95rem; font-weight: 500; cursor: pointer; transition: opacity .2s; display: flex; align-items: center; justify-content: center; gap: .8rem; }
   .btn-google:hover { opacity: .85; }
+  .btn-google:disabled { opacity: .6; cursor: not-allowed; }
   .btn-google svg { width: 20px; height: 20px; }
   .modal-error { color: #ff6b6b; font-size: .8rem; margin-top: 1rem; text-align: center; }
   #dashboard { display: none; min-height: 100vh; }
@@ -152,7 +146,7 @@
   .dash-form-field input:focus, .dash-form-field select:focus { border-color: #ff3c3c; }
   .btn-dash-publish { width: 100%; background: #ff3c3c; border: none; color: #f5f3ee; padding: .8rem; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .92rem; font-weight: 500; cursor: pointer; transition: opacity .2s; }
   .btn-dash-publish:hover { opacity: .85; }
-  .btn-dash-publish:disabled { opacity: .5; cursor: not-allowed; background: #999; }
+  .btn-dash-publish:disabled { opacity: .5; cursor: not-allowed; background: #999; border-color: #888; color: #555; }
   .dash-error { color: #ff6b6b; font-size: .8rem; margin-bottom: .6rem; min-height: 1em; }
   .ai-results-grid { display: none; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 1.5rem; }
   @media(min-width: 768px) { .ai-results-grid { grid-template-columns: 1fr 1fr 1fr; } }
@@ -163,27 +157,22 @@
   .ai-block p { font-size: .85rem; color: #ddd; line-height: 1.6; background: #0a0a0a; padding: .7rem; border-radius: 8px; white-space: pre-wrap; word-break: break-word; min-height: 60px; }
   .btn-copy { width: 100%; background: transparent; border: 1px solid #333; color: #fff; padding: .6rem; border-radius: 8px; font-family: 'DM Sans'; font-size: .82rem; cursor: pointer; margin-top: auto; transition: all .2s; }
   .btn-copy:hover { background: #222; border-color: #555; }
-  .btn-copy.copied { background: #1a3a1a; border-color: var(--green); color: var(--green); }
+  .btn-copy.copied { background: #1a3a1a; border-color: #4cff72; color: #4cff72; }
   .dash-profile-header { display: flex; align-items: center; gap: 1.2rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #1e1e1e; }
   .dash-profile-avatar { width: 70px; height: 70px; border-radius: 50%; background: #2d1a4a; color: #b48fe0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.5rem; background-size: cover; background-position: center; flex-shrink:0; cursor:pointer; position:relative; overflow:hidden; }
-  .dash-profile-avatar:hover::after { content: '\1F4F7'; position: absolute; inset:0; background: rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; font-size:24px; }
-  .dash-profile-plan { font-size: .78rem; padding: .2rem .6rem; border-radius: 100px; background: rgba(76,255,114,0.1); color: var(--green); border: 1px solid rgba(76,255,114,0.3); display:inline-block; margin-top:.3rem; }
-  .btn-dash-secondary { width: 100%; background: transparent; border: 1px solid #2a2a2a; color: #f5f5ee; padding: .8rem; border-radius: 10px; font-family: 'DM Sans'; font-size: .92rem; font-weight:500; cursor:pointer; transition:all .2s; margin-top: .5rem; }
+  .dash-profile-avatar:hover::after { content: '📷'; position: absolute; inset:0; background: rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; font-size:24px; }
+  .dash-profile-plan { font-size: .78rem; padding: .2rem .6rem; border-radius: 100px; background: rgba(255,60,60,0.1); color: var(--accent); border: 1px solid rgba(255,60,60,0.3); display:inline-block; margin-top:.3rem; }
+  .btn-dash-secondary { width: 100%; background: transparent; border: 1px solid #2a2a2a; color: #f5f3ee; padding: .8rem; border-radius: 10px; font-family: 'DM Sans'; font-size: .92rem; font-weight:500; cursor:pointer; transition:all .2s; margin-top: .5rem; }
   .btn-dash-secondary:hover { background:#1a1a1a; border-color:#555; }
-  .dash-success { color: var(--green); font-size:.85rem; margin-top:.5rem; display:none; }
+  .dash-success { color:#4cff72; font-size:.85rem; margin-top:.5rem; display:none; }
   .legal-section { display: none; padding: 4rem 5%; max-width: 800px; margin: 0 auto; }
   .legal-section h2 { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem; }
   .legal-section p { color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem; }
   .back-btn { background: transparent; border: 1px solid #2a2a2a; color: var(--text-muted); padding: .6rem 1.2rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: .88rem; cursor: pointer; transition: all .2s; margin-bottom: 2rem; }
   .back-btn:hover { background: #1a1a1a; color: var(--white); border-color: #555; }
-  .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px); background: #1a3a1a; border: 1px solid var(--green); color: var(--green); padding: .7rem 1.4rem; border-radius: 10px; font-size: .85rem; z-index: 9999; transition: transform .35s ease; pointer-events: none; }
+  .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px); background: #1a3a1a; border: 1px solid #4cff72; color: #4cff72; padding: .7rem 1.4rem; border-radius: 10px; font-size: .85rem; z-index: 9999; transition: transform .35s ease; pointer-events: none; }
   .toast.show { transform: translateX(-50%) translateY(0); }
   .toast.error { background: #3a1a1a; border-color: #ff6b6b; color: #ff6b6b; }
-  .dash-plan-banner { background: linear-gradient(135deg, rgba(255,60,60,0.08), rgba(255,60,60,0.02)); border: 1px solid rgba(255,60,60,0.15); border-radius: 12px; padding: .8rem 1.2rem; margin-bottom: 1.5rem; text-align: center; }
-  .dash-plan-banner h4 { font-family: 'Syne', sans-serif; font-size: .85rem; font-weight: 700; margin-bottom: .3rem; }
-  .dash-plan-banner p { color: var(--text-muted); font-size: .82rem; line-height: 1.5; }
-  .dash-plan-banner p strong { color: var(--white); }
-  .dash-plan-banner .free-tag { display: inline-block; background: rgba(76,255,114,0.1); color: var(--green); border: 1px solid rgba(76,255,114,0.3); border-radius: 6px; padding: .15rem .5rem; font-size: .72rem; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; }
 </style>
 </head>
 <body>
@@ -256,6 +245,28 @@
     </div>
   </section>
 
+  <section class="landing-section" id="precios">
+    <h2>Precios simples</h2>
+    <p class="section-sub">Sin sorpresas, sin letras pequeñas. Elige tu plan y empieza a crear.</p>
+    <div class="pricing-grid-mockup" style="margin-bottom:0;">
+      <div class="price-card featured">
+        <div class="featured-badge">Más popular</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-price">7,99€ <span>/ mes</span></div>
+        <div class="plan-desc">Para creadores activos</div>
+        <ul class="plan-features"><li>Multipost ilimitados</li><li>3 plataformas</li><li>Todos los tonos de voz</li><li>Historial de generaciones</li></ul>
+        <button class="btn-plan featured-btn" onclick="handlePlanClick('pro')">Empezar con Pro</button>
+      </div>
+      <div class="price-card">
+        <div class="plan-name">Agencia</div>
+        <div class="plan-price">29,99€ <span>/ mes</span></div>
+        <div class="plan-desc">Para equipos y agencias</div>
+        <ul class="plan-features"><li>Multipost ilimitados</li><li>Cuentas múltiples</li><li>Hasta 10 usuarios</li><li>API de integración</li></ul>
+        <button class="btn-plan" onclick="handlePlanClick('agencia')">Contactar ventas</button>
+      </div>
+    </div>
+  </section>
+
   <section class="landing-section" id="faq">
     <h2>Preguntas frecuentes</h2>
     <p class="section-sub">Resolvemos tus dudas antes de que las tengas.</p>
@@ -264,38 +275,6 @@
       <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">¿Puedo usar los textos generados comercialmente?<span class="faq-arrow">▼</span></div><div class="faq-answer"><div class="faq-answer-inner">Por supuesto. Los textos generados son tuyos y puedes usarlos en tus redes, clientes, proyectos comerciales, etc.</div></div></div>
       <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">¿En qué idioma genera el contenido?<span class="faq-arrow">▼</span></div><div class="faq-answer"><div class="faq-answer-inner">Actualmente generamos contenido en español. Estamos trabajando en añadir más idiomas próximamente.</div></div></div>
       <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">¿Puedo cancelar en cualquier momento?<span class="faq-arrow">▼</span></div><div class="faq-answer"><div class="faq-answer-inner">Sí, puedes cancelar tu suscripción cuando quieras desde tu perfil. Sin permanencias ni penalizaciones.</div></div></div>
-    </div>
-  </section>
-
-  <section class="pricing-section" id="precios">
-    <h2>Precios simples</h2>
-    <p class="section-sub">Sin sorpresas, sin letras pequeñas. Elige tu plan y empieza a crear.</p>
-    <div class="pricing-grid">
-      <div class="price-card featured">
-        <div class="featured-badge">Más popular</div>
-        <div class="plan-name">Pro</div>
-        <div class="plan-price">12€ <span>/ mes</span></div>
-        <div class="plan-desc">Para creadores activos</div>
-        <ul class="plan-features">
-          <li class="unlimited">Multiposts ilimitados</li>
-          <li class="unlimited">3 plataformas</li>
-          <li class="unlimited">Todos los tonos de voz</li>
-          <li class="unlimited">Historial de generaciones</li>
-        </ul>
-        <button class="btn-plan featured-btn" onclick="handlePlanClick('pro')">Empezar con Pro</button>
-      </div>
-      <div class="price-card">
-        <div class="plan-name">Agencia</div>
-        <div class="plan-price">39€ <span>/ mes</span></div>
-        <div class="plan-desc">Para equipos y agencias</div>
-        <ul class="plan-features">
-          <li class="unlimited">Multipost ilimitados</li>
-          <li class="unlimited">Cuentas múltiples</li>
-          <li class="unlimited">Hasta 10 usuarios</li>
-          <li class="unlimited">API de integración</li>
-        </ul>
-        <button class="btn-plan" onclick="handlePlanClick('agencia')">Contactar ventas</button>
-      </div>
     </div>
   </section>
 
@@ -345,13 +324,13 @@
       <div>
         <div id="settings-name-display" style="font-weight:700; font-size:1.1rem; margin-bottom:.2rem;">Usuario</div>
         <div id="settings-email-display" style="font-size:.85rem; color:#888;">user@email.com</div>
-        <div class="dash-profile-plan" id="settings-plan-badge">Plan: Gratis · Ilimitado</div>
+        <div class="dash-profile-plan" id="settings-plan-badge">Plan: Gratis</div>
       </div>
     </div>
     <form onsubmit="handleSaveProfile(event)">
       <div class="dash-form-field"><label>NOMBRE DE USUARIO</label><input type="text" id="settings-name" placeholder="Tu nombre público" required></div>
-      <div class="dash-success" id="profile-success">✅ Perfil guardado correctamente.</div>
-      <button type="submit" class="btn-dash-secondary" id="btn-save-profile">Guardar cambios</button>
+      <div class="dash-success" id="profile-success">✅ Perfil actualizado.</div>
+      <button type="submit" class="btn-dash-secondary">Guardar cambios</button>
     </form>
   </div>
 </div>
@@ -362,12 +341,6 @@
       <h2>Generador de Contenido</h2>
       <p>Escribe tu idea y obtén los textos perfectos para cada red social.</p>
     </div>
-
-    <div class="dash-plan-banner" id="dash-plan-banner">
-      <h4>⚡ Plan actual: <span id="dash-plan-name">Gratis · Ilimitado</span></h4>
-      <p>Tienes generaciones ilimitados. <strong>Sube a Pro</strong> para desbloquear funciones premium.</p>
-    </div>
-
     <div class="dash-grid">
       <div class="dash-card">
         <h3>✨ Nueva generación</h3>
@@ -387,7 +360,6 @@
           <button type="submit" class="btn-dash-publish" id="ai-generate-btn">Generar textos con IA →</button>
         </form>
       </div>
-
       <div class="ai-results-grid" id="div-resultados-ia">
         <div class="ai-card" style="border-top: 3px solid #fff;">
           <h3>🎵 TikTok</h3>
@@ -418,234 +390,216 @@
 <div class="toast" id="toast"></div>
 
 <script>
-var SB_URL = "https://xwbreyqsgujjxqwjtrbi.supabase.co";
-var SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3YnJleXFzZ3Vqanhxd2p0cmJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5NjU0OSwiZXhwIjoyMDkxNDkxNjU0NH0.HWw89AP7p7DmEPuy_UUhdt5nQzrSlzT3x8pc7R5S2Zo";
+var SB_URL = 'https://xwbreyqsgujjxqwjtrbi.supabase.co';
+var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3YnJleXFzZ3Vqanhxd2p0cmJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5MTU2NTQsImV4cCI6MjA5MTQ5MTY1NH0.HWw89AP7p7DmEPuy_UUhdt5nQzrSlzT3x8pc7R5S2Zo';
 
 var currentUser = null;
 
-function forceCleanSession() {
-  currentUser = null;
-  localStorage.removeItem("sb_tokens");
-  localStorage.removeItem("user");
-  updateUIForLoggedOutUser();
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-  if (!localStorage.getItem("cookiesAccepted")) {
-    document.getElementById("cookie-banner").classList.add("visible");
+document.addEventListener('DOMContentLoaded', function() {
+  if (!localStorage.getItem('cookiesAccepted')) {
+    document.getElementById('cookie-banner').classList.add('visible');
   }
   handleOAuthRedirect();
 });
 
 function showToast(msg, duration, isError) {
   duration = duration || 2500;
-  var t = document.getElementById("toast");
+  var t = document.getElementById('toast');
   t.textContent = msg;
-  t.className = "toast show" + (isError ? " error" : "");
-  setTimeout(function() { t.className = "toast"; }, duration);
+  t.className = 'toast show' + (isError ? ' error' : '');
+  setTimeout(function() { t.className = 'toast'; }, duration);
 }
 
 function closeCookie() {
-  localStorage.setItem("cookiesAccepted", "true");
-  document.getElementById("cookie-banner").classList.remove("visible");
+  localStorage.setItem('cookiesAccepted', 'true');
+  document.getElementById('cookie-banner').classList.remove('visible');
 }
 
 function toggleFaq(el) {
   var item = el.parentElement;
-  var wasOpen = item.classList.contains("open");
-  document.querySelectorAll(".faq-item").forEach(function(i) { i.classList.remove("open"); });
-  if (!wasOpen) item.classList.add("open");
+  var wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+  if (!wasOpen) item.classList.add('open');
 }
 
 function openModal() {
-  document.getElementById("modal-overlay").classList.add("active");
-  document.getElementById("login-error").textContent = "";
+  document.getElementById('modal-overlay').classList.add('active');
+  document.getElementById('login-error').textContent = '';
 }
 
 function closeModal() {
-  document.getElementById("modal-overlay").classList.remove("active");
-  document.getElementById("login-error").textContent = "";
+  document.getElementById('modal-overlay').classList.remove('active');
+  document.getElementById('login-error').textContent = '';
 }
 
-document.getElementById("modal-overlay").addEventListener("click", function(e) {
+document.getElementById('modal-overlay').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
 
 function openProfile() {
   if (!currentUser) return;
-  document.getElementById("settings-name").value = currentUser.name || "";
-  document.getElementById("settings-name-display").textContent = currentUser.name || "Usuario";
-  document.getElementById("settings-email-display").textContent = currentUser.email || "";
-  document.getElementById("settings-plan-badge").textContent = "Plan: " + (currentUser.plan || "Gratis") + " · Ilimitado";
-  var avatar = document.getElementById("settings-avatar");
+  document.getElementById('settings-name').value = currentUser.name || '';
+  document.getElementById('settings-name-display').textContent = currentUser.name || 'Usuario';
+  document.getElementById('settings-email-display').textContent = currentUser.email || '';
+  document.getElementById('settings-plan-badge').textContent = 'Plan: ' + (currentUser.plan || 'Gratis');
+  var avatar = document.getElementById('settings-avatar');
   if (currentUser.avatar) {
-    avatar.style.backgroundImage = "url(" + currentUser.avatar + ")";
-    avatar.textContent = "";
+    avatar.style.backgroundImage = 'url(' + currentUser.avatar + ')';
+    avatar.textContent = '';
   } else {
-    avatar.style.backgroundImage = "none";
-    avatar.textContent = (currentUser.name || "MP").substring(0, 2).toUpperCase();
+    avatar.style.backgroundImage = 'none';
+    avatar.textContent = (currentUser.name || 'MP').substring(0, 2).toUpperCase();
   }
-  document.getElementById("profile-overlay").classList.add("active");
+  document.getElementById('profile-overlay').classList.add('active');
 }
 
 function closeProfile() {
-  document.getElementById("profile-overlay").classList.remove("active");
-  document.getElementById("profile-success").style.display = "none";
+  document.getElementById('profile-overlay').classList.remove('active');
+  document.getElementById('profile-success').style.display = 'none';
 }
 
-document.getElementById("profile-overlay").addEventListener("click", function(e) {
+document.getElementById('profile-overlay').addEventListener('click', function(e) {
   if (e.target === this) closeProfile();
 });
 
 function loginWithGoogle() {
   var redirectUrl = window.location.origin + window.location.pathname;
-  var authUrl = SB_URL + "/auth/v1/authorize"
-    + "?provider=google"
-    + "&redirect_to=" + encodeURIComponent(redirectUrl)
-    + "&apikey=" + SB_KEY;
+  var authUrl = SB_URL + '/auth/v1/authorize'
+    + '?provider=google'
+    + '&redirect_to=' + encodeURIComponent(redirectUrl)
+    + '&apikey=' + SB_KEY;
   window.location.href = authUrl;
 }
 
 async function handleOAuthRedirect() {
   var hash = window.location.hash;
-  if (!hash || hash.indexOf("access_token") === -1) {
+  if (!hash || hash.indexOf('access_token') === -1) {
     await checkExistingSession();
     return;
   }
   var params = new URLSearchParams(hash.substring(1));
-  var accessToken = params.get("access_token");
-  var refreshToken = params.get("refresh_token");
+  var accessToken = params.get('access_token');
+  var refreshToken = params.get('refresh_token');
   if (!accessToken) {
     await checkExistingSession();
     return;
   }
-  localStorage.setItem("sb_tokens", JSON.stringify({
+  localStorage.setItem('sb_tokens', JSON.stringify({
     access_token: accessToken,
     refresh_token: refreshToken
   }));
-  window.history.replaceState(null, "", window.location.pathname + window.location.search);
+  window.history.replaceState(null, '', window.location.pathname + window.location.search);
   await fetchUserAndLogin(accessToken);
 }
 
 async function checkExistingSession() {
-  var tokens = localStorage.getItem("sb_tokens");
+  var saved = localStorage.getItem('user');
+  if (saved) {
+    try {
+      currentUser = JSON.parse(saved);
+      updateUIForLoggedInUser();
+    } catch(e) { localStorage.removeItem('user'); }
+  }
+  var tokens = localStorage.getItem('sb_tokens');
   if (!tokens) {
-    forceCleanSession();
+    if (currentUser) {
+      currentUser = null;
+      localStorage.removeItem('user');
+      updateUIForLoggedOutUser();
+    }
     return;
   }
   try {
     var tokensObj = JSON.parse(tokens);
     await fetchUserAndLogin(tokensObj.access_token);
   } catch(e) {
-    forceCleanSession();
+    localStorage.removeItem('sb_tokens');
+    localStorage.removeItem('user');
+    currentUser = null;
+    updateUIForLoggedOutUser();
   }
 }
 
 async function fetchUserAndLogin(accessToken) {
   try {
-    var response = await fetch(SB_URL + "/auth/v1/user", {
-      method: "GET",
+    var response = await fetch(SB_URL + '/auth/v1/user', {
+      method: 'GET',
       headers: {
-        "Authorization": "Bearer " + accessToken,
-        "apikey": SB_KEY
+        'Authorization': 'Bearer ' + accessToken,
+        'apikey': SB_KEY
       }
     });
     if (!response.ok) {
-      forceCleanSession();
+      localStorage.removeItem('sb_tokens');
+      localStorage.removeItem('user');
+      currentUser = null;
+      updateUIForLoggedOutUser();
       return;
     }
     var user = await response.json();
     var meta = user.user_metadata || {};
-    var plan = "Gratis";
-    var displayName = null;
-    var avatarUrl = null;
-    try {
-      var profileRes = await fetch(SB_URL + "/rest/v1/profiles?select=plan,display_name,avatar_url&id=eq." + user.id, {
-        headers: {
-          "Authorization": "Bearer " + accessToken,
-          "apikey": SB_KEY,
-          "Content-Type": "application/json",
-          "Prefer: return=representation"
-        }
-      });
-      if (profileRes.ok) {
-        var data = await profileRes.json();
-        if (Array.isArray(data) && data.length > 0) {
-          if (data[0].plan) plan = data[0].plan;
-          if (data[0].display_name) displayName = data[0].display_name;
-          if (data[0].avatar_url) avatarUrl = data[0].avatar_url;
-        }
-      }
-    } catch(e) {}
     currentUser = {
       id: user.id,
       email: user.email,
-      name: displayName || meta.full_name || meta.name || user.email.split("@")[0],
-      avatar: avatarUrl || meta.avatar_url || meta.picture || null,
-      plan: plan
+      name: meta.full_name || meta.name || user.email.split('@')[0],
+      avatar: meta.avatar_url || meta.picture || null,
+      plan: 'Gratis'
     };
-    localStorage.setItem("user", JSON.stringify(currentUser));
+    localStorage.setItem('user', JSON.stringify(currentUser));
     updateUIForLoggedInUser();
     showDashboard();
-    showToast("¡Bienvenido, " + currentUser.name + "!");
+    showToast('¡Bienvenido, ' + currentUser.name + '!');
   } catch(e) {
-    console.error("Error fetching user:", e);
-    forceCleanSession();
+    console.error('Error fetching user:', e);
   }
 }
 
 async function logout() {
-  var tokens = localStorage.getItem("sb_tokens");
+  var tokens = localStorage.getItem('sb_tokens');
   if (tokens) {
     try {
       var tokensObj = JSON.parse(tokens);
-      await fetch(SB_URL + "/auth/v1/logout", {
-        method: "POST",
+      await fetch(SB_URL + '/auth/v1/logout', {
+        method: 'POST',
         headers: {
-          "Authorization": "Bearer " + tokensObj.access_token,
-          "apikey": SB_KEY
+          'Authorization': 'Bearer ' + tokensObj.access_token,
+          'apikey': SB_KEY
         }
       });
     } catch(e) {}
   }
-  forceCleanSession();
+  currentUser = null;
+  localStorage.removeItem('sb_tokens');
+  localStorage.removeItem('user');
+  updateUIForLoggedOutUser();
   showMainContent();
-  showToast("Sesión cerrada");
+  showToast('Sesión cerrada');
 }
 
 function updateUIForLoggedInUser() {
-  document.getElementById("nav-btn-guest").style.display = "none";
-  document.getElementById("nav-user-menu").style.display = "flex";
-  document.getElementById("nav-name").textContent = currentUser.name || "Usuario";
-  document.getElementById("nav-email").textContent = currentUser.email || "";
-  var navAvatar = document.getElementById("nav-avatar");
+  document.getElementById('nav-btn-guest').style.display = 'none';
+  document.getElementById('nav-user-menu').style.display = 'flex';
+  document.getElementById('nav-name').textContent = currentUser.name || 'Usuario';
+  document.getElementById('nav-email').textContent = currentUser.email || '';
+  var navAvatar = document.getElementById('nav-avatar');
   if (currentUser.avatar) {
-    navAvatar.style.backgroundImage = "url(" + currentUser.avatar + ")";
-    navAvatar.textContent = "";
+    navAvatar.style.backgroundImage = 'url(' + currentUser.avatar + ')';
+    navAvatar.textContent = '';
   } else {
-    navAvatar.style.backgroundImage = "none";
-    navAvatar.textContent = (currentUser.name || "MP").substring(0, 2).toUpperCase();
-  }
-  var planBanner = document.getElementById("dash-plan-banner");
-  if (planBanner) {
-    var isPro = currentUser.plan && currentUser.plan.toLowerCase() !== "gratis";
-    if (isPro) {
-      planBanner.innerHTML = '<h4>🚀 Plan actual: <span style="color:var(--accent)">Pro</span></h4><p>Tienes generaciones ilimitados y acceso a todas las funciones premium.</p>';
-    } else {
-      planBanner.innerHTML = '<h4>⚡ Plan actual: <span style="color:var(--green)">Gratis · Ilimitado</span></h4><p>Tienes generaciones ilimitados. <strong>Sube a Pro</strong> para desbloquear funciones premium.</p>';
-    }
+    navAvatar.style.backgroundImage = 'none';
+    navAvatar.textContent = (currentUser.name || 'MP').substring(0, 2).toUpperCase();
   }
   updateHeroCta();
 }
 
 function updateUIForLoggedOutUser() {
-  document.getElementById("nav-btn-guest").style.display = "block";
-  document.getElementById("nav-user-menu").style.display = "none";
+  document.getElementById('nav-btn-guest').style.display = 'block';
+  document.getElementById('nav-user-menu').style.display = 'none';
   updateHeroCta();
 }
 
 function updateHeroCta() {
-  var cta = document.getElementById("hero-cta");
+  var cta = document.getElementById('hero-cta');
   if (currentUser) {
     cta.innerHTML = '<button class="btn-primary" onclick="showDashboard()">Ir al generador →</button>'
       + '<button class="btn-secondary-outline" onclick="showMainContent()">Ver landing</button>';
@@ -655,34 +609,34 @@ function updateHeroCta() {
 }
 
 function showDashboard() {
-  document.getElementById("main-content").style.display = "none";
-  document.getElementById("dashboard").style.display = "block";
-  document.querySelectorAll(".legal-section").forEach(function(el) { el.style.display = "none"; });
-  document.getElementById("nav-links-landing").style.display = "none";
+  document.getElementById('main-content').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  document.querySelectorAll('.legal-section').forEach(function(el) { el.style.display = 'none'; });
+  document.getElementById('nav-links-landing').style.display = 'none';
   window.scrollTo(0, 0);
 }
 
 function showMainContent() {
-  document.getElementById("main-content").style.display = "block";
-  document.getElementById("dashboard").style.display = "none";
-  document.querySelectorAll(".legal-section").forEach(function(el) { el.style.display = "none"; });
-  document.getElementById("nav-links-landing").style.display = "flex";
+  document.getElementById('main-content').style.display = 'block';
+  document.getElementById('dashboard').style.display = 'none';
+  document.querySelectorAll('.legal-section').forEach(function(el) { el.style.display = 'none'; });
+  document.getElementById('nav-links-landing').style.display = 'flex';
   window.scrollTo(0, 0);
 }
 
 function showLegal(page) {
   closeModal();
   closeCookie();
-  document.getElementById("main-content").style.display = "none";
-  document.getElementById("dashboard").style.display = "none";
-  document.getElementById("nav-links-landing").style.display = "none";
-  document.querySelectorAll(".legal-section").forEach(function(el) { el.style.display = "none"; });
-  document.getElementById("page-" + page).style.display = "block";
+  document.getElementById('main-content').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('nav-links-landing').style.display = 'none';
+  document.querySelectorAll('.legal-section').forEach(function(el) { el.style.display = 'none'; });
+  document.getElementById('page-' + page).style.display = 'block';
   window.scrollTo(0, 0);
 }
 
 function hideLegal() {
-  document.querySelectorAll(".legal-section").forEach(function(el) { el.style.display = "none"; });
+  document.querySelectorAll('.legal-section').forEach(function(el) { el.style.display = 'none'; });
   if (currentUser) { showDashboard(); } else { showMainContent(); }
 }
 
@@ -696,58 +650,23 @@ function handleHeroCta() {
 
 function handlePlanClick(plan) {
   if (!currentUser) { openModal(); return; }
-  var urls = {
-    pro: "https://buy.stripe.com/14A9AT3debVVcu0drW3gk01",
-    agencia: "https://buy.stripe.com/00w4gzg00f87bpW3Rm3gk00"
-  };
+  var urls = { pro: 'https://buy.stripe.com/14A9AT3debVVcu0drW3gk01', agencia: 'https://buy.stripe.com/00w4gzg00f87bpW3Rm3gk00' };
   if (urls[plan]) window.location.href = urls[plan];
 }
 
-async function handleSaveProfile(event) {
+function handleSaveProfile(event) {
   event.preventDefault();
-  var newName = document.getElementById("settings-name").value.trim();
+  var newName = document.getElementById('settings-name').value.trim();
   if (!newName) return;
-  var btn = document.getElementById("btn-save-profile");
-  btn.disabled = true;
-  btn.textContent = "Guardando...";
-  document.getElementById("profile-success").style.display = "none";
-  var saved = false;
-  currentUser.name = newName;
-  localStorage.setItem("user", JSON.stringify(currentUser));
-  updateUIForLoggedInUser();
-  document.getElementById("settings-name-display").textContent = newName;
-  var avatar = document.getElementById("settings-avatar");
-  if (!currentUser.avatar) avatar.textContent = newName.substring(0, 2).toUpperCase();
-  if (currentUser.id) {
-    try {
-      var tokens = localStorage.getItem("sb_tokens");
-      if (tokens) {
-        var tokensObj = JSON.parse(tokens);
-        var profileRes = await fetch(SB_URL + "/rest/v1/profiles", {
-          method: "POST",
-          headers: {
-            "Authorization": "Bearer " + tokensObj.access_token,
-            "apikey": SB_KEY,
-            "Content-Type": "application/json",
-            "Prefer: return=representation"
-          },
-          body: JSON.stringify({
-            id: currentUser.id,
-            display_name: newName
-          })
-        });
-        if (profileRes.ok) saved = true;
-      }
-    } catch(e) {}
-  }
-  btn.disabled = false;
-  btn.textContent = "Guardar cambios";
-  if (saved) {
-    document.getElementById("profile-success").style.display = "block";
-    setTimeout(function() { document.getElementById("profile-success").style.display = "none"; }, 3000);
-    showToast("¡Perfil guardado!");
-  } else {
-    showToast("Guardado localmente (no se pudo conectar con el servidor)", 3000);
+  if (currentUser) {
+    currentUser.name = newName;
+    localStorage.setItem('user', JSON.stringify(currentUser));
+    updateUIForLoggedInUser();
+    document.getElementById('settings-name-display').textContent = newName;
+    var avatar = document.getElementById('settings-avatar');
+    if (!currentUser.avatar) avatar.textContent = newName.substring(0, 2).toUpperCase();
+    document.getElementById('profile-success').style.display = 'block';
+    setTimeout(function() { document.getElementById('profile-success').style.display = 'none'; }, 3000);
   }
 }
 
@@ -759,12 +678,12 @@ function handleAvatarUpload(event) {
     var avatarUrl = e.target.result;
     if (currentUser) {
       currentUser.avatar = avatarUrl;
-      localStorage.setItem("user", JSON.stringify(currentUser));
-      document.getElementById("nav-avatar").style.backgroundImage = "url(" + avatarUrl + ")";
-      document.getElementById("nav-avatar").textContent = "";
-      document.getElementById("settings-avatar").style.backgroundImage = "url(" + avatarUrl + ")";
-      document.getElementById("settings-avatar").textContent = "";
-      showToast("Avatar actualizado");
+      localStorage.setItem('user', JSON.stringify(currentUser));
+      document.getElementById('nav-avatar').style.backgroundImage = 'url(' + avatarUrl + ')';
+      document.getElementById('nav-avatar').textContent = '';
+      document.getElementById('settings-avatar').style.backgroundImage = 'url(' + avatarUrl + ')';
+      document.getElementById('settings-avatar').textContent = '';
+      showToast('Avatar actualizado');
     }
   };
   reader.readAsDataURL(file);
@@ -772,48 +691,48 @@ function handleAvatarUpload(event) {
 
 function handleGenerateAI(event) {
   event.preventDefault();
-  var topic = document.getElementById("ai-topic").value.trim();
-  var tone = document.getElementById("ai-tone").value;
-  var errorDiv = document.getElementById("dash-error");
-  var submitBtn = document.getElementById("ai-generate-btn");
-  if (!topic) { errorDiv.textContent = "Escribe de qué va tu video."; return; }
-  errorDiv.textContent = "";
+  var topic = document.getElementById('ai-topic').value.trim();
+  var tone = document.getElementById('ai-tone').value;
+  var errorDiv = document.getElementById('dash-error');
+  var submitBtn = document.getElementById('ai-generate-btn');
+  if (!topic) { errorDiv.textContent = 'Escribe de qué va tu video.'; return; }
+  errorDiv.textContent = '';
   submitBtn.disabled = true;
-  submitBtn.textContent = "Generando... ⏳";
-  document.getElementById("div-resultados-ia").style.display = "none";
+  submitBtn.textContent = 'Generando... ⏳';
+  document.getElementById('div-resultados-ia').style.display = 'none';
   setTimeout(function() {
-    var safeTag = topic.split(" ")[0].toLowerCase().replace(/[^a-záéíóúñ]/g, "");
-    var toneEmoji = { "Divertido": "😂", "Educativo": "📚", "Serio y Profesional": "💼", "Polémico": "🔥", "Motivador": "💪" };
-    document.getElementById("res-tiktok-hook").textContent = "¿" + topic + "? 🤯 Te cuento el secreto que nadie te dice...";
-    document.getElementById("res-tiktok-screen").textContent = topic.toUpperCase() + " ✨";
-    document.getElementById("res-tiktok-caption").textContent = topic + " y te va a cambiar la vida 🚀 (Tono: " + tone + ")";
-    document.getElementById("res-tiktok-tags").textContent = "#viral #tips #tutorial #parati #" + safeTag;
-    document.getElementById("res-ig-caption").textContent = "💡 " + topic + "\n\n" + (toneEmoji[tone] || "📝") + " Hoy te comparto todo lo que necesitas saber sobre esto.\n\n¿Listo para el cambio? 👇\n\n—\n#multipost #contenido #tutorial #" + safeTag;
-    document.getElementById("res-ig-tags").textContent = "#multipost #contenido #tutorial #aprendizaje #" + safeTag;
-    document.getElementById("res-yt-title").textContent = topic + " | Guía Completa 2025";
-    document.getElementById("res-yt-desc").textContent = "En este video te enseño todo sobre: " + topic + "\n\n⏱️ TIMESTAMPS:\n0:00 - Introducción\n1:30 - Paso 1\n3:45 - Paso 2\n6:20 - Conclusión\n\n🔔 Suscríbete para más contenido";
-    document.getElementById("res-yt-tags").textContent = "#youtube #tutorial #guia #" + safeTag;
-    document.getElementById("div-resultados-ia").style.display = "grid";
+    var safeTag = topic.split(' ')[0].toLowerCase().replace(/[^a-záéíóúñ]/g, '');
+    var toneEmoji = { 'Divertido': '😂', 'Educativo': '📚', 'Serio y Profesional': '💼', 'Polémico': '🔥', 'Motivador': '💪' };
+    document.getElementById('res-tiktok-hook').textContent = '¿' + topic + '? 🤯 Te cuento el secreto que nadie te dice...';
+    document.getElementById('res-tiktok-screen').textContent = topic.toUpperCase() + ' ✨';
+    document.getElementById('res-tiktok-caption').textContent = topic + ' y te va a cambiar la vida 🚀 (Tono: ' + tone + ')';
+    document.getElementById('res-tiktok-tags').textContent = '#viral #tips #tutorial #parati #' + safeTag;
+    document.getElementById('res-ig-caption').textContent = '💡 ' + topic + '\n\n' + (toneEmoji[tone] || '📝') + ' Hoy te comparto todo lo que necesitas saber sobre esto.\n\n¿Listo para el cambio? 👇\n\n—\n#multipost #contenido #tutorial #' + safeTag;
+    document.getElementById('res-ig-tags').textContent = '#multipost #contenido #tutorial #aprendizaje #' + safeTag;
+    document.getElementById('res-yt-title').textContent = topic + ' | Guía Completa 2025';
+    document.getElementById('res-yt-desc').textContent = 'En este video te enseño todo sobre: ' + topic + '\n\n⏱️ TIMESTAMPS:\n0:00 - Introducción\n1:30 - Paso 1\n3:45 - Paso 2\n6:20 - Conclusión\n\n🔔 Suscríbete para más contenido';
+    document.getElementById('res-yt-tags').textContent = '#youtube #tutorial #guia #' + safeTag;
+    document.getElementById('div-resultados-ia').style.display = 'grid';
     submitBtn.disabled = false;
-    submitBtn.textContent = "Generar textos con IA →";
-    document.getElementById("div-resultados-ia").scrollIntoView({ behavior: "smooth", block: "nearest" });
-    showToast("¡Textos generados!");
+    submitBtn.textContent = 'Generar textos con IA →';
+    document.getElementById('div-resultados-ia').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    showToast('¡Textos generados!');
   }, 2000);
 }
 
 function copyText(btn, platform) {
-  var textToCopy = "";
-  if (platform === "tiktok") {
-    textToCopy = "GANCHO:\n" + document.getElementById("res-tiktok-hook").textContent
-      + "\n\nTEXTO EN PANTALLA:\n" + document.getElementById("res-tiktok-screen").textContent
-      + "\n\nCAPTION:\n" + document.getElementById("res-tiktok-caption").textContent
-      + "\n\nHASHTAGS:\n" + document.getElementById("res-tiktok-tags").textContent;
-  } else if (platform === "instagram") {
-    textToCopy = document.getElementById("res-ig-caption").textContent + "\n\n" + document.getElementById("res-ig-tags").textContent;
-  } else if (platform === "youtube") {
-    textToCopy = "TÍTULO:\n" + document.getElementById("res-yt-title").textContent
-      + "\n\nDESCRIPCIÓN:\n" + document.getElementById("res-yt-desc").textContent
-      + "\n\nHASHTAGS:\n" + document.getElementById("res-yt-tags").textContent;
+  var textToCopy = '';
+  if (platform === 'tiktok') {
+    textToCopy = 'GANCHO:\n' + document.getElementById('res-tiktok-hook').textContent +
+      '\n\nTEXTO EN PANTALLA:\n' + document.getElementById('res-tiktok-screen').textContent +
+      '\n\nCAPTION:\n' + document.getElementById('res-tiktok-caption').textContent +
+      '\n\nHASHTAGS:\n' + document.getElementById('res-tiktok-tags').textContent;
+  } else if (platform === 'instagram') {
+    textToCopy = document.getElementById('res-ig-caption').textContent + '\n\n' + document.getElementById('res-ig-tags').textContent;
+  } else if (platform === 'youtube') {
+    textToCopy = 'TÍTULO:\n' + document.getElementById('res-yt-title').textContent +
+      '\n\nDESCRIPCIÓN:\n' + document.getElementById('res-yt-desc').textContent +
+      '\n\nHASHTAGS:\n' + document.getElementById('res-yt-tags').textContent;
   }
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(textToCopy).then(function() { copySuccess(btn); }).catch(function() { copyFallback(textToCopy, btn); });
@@ -821,24 +740,24 @@ function copyText(btn, platform) {
 }
 
 function copyFallback(text, btn) {
-  var ta = document.createElement("textarea");
+  var ta = document.createElement('textarea');
   ta.value = text;
-  ta.style.cssText = "position:fixed;left:-9999px;top:-9999px";
+  ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
   document.body.appendChild(ta);
   ta.focus(); ta.select();
-  try { document.execCommand("copy"); copySuccess(btn); } catch(e) { showToast("No se pudo copiar", 2000, true); }
+  try { document.execCommand('copy'); copySuccess(btn); } catch(e) { showToast('No se pudo copiar', 2000, true); }
   document.body.removeChild(ta);
 }
 
 function copySuccess(btn) {
-  btn.classList.add("copied");
-  btn.textContent = "✓ Copiado";
-  showToast("¡Copiado al portapapeles!");
-  setTimeout(function() { btn.classList.remove("copied"); btn.textContent = "Copiar todo"; }, 2000);
+  btn.classList.add('copied');
+  btn.textContent = '✓ Copiado';
+  showToast('¡Copiado al portapapeles!');
+  setTimeout(function() { btn.classList.remove('copied'); btn.textContent = 'Copiar todo'; }, 2000);
 }
 
-document.addEventListener("keydown", function(e) {
-  if (e.key === "Escape") { closeModal(); closeProfile(); }
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { closeModal(); closeProfile(); }
 });
 </script>
 
