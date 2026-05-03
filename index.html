@@ -173,8 +173,6 @@
   .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px); background: #1a3a1a; border: 1px solid #4cff72; color: #4cff72; padding: .7rem 1.4rem; border-radius: 10px; font-size: .85rem; z-index: 9999; transition: transform .35s ease; pointer-events: none; }
   .toast.show { transform: translateX(-50%) translateY(0); }
   .toast.error { background: #3a1a1a; border-color: #ff6b6b; color: #ff6b6b; }
-  
-  /* NUEVOS ESTILOS PARA DASHBOARD MEJORADO */
   .usage-card { background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%); border: 1px solid #2a2a2a; border-radius: 18px; padding: 1.8rem; margin-bottom: 1.5rem; }
   .usage-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
   .usage-header h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
@@ -374,7 +372,6 @@
       <p>Escribe tu idea y obtén los textos perfectos para cada red social.</p>
     </div>
 
-    <!-- NUEVA SECCIÓN: Usage Card -->
     <div class="usage-card" id="usage-section">
       <div class="usage-header">
         <h3>📊 Tu uso este mes</h3>
@@ -386,7 +383,6 @@
       <p class="usage-text" id="usage-text">Has usado <strong>0 de 3</strong> generaciones gratuitas</p>
     </div>
 
-    <!-- Advertencia de límite -->
     <div class="limit-warning" id="limit-warning">
       <p>⚠️ Has alcanzado el límite de 3 generaciones gratuitas. <a onclick="scrollToPricing()">Mejora a Pro</a> para generaciones ilimitadas.</p>
     </div>
@@ -435,7 +431,6 @@
       </div>
     </div>
 
-    <!-- NUEVA SECCIÓN: Precios en Dashboard -->
     <div class="dash-card" style="margin-top: 2rem;" id="pricing-section">
       <h3>💎 Mejora tu plan</h3>
       <p style="color: #888; font-size: .85rem; margin-bottom: 1.5rem;">Desbloquea todo el potencial de MultiPost</p>
@@ -473,6 +468,262 @@ var SB_URL = 'https://xwbreyqsgujjxqwjtrbi.supabase.co';
 var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3YnJleXFzZ3Vqanhxd2p0cmJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5MTU2NTQsImV4cCI6MjA5MTQ5MTY1NH0.HWw89AP7p7DmEPuy_UUhdt5nQzrSlzT3x8pc7R5S2Zo';
 
 var currentUser = null;
+
+// ==========================================
+// SISTEMA DE PLANTILLAS POR TONO
+// ==========================================
+
+function getRandomItem(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+var TEMPLATES = {
+  "Divertido": {
+    hooks: [
+      "\u00bf{topic}? Yo tampoco lo sab\u00eda y m\u00edrame ahora \ud83d\ude02",
+      "Amigos, si no sabes de {topic}, est\u00e1s perdiendo el 50% de tu vida \ud83d\ude80",
+      "Pens\u00e9 que sab\u00eda todo sobre {topic}... me equivoqu\u00e9 de gratitud \ud83d\ude2d",
+      "Nivel de {topic}: principiante \u2192 experto en 3 minutos \u26a1",
+      "Mi madre cuando le dije que iba a hablar de {topic}... \ud83e\udd21",
+      "Avis\u00e9: despu\u00e9s de ver esto sobre {topic} no vas a poder parar \ud83d\ude02"
+    ],
+    screens: [
+      "{topic} (PERO EN SERIO)",
+      "TODO LO QUE NADIE TE DICE SOBRE {topic}",
+      "{topic} - EDICI\u00d3N SIN FILTRO",
+      "TE VAN A JUZGAR POR ESTO DE {topic}",
+      "{topic}?! AYUDA \ud83d\ude2d",
+      "LO QUE PASA CUANDO ENTIENDES {topic}"
+    ],
+    captionsTk: [
+      "Me acab\u00e9 de dar cuenta de esto sobre {topic} y mi vida cambi\u00f3 (para bien) \ud83d\ude02 Si te pas\u00f3 lo mismo, reacciona \ud83d\ude4f",
+      "Si est\u00e1s pasando por esto con {topic}, este video es para ti \ud83d\ude02 No est\u00e1s solo, somos muchos \ud83d\udc4f",
+      "El truco sobre {topic} que deber\u00eda ser ilegal de lo bueno que es \ud83d\ude02 Guarda esto antes de que lo borren",
+      "POV: acabas de descubrir esto de {topic} \ud83d\ude02 \u00bfA qui\u00e9n le pasa esto? Comenta \ud83d\udcac",
+      "Esto de {topic} es m\u00e1s f\u00e1cil de lo que parece y voy a demostr\u00e1rtelo \ud83d\ude02 S\u00edgueme para m\u00e1s"
+    ],
+    captionsIg: [
+      "\ud83d\ude02 S\u00ed, pas\u00e9 por esto con {topic} y aqu\u00ed te cuento c\u00f3mo lo solucion\u00e9.\n\nSi est\u00e1s en la misma situaci\u00f3n, \u00bfqu\u00e9 esperas? \ud83d\udc47\n\n\u2014\n#multipost #contenido #tutorial #{tag}",
+      "\ud83d\ude02 Otra vez hablando de {topic} pero es que es NECESARIO.\n\nTe dejo el paso a paso aqu\u00ed abajo \u2193\u2193\u2193\n\n\u2014\n#multipost #contenido #tutorial #{tag}",
+      "Me cans\u00e9 de ver informaci\u00f3n falsa sobre {topic} as\u00ed que lo hice yo mismo \ud83d\ude02\n\nGuarda este post porque te va a servir \ud83d\udd25\n\n\u2014\n#multipost #contenido #tutorial #{tag}"
+    ],
+    titlesYt: [
+      "{topic} | La verdad que NADIE te cuenta (con humor)",
+      "Prob\u00e9 {topic} durante 30 d\u00edas y pas\u00f3 esto...",
+      "C\u00f3mo dominar {topic} sin volverte loco (gu\u00eda real)",
+      "Todo lo que te equivocas sobre {topic} (y c\u00f3mo arreglarlo)",
+      "{topic} para principiantes: de cero a pro sin morir en el intento"
+    ],
+    descsYt: [
+      "En este video te cuento mi experiencia real con {topic}. Sin filtros, sin teor\u00eda, solo pr\u00e1ctica.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - El error que comet\u00eda\n1:30 - El truco que cambi\u00f3 todo\n3:00 - Resultados reales\n5:00 - Conclusi\u00f3n\n\n\u26a1 Suscr\u00edbete para m\u00e1s contenido como este.",
+      "Si est\u00e1s buscando c\u00f3mo mejorar en {topic}, este video es lo que necesitas. Te explico paso a paso c\u00f3mo lo hice.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - Introducci\u00f3n\n1:15 - Paso 1\n2:45 - Paso 2\n4:30 - Consejos finales\n\n\u2728 No olvides dejar tu like si te sirvi\u00f3."
+    ]
+  },
+
+  "Educativo": {
+    hooks: [
+      "Solo el 5% de las personas sabe esto sobre {topic} \ud83e\udde0",
+      "\u00bfSab\u00edas esto sobre {topic}? La ciencia lo confirma \ud83e\udde0",
+      "La diferencia entre quien sabe {topic} y quien no, es esto \ud83d\udcca",
+      "3 datos sobre {topic} que cambiar\u00e1n tu perspectiva \ud83e\udde0",
+      "{topic} explicado en menos de 60 segundos \u23f1\ufe0f",
+      "Deja de hacer esto con {topic}. Haz esto en su lugar \ud83e\udde0"
+    ],
+    screens: [
+      "3 DATOS CIENT\u00cdFICOS SOBRE {topic}",
+      "LO QUE LA CIENCIA DICE DE {topic}",
+      "{topic} - EXPLICADO F\u00c1CIL",
+      "APRENDE {topic} EN 60 SEGUNDOS",
+      "EL M\u00c9TODO CIENT\u00cdFICO PARA {topic}",
+      "ERROR VS ACIERTO EN {topic}"
+    ],
+    captionsTk: [
+      "Esto sobre {topic} deber\u00eda ense\u00f1arse en todas partes \ud83e\udde0 Pasa a quien le sirva \ud83d\udc49",
+      "La mayor\u00eda hace mal esto de {topic}. Aqu\u00ed te explico el m\u00e9todo correcto \ud83d\udcca Guarda para despu\u00e9s",
+      "Aprend\u00ed esto de {topic} despu\u00e9s de a\u00f1os y me hubiera gustado saberlo antes \ud83e\udde0 Comenta si lo sab\u00edas",
+      "Si quieres entender {topic} de verdad, presta atenci\u00f3n \ud83e\udde0 No es lo que te han contado",
+      "El concepto clave de {topic} que todo el mundo ignora \ud83d\udcca Reacciona si aprendiste algo nuevo"
+    ],
+    captionsIg: [
+      "\ud83e\udde0 {topic}: lo que la ciencia dice vs lo que todo el mundo cree.\n\nTe resumo los puntos clave aqu\u00ed \u2193\n\n1. El mito m\u00e1s com\u00fan\n2. Lo que realmente funciona\n3. C\u00f3mo aplicarlo hoy\n\n\u2014\n#multipost #educaci\u00f3n #tutorial #{tag}",
+      "\ud83d\udcca Gu\u00eda completa sobre {topic}.\n\nHe recopilado la informaci\u00f3n m\u00e1s actualizada para que no tengas que buscar m\u00e1s.\n\n\u2014\n#multipost #educaci\u00f3n #aprender #{tag}",
+      "\ud83e\udde0 Te explico {topic} de forma simple y clara.\n\nSi te ha quedado alguna duda, d\u00edmelo en comentarios y te respondo.\n\n\u2014\n#multipost #educaci\u00f3n #conocimiento #{tag}"
+    ],
+    titlesYt: [
+      "{topic} | Gu\u00eda completa para principiantes (2025)",
+      "Todo lo que necesitas saber sobre {topic} en un solo video",
+      "La ciencia detr\u00e1s de {topic} explicada f\u00e1cilmente",
+      "{topic}: mitos, verdades y c\u00f3mo aplicarlo correctamente",
+      "Aprende {topic} desde cero - Curso expr\u00e9s gratuito"
+    ],
+    descsYt: [
+      "En este video te explico todo lo que necesitas saber sobre {topic} de forma clara y estructurada.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - Introducci\u00f3n\n1:00 - Fundamentos b\u00e1sicos\n3:00 - Errores comunes\n5:00 - Gu\u00eda pr\u00e1ctica\n7:00 - Resumen y conclusi\u00f3n\n\n\u2728 Suscr\u00edbete para no perderte los pr\u00f3ximos v\u00eddeos educativos.",
+      "He creado esta gu\u00eda completa sobre {topic} para que puedas entenderlo desde cero, sin conocimientos previos.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - \u00bfPor qu\u00e9 es importante?\n1:30 - Conceptos clave\n3:15 - Ejemplos pr\u00e1cticos\n5:30 - Paso a paso\n7:00 - Conclusi\u00f3n\n\n\u2713 Si te sirvi\u00f3, dale like y suscr\u00edbete."
+    ]
+  },
+
+  "Serio y Profesional": {
+    hooks: [
+      "El 80% fracasa en {topic} por este \u00fanico error \ud83d\udcbc",
+      "Lo que nadie te explica sobre {topic} en el mundo profesional \ud83d\udcbc",
+      "Si trabajas con {topic}, necesitas saber esto \ud83d\udcbc",
+      "La realidad de {topic} que pocos se atreven a contar \ud83d\udcbc",
+      "Tras 10 a\u00f1os en {topic}, esto es lo que he aprendido \ud83d\udcbc",
+      "La diferencia profesional en {topic} est\u00e1 en los detalles \ud83d\udcbc"
+    ],
+    screens: [
+      "EL ERROR QUE DESTRUYE TU {topic}",
+      "{topic}: AN\u00c1LISIS PROFESIONAL",
+      "LO QUE REALMENTE IMPORTA EN {topic}",
+      "LA REALIDAD SOBRE {topic}",
+      "{topic} - VISI\u00d3N PROFESIONAL",
+      "DATOS REALES SOBRE {topic}"
+    ],
+    captionsTk: [
+      "La mayor\u00eda aborda {topic} sin estrategia. Aqu\u00ed te explico c\u00f3mo hacerlo bien \ud83d\udcbc Para profesionales",
+      "No es opini\u00f3n, es dato: as\u00ed es como funciona realmente {topic} \ud83d\udcbc Guarda este contenido",
+      "Despu\u00e9s de analizar {topic} a fondo, estas son mis conclusiones \ud83d\udcbc Comparte si eres profesional del sector",
+      "El enfoque correcto para {topic} no es el que te venden \ud83d\udcbc Te explico la diferencia",
+      "Si te tomas {topic} en serio, necesitas entender esto \ud83d\udcbc Sin atajos, sin falsas promesas"
+    ],
+    captionsIg: [
+      "\ud83d\udcbc An\u00e1lisis profesional sobre {topic}.\n\nTras a\u00f1os de experiencia, comparto las claves que realmente marcan la diferencia.\n\n\u2014\n#multipost #profesional #{tag}",
+      "\ud83d\udcbc {topic}: m\u00e1s all\u00e1 de la superficie.\n\nLa mayor\u00eda se queda en lo b\u00e1sico. Aqu\u00ed vamos al fondo del tema.\n\n\u2014\n#multipost #profesional #an\u00e1lisis #{tag}",
+      "\ud83d\udcbc Lo que funciona en {topic} vs lo que es solo ruido.\n\nDato sobre opini\u00f3n. Siempre.\n\n\u2014\n#multipost #profesional #{tag}"
+    ],
+    titlesYt: [
+      "{topic} | An\u00e1lisis profesional completo (2025)",
+      "La realidad de {topic} que nadie te cuenta",
+      "C\u00f3mo abordar {topic} con un m\u00e9todo profesional",
+      "{topic}: errores comunes y c\u00f3mo evitarlos",
+      "Gu\u00eda profesional sobre {topic} para resultados reales"
+    ],
+    descsYt: [
+      "An\u00e1lisis profundo y profesional sobre {topic}. Sin simplificaciones innecesarias, con datos y estrategias reales.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - Contexto actual\n1:45 - An\u00e1lisis del problema\n3:30 - Estrategia profesional\n5:30 - Implementaci\u00f3n pr\u00e1ctica\n7:00 - Conclusiones\n\n\u26a1 Canal dedicado a contenido profesional de calidad. Suscr\u00edbete.",
+      "En este v\u00edeo desgloso {topic} desde una perspectiva profesional, bas\u00e1ndome en experiencia real y datos verificados.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - Presentaci\u00f3n\n1:00 - Estado actual\n2:45 - An\u00e1lisis detallado\n5:00 - Recomendaciones\n6:30 - Cierre\n\n\u2713 Contenido profesional sin filtros."
+    ]
+  },
+
+  "Pol\u00e9mico": {
+    hooks: [
+      "Est\u00e1s haciendo {topic} mal y nadie te lo dice \ud83d\udd25",
+      "Todo lo que te han dicho sobre {topic} es una mentira \ud83d\udd25",
+      "Me van a odiar por decir esto sobre {topic} pero me da igual \ud83d\udd25",
+      "El negocio de {topic} es una estafa y te explico por qu\u00e9 \ud83d\udd25",
+      "Deja de seguir consejos falsos sobre {topic} \ud83d\udd25",
+      "Lo que los 'expertos' de {topic} no quieren que sepas \ud83d\udd25"
+    ],
+    screens: [
+      "LA VERDAD QUE NADIE DICE SOBRE {topic}",
+      "EST\u00c1S HACIENDO {topic} MAL",
+      "{topic}: LA GRAN ESTAFA",
+      "NO VAYAS A HACER {topic} SIN VER ESTO",
+      "LOS EXPERTOS MIENTEN SOBRE {topic}",
+      "POR QU\u00c9 {topic} NO FUNCIONA"
+    ],
+    captionsTk: [
+      "Voy a recibir odio por esto pero alguien ten\u00eda que decirlo sobre {topic} \ud83d\udd25 \u00bfEst\u00e1s de acuerdo o no?",
+      "Todos los 'gurus' de {topic} te est\u00e1n mintiendo y aqu\u00ed est\u00e1 la prueba \ud83d\udd25 Comparte si tienes valor",
+      "Me cancelar\u00e1n por este video sobre {topic} pero no me callo \ud83d\udd25 Reacciona si piensas igual",
+      "El 99% de lo que ves sobre {topic} es basura \ud83d\udd25 Te digo qu\u00e9 es lo \u00fanico que funciona de verdad",
+      "Aviso: esto sobre {topic} te va a molestar \ud83d\udd25 Pero es la realidad y hay que decirla"
+    ],
+    captionsIg: [
+      "\ud83d\udd25 Me van a cancelar por esto pero me da igual.\n\nLa verdad sobre {topic} que nadie quiere admitir.\n\n\u00bfEst\u00e1s de acuerdo? Dilo en comentarios.\n\n\u2014\n#multipost #verdad #{tag}",
+      "\ud83d\udd25 Todos hablan de {topic} pero casi nadie dice la verdad.\n\nAqu\u00ed rompo el silencio. Comparte si tienes los pantalones.\n\n\u2014\n#multipost #sinfiltros #{tag}",
+      "\ud83d\udd25 Deja de consumir contenido basura sobre {topic}.\n\nEsto es lo que realmente pasa detr\u00e1s. Y no es bonito.\n\n\u2014\n#multipost #realidad #{tag}"
+    ],
+    titlesYt: [
+      "La VERDAD sobre {topic} que nadie te cuenta",
+      "Por qu\u00e9 {topic} es una ESTAFA (y qu\u00e9 hacer en su lugar)",
+      "Los 'expertos' de {topic} te est\u00e1n mintiendo",
+      "NO hagas {topic} hasta que veas este video",
+      "Destruyo los mitos m\u00e1s grandes sobre {topic}"
+    ],
+    descsYt: [
+      "Nadie quiere decir la verdad sobre {topic}, pero yo s\u00ed. En este video expongo lo que realmente pasa detr\u00e1s.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - La mentira que todos creen\n1:30 - La realidad inc\u00f3moda\n3:00 - Lo que los 'expertos' ocultan\n5:00 - Qu\u00e9 hacer realmente\n6:30 - Reflexi\u00f3n final\n\n\u26a0\ufe0f Contenido que puede molestar a algunos. Se advierte.",
+      "Hablo claro y sin pelos en la lengua sobre {topic}. Si esperas un video m\u00e1s, este no es para ti.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - Por qu\u00e9 hago este video\n1:15 - Lo que est\u00e1 mal\n3:00 - Datos que no te quieren mostrar\n4:45 - La soluci\u00f3n real\n6:00 - Palabras finales\n\n\u2713 Si te gusta la verdad sin filtros, suscr\u00edbete."
+    ]
+  },
+
+  "Motivador": {
+    hooks: [
+      "Si est\u00e1s pasando por una mala racha con {topic}, mira esto \ud83d\udcaa",
+      "No eres demasiado tarde para empezar con {topic} \ud83d\udcaa",
+      "Este video sobre {topic} te va a cambiar la vida \ud83d\udcaa",
+      "Dej\u00e9 de postergar {topic} y haz esto hoy \ud83d\udcaa",
+      "Tu futuro yo te agradecer\u00e1 haber visto esto sobre {topic} \ud83d\udcaa",
+      "El momento perfecto para {topic} fue ayer. El segundo mejor: ahora \ud83d\udcaa"
+    ],
+    screens: [
+      "EMPIEZA {topic} HOY",
+      "TU TRANSFORMACI\u00d3N CON {topic} EMPIEZA AHORA",
+      "NO RINDAS CON {topic}",
+      "{topic} - TU MEJOR VERSI\u00d3N",
+      "EL CAMINO HACIA {topic} EMPIEZA AQU\u00cd",
+      "DA EL PASO: {topic}"
+    ],
+    captionsTk: [
+      "S\u00e9 que es dif\u00edcil empezar con {topic} pero te prometo que vale la pena \ud83d\udcaa Etiqueta a alguien que lo necesite",
+      "Hace un a\u00f1o no sab\u00eda nada de {topic}. Hoy mira d\u00f3nde estoy \ud83d\udcaa Si yo pude, t\u00fa tambi\u00e9n. Guarda este video",
+      "Deja de esperar el momento perfecto para {topic}. El momento perfecto es ahora \ud83d\udcaa Reacciona si est\u00e1s listo",
+      "Este es tu signo para empezar con {topic} \ud83d\udcaa No lo pienses m\u00e1s, solo hazlo. Comenta 'YO PUEDO' si est\u00e1s de acuerdo",
+      "La primera vez que intent\u00e9 {topic} fue un desastre. Pero no me rend\u00ed \ud83d\udcaa Tu historia puede ser diferente"
+    ],
+    captionsIg: [
+      "\ud83d\udcaa Si est\u00e1s pensando en empezar con {topic}, esto es para ti.\n\nNo importa d\u00f3nde est\u00e1s ahora. Lo que importa es que des el primer paso hoy.\n\n\u00bfListo? \u2193\u2193\u2193\n\n\u2014\n#multipost #motivaci\u00f3n #{tag}",
+      "\ud83d\udcaa {topic} cambi\u00f3 mi vida y puede cambiar la tuya.\n\nNo necesitas ser perfecto. Solo necesitas empezar.\n\n\u2014\n#multipost #crecimiento #{tag}",
+      "\ud83d\udcaa Deja de decir 'ma\u00f1ana' a {topic}.\n\nMa\u00f1ana no existe. Solo hay hoy. Y hoy puedes dar el primer paso.\n\n\u2014\n#multipost #motivaci\u00f3n #{tag}"
+    ],
+    titlesYt: [
+      "C\u00f3mo {topic} cambi\u00f3 mi vida (y puede cambiar la tuya)",
+      "Deja de procrastinar {topic}: haz esto HOY",
+      "Mi transformaci\u00f3n con {topic} | Historia real",
+      "Empieza {topic} desde cero: gu\u00eda motivacional",
+      "El video que necesitabas ver sobre {topic} hoy"
+    ],
+    descsYt: [
+      "Este video es diferente. No es un tutorial m\u00e1s sobre {topic}. Es una historia real de transformaci\u00f3n que te va a inspirar a dar el primer paso.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - Mi historia personal\n1:30 - El punto de inflexi\u00f3n\n3:00 - C\u00f3mo lo logr\u00e9\n4:30 - Lo que aprend\u00ed\n6:00 - Mensaje para ti\n\n\u2728 Si este video te inspira, comp\u00e1rtelo con alguien que lo necesite. Suscr\u00edbete para m\u00e1s contenido motivacional.",
+      "Si has estado dudando en empezar con {topic}, este v\u00edeo es para ti. Te cuento mi experiencia real y te doy las herramientas para que empieces hoy mismo.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - \u00bfPor qu\u00e9 hice esto?\n1:15 - Los miedos que super\u00e9\n3:00 - El proceso paso a paso\n5:00 - Resultados reales\n6:30 - Tu turno\n\n\u2713 Dale al play. Tu futuro yo te lo agradecer\u00e1."
+    ]
+  }
+};
+
+// ==========================================
+// SISTEMA DE USO PERSISTENTE (localStorage)
+// Se reinicia autom\u00e1ticamente cada mes
+// ==========================================
+
+function getUsageKey() {
+  if (!currentUser || !currentUser.id) return null;
+  var now = new Date();
+  var monthKey = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0");
+  return "mp_usage_" + currentUser.id + "_" + monthKey;
+}
+
+function loadUsageFromLocal() {
+  var key = getUsageKey();
+  if (!key) return;
+  try {
+    var saved = JSON.parse(localStorage.getItem(key));
+    if (saved && typeof saved.count === "number") {
+      if (saved.count > currentUser.usageCount) currentUser.usageCount = saved.count;
+      if (saved.plan && saved.plan !== "Gratis") currentUser.plan = saved.plan;
+    }
+  } catch(e) {}
+}
+
+function saveUsageToLocal() {
+  var key = getUsageKey();
+  if (!key) return;
+  try {
+    localStorage.setItem(key, JSON.stringify({ count: currentUser.usageCount || 0, plan: currentUser.plan || "Gratis" }));
+  } catch(e) {}
+}
+
+// ==========================================
+// INICIO Y AUTENTICACI\u00d3N
+// ==========================================
 
 document.addEventListener('DOMContentLoaded', function() {
   if (!localStorage.getItem('cookiesAccepted')) {
@@ -615,8 +866,11 @@ async function fetchUserAndLogin(accessToken) {
       usageCount: 0
     };
     
-    // CRÍTICO: Cargar datos desde Supabase ANTES de mostrar nada
+    // Cargar datos desde Supabase
     await loadUserDataFromSupabase(accessToken);
+    
+    // Fallback a localStorage (garantiza que el l\u00edmite persista aunque Supabase falle)
+    loadUsageFromLocal();
     
     updateUIForLoggedInUser();
     showDashboard();
@@ -645,22 +899,15 @@ async function loadUserDataFromSupabase(accessToken) {
       var data = await response.json();
       if (data && data.length > 0) {
         var userData = data[0];
-        // Actualizar currentUser con datos reales de la BD
         currentUser.name = userData.name || currentUser.name;
         currentUser.avatar = userData.avatar || currentUser.avatar;
         currentUser.plan = userData.plan || 'Gratis';
         currentUser.usageCount = userData.usage_count || 0;
-        
-        console.log('✅ Datos cargados desde Supabase:', currentUser);
       } else {
-        // Usuario nuevo - crear registro inicial
-        console.log('👤 Usuario nuevo detectado, creando registro...');
         await createUserInSupabase(accessToken);
       }
     }
-  } catch(e) {
-    console.error('❌ Error al cargar datos del usuario:', e);
-  }
+  } catch(e) {}
 }
 
 async function createUserInSupabase(accessToken) {
@@ -674,7 +921,7 @@ async function createUserInSupabase(accessToken) {
       usage_count: 0
     };
     
-    var response = await fetch(SB_URL + '/rest/v1/users', {
+    await fetch(SB_URL + '/rest/v1/users', {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + accessToken,
@@ -684,13 +931,7 @@ async function createUserInSupabase(accessToken) {
       },
       body: JSON.stringify(userData)
     });
-    
-    if (response.ok) {
-      console.log('✅ Usuario creado en Supabase');
-    }
-  } catch(e) {
-    console.error('❌ Error al crear usuario:', e);
-  }
+  } catch(e) {}
 }
 
 async function saveUserDataToSupabase() {
@@ -709,10 +950,8 @@ async function saveUserDataToSupabase() {
       usage_count: currentUser.usageCount
     };
     
-    console.log('💾 Guardando en Supabase:', userData);
-    
     // Usar UPSERT para actualizar o crear
-    var response = await fetch(SB_URL + '/rest/v1/users', {
+    await fetch(SB_URL + '/rest/v1/users', {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + tokensObj.access_token,
@@ -722,15 +961,7 @@ async function saveUserDataToSupabase() {
       },
       body: JSON.stringify(userData)
     });
-    
-    if (response.ok) {
-      console.log('✅ Datos guardados correctamente');
-    } else {
-      console.error('❌ Error al guardar:', await response.text());
-    }
-  } catch(e) {
-    console.error('❌ Error saving user data:', e);
-  }
+  } catch(e) {}
 }
 
 async function logout() {
@@ -793,28 +1024,26 @@ function updatePlanCards() {
   var freePlanCard = document.getElementById('free-plan-card');
   var proPlanCard = document.getElementById('pro-plan-card');
   
+  // Limpiar badges anteriores
+  var oldBadge1 = freePlanCard.querySelector('.current-plan-badge');
+  var oldBadge2 = proPlanCard.querySelector('.current-plan-badge');
+  if (oldBadge1) oldBadge1.remove();
+  if (oldBadge2) oldBadge2.remove();
+  freePlanCard.classList.remove('current-plan');
+  proPlanCard.classList.remove('current-plan');
+
   if (currentUser.plan === 'Gratis') {
     freePlanCard.classList.add('current-plan');
-    proPlanCard.classList.remove('current-plan');
-    if (!freePlanCard.querySelector('.current-plan-badge')) {
-      var badge = document.createElement('div');
-      badge.className = 'current-plan-badge';
-      badge.textContent = 'Plan actual';
-      freePlanCard.appendChild(badge);
-    }
-    var existingBadge = proPlanCard.querySelector('.current-plan-badge');
-    if (existingBadge) existingBadge.remove();
+    var badge = document.createElement('div');
+    badge.className = 'current-plan-badge';
+    badge.textContent = 'Plan actual';
+    freePlanCard.appendChild(badge);
   } else if (currentUser.plan === 'Pro') {
     proPlanCard.classList.add('current-plan');
-    freePlanCard.classList.remove('current-plan');
-    if (!proPlanCard.querySelector('.current-plan-badge')) {
-      var badge = document.createElement('div');
-      badge.className = 'current-plan-badge';
-      badge.textContent = 'Plan actual';
-      proPlanCard.appendChild(badge);
-    }
-    var existingBadge = freePlanCard.querySelector('.current-plan-badge');
-    if (existingBadge) existingBadge.remove();
+    var badge = document.createElement('div');
+    badge.className = 'current-plan-badge';
+    badge.textContent = 'Plan actual';
+    proPlanCard.appendChild(badge);
   }
 }
 
@@ -828,25 +1057,38 @@ function updateUsageDisplay() {
   var usageText = document.getElementById('usage-text');
   var upgradeBadge = document.getElementById('upgrade-badge');
   var usageSection = document.getElementById('usage-section');
+  var limitWarning = document.getElementById('limit-warning');
+  var generateBtn = document.getElementById('ai-generate-btn');
   
   if (currentUser.plan === 'Pro') {
     usageSection.style.display = 'none';
+    limitWarning.classList.remove('show');
+    generateBtn.disabled = false;
+    generateBtn.textContent = 'Generar textos con IA →';
     return;
   }
   
   usageSection.style.display = 'block';
-  
   var percentage = Math.min((usageCount / maxUsage) * 100, 100);
   usageFill.style.width = percentage + '%';
   usageText.innerHTML = 'Has usado <strong>' + usageCount + ' de ' + maxUsage + '</strong> generaciones gratuitas';
   
-  if (usageCount >= 2) {
+  if (usageCount >= maxUsage) {
     upgradeBadge.style.display = 'inline-block';
+    limitWarning.classList.add('show');
+    generateBtn.disabled = true;
+    generateBtn.textContent = 'Límite alcanzado';
+  } else if (usageCount >= maxUsage - 1) {
+    upgradeBadge.style.display = 'inline-block';
+    limitWarning.classList.remove('show');
+    generateBtn.disabled = false;
+    generateBtn.textContent = 'Generar textos con IA →';
   } else {
     upgradeBadge.style.display = 'none';
+    limitWarning.classList.remove('show');
+    generateBtn.disabled = false;
+    generateBtn.textContent = 'Generar textos con IA →';
   }
-  
-  console.log('📊 Uso actualizado:', usageCount + '/' + maxUsage);
 }
 
 function showDashboard() {
@@ -917,7 +1159,7 @@ async function handleSaveProfile(event) {
   if (!newName || !currentUser) return;
   
   currentUser.name = newName;
-  
+  saveUsageToLocal();
   await saveUserDataToSupabase();
   
   updateUIForLoggedInUser();
@@ -937,7 +1179,7 @@ async function handleAvatarUpload(event) {
   reader.onload = async function(e) {
     var avatarUrl = e.target.result;
     currentUser.avatar = avatarUrl;
-    
+    saveUsageToLocal();
     await saveUserDataToSupabase();
     
     document.getElementById('nav-avatar').style.backgroundImage = 'url(' + avatarUrl + ')';
@@ -949,6 +1191,10 @@ async function handleAvatarUpload(event) {
   reader.readAsDataURL(file);
 }
 
+// ==========================================
+// GENERADOR CON TONOS \u00daNICOS Y ALEATORIEDAD
+// ==========================================
+
 async function handleGenerateAI(event) {
   event.preventDefault();
   
@@ -956,9 +1202,6 @@ async function handleGenerateAI(event) {
     openModal();
     return;
   }
-  
-  // CRÍTICO: Verificar límite con el valor REAL de la base de datos
-  console.log('🔍 Verificando límite - Usage:', currentUser.usageCount, 'Plan:', currentUser.plan);
   
   if (currentUser.plan === 'Gratis' && currentUser.usageCount >= 3) {
     document.getElementById('limit-warning').classList.add('show');
@@ -985,33 +1228,44 @@ async function handleGenerateAI(event) {
   
   setTimeout(async function() {
     var safeTag = topic.split(' ')[0].toLowerCase().replace(/[^a-záéíóúñ]/g, '');
-    var toneEmoji = { 'Divertido': '😂', 'Educativo': '📚', 'Serio y Profesional': '💼', 'Polémico': '🔥', 'Motivador': '💪' };
-    
-    document.getElementById('res-tiktok-hook').textContent = '¿' + topic + '? 🤯 Te cuento el secreto que nadie te dice...';
-    document.getElementById('res-tiktok-screen').textContent = topic.toUpperCase() + ' ✨';
-    document.getElementById('res-tiktok-caption').textContent = topic + ' y te va a cambiar la vida 🚀 (Tono: ' + tone + ')';
-    document.getElementById('res-tiktok-tags').textContent = '#viral #tips #tutorial #parati #' + safeTag;
-    
-    document.getElementById('res-ig-caption').textContent = '💡 ' + topic + '\n\n' + (toneEmoji[tone] || '📝') + ' Hoy te comparto todo lo que necesitas saber sobre esto.\n\n¿Listo para el cambio? 👇\n\n—\n#multipost #contenido #tutorial #' + safeTag;
-    document.getElementById('res-ig-tags').textContent = '#multipost #contenido #tutorial #aprendizaje #' + safeTag;
-    
-    document.getElementById('res-yt-title').textContent = topic + ' | Guía Completa 2025';
-    document.getElementById('res-yt-desc').textContent = 'En este video te enseño todo sobre: ' + topic + '\n\n⏱️ TIMESTAMPS:\n0:00 - Introducción\n1:30 - Paso 1\n3:45 - Paso 2\n6:20 - Conclusión\n\n🔔 Suscríbete para más contenido';
+    var t = TEMPLATES[tone] || TEMPLATES['Divertido'];
+
+    // Generar textos \u00fanicos aleatorios seg\u00fan el tono elegido
+    var hook = getRandomItem(t.hooks).replace(/{topic}/g, topic);
+    var screen = getRandomItem(t.screens).replace(/{topic}/g, topic.toUpperCase());
+    var captionTk = getRandomItem(t.captionsTk).replace(/{topic}/g, topic);
+    var captionIg = getRandomItem(t.captionsIg).replace(/{topic}/g, topic).replace(/{tag}/g, safeTag);
+    var titleYt = getRandomItem(t.titlesYt).replace(/{topic}/g, topic);
+    var descYt = getRandomItem(t.descsYt).replace(/{topic}/g, topic);
+
+    var toneEmojis = { 'Divertido': '😂', 'Educativo': '🧠', 'Serio y Profesional': '💼', 'Polémico': '🔥', 'Motivador': '💪' };
+    var toneTag = tone.toLowerCase().replace(' y profesional', '').replace(' ', '');
+
+    // TikTok
+    document.getElementById('res-tiktok-hook').textContent = hook;
+    document.getElementById('res-tiktok-screen').textContent = screen;
+    document.getElementById('res-tiktok-caption').textContent = captionTk;
+    document.getElementById('res-tiktok-tags').textContent = '#viral #tips #tutorial #parati #' + safeTag + ' #' + toneTag;
+
+    // Instagram
+    document.getElementById('res-ig-caption').textContent = captionIg;
+    document.getElementById('res-ig-tags').textContent = '#multipost #contenido #tutorial #aprendizaje #' + safeTag + ' #' + toneTag;
+
+    // YouTube
+    document.getElementById('res-yt-title').textContent = titleYt;
+    document.getElementById('res-yt-desc').textContent = descYt;
     document.getElementById('res-yt-tags').textContent = '#youtube #tutorial #guia #' + safeTag;
-    
+
     document.getElementById('div-resultados-ia').style.display = 'grid';
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Generar textos con IA →';
-    
-    // CRÍTICO: Incrementar uso y guardar inmediatamente en Supabase
+
+    // Incrementar uso y PERSISTIR (doble capa: localStorage + Supabase)
     currentUser.usageCount = (currentUser.usageCount || 0) + 1;
-    console.log('➕ Incrementando uso a:', currentUser.usageCount);
-    
-    await saveUserDataToSupabase();
+    saveUsageToLocal();
+    saveUserDataToSupabase();
     updateUsageDisplay();
     
     document.getElementById('div-resultados-ia').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    showToast('¡Textos generados!');
+    showToast('¡Textos generados en tono ' + tone + '!');
   }, 2000);
 }
 
