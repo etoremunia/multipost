@@ -173,6 +173,38 @@
   .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px); background: #1a3a1a; border: 1px solid #4cff72; color: #4cff72; padding: .7rem 1.4rem; border-radius: 10px; font-size: .85rem; z-index: 9999; transition: transform .35s ease; pointer-events: none; }
   .toast.show { transform: translateX(-50%) translateY(0); }
   .toast.error { background: #3a1a1a; border-color: #ff6b6b; color: #ff6b6b; }
+  
+  /* NUEVOS ESTILOS PARA DASHBOARD MEJORADO */
+  .usage-card { background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%); border: 1px solid #2a2a2a; border-radius: 18px; padding: 1.8rem; margin-bottom: 1.5rem; }
+  .usage-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
+  .usage-header h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
+  .upgrade-badge { background: linear-gradient(135deg, #ff3c3c, #ff6b6b); color: white; padding: .3rem .8rem; border-radius: 100px; font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; cursor: pointer; transition: opacity .2s; }
+  .upgrade-badge:hover { opacity: .85; }
+  .usage-bar { background: #0a0a0a; border-radius: 100px; height: 12px; overflow: hidden; margin-bottom: .8rem; }
+  .usage-fill { background: linear-gradient(90deg, #ff3c3c, #ff6b6b); height: 100%; border-radius: 100px; transition: width .5s ease; }
+  .usage-text { font-size: .85rem; color: #888; }
+  .usage-text strong { color: #fff; font-weight: 600; }
+  .dash-pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 1.5rem; }
+  @media(max-width: 768px) { .dash-pricing-grid { grid-template-columns: 1fr; } }
+  .dash-price-card { background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 14px; padding: 1.5rem; position: relative; transition: all .2s; }
+  .dash-price-card:hover { border-color: #333; }
+  .dash-price-card.current-plan { border-color: #4cff72; background: rgba(76, 255, 114, 0.03); }
+  .current-plan-badge { position: absolute; top: -10px; right: 1rem; background: #4cff72; color: #0a0a0a; font-size: .65rem; font-weight: 600; padding: .2rem .7rem; border-radius: 100px; text-transform: uppercase; letter-spacing: .05em; }
+  .dash-plan-name { font-size: .7rem; color: #666; text-transform: uppercase; letter-spacing: .08em; margin-bottom: .6rem; }
+  .dash-plan-price { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; letter-spacing: -1px; margin-bottom: .3rem; }
+  .dash-plan-price span { font-size: .8rem; font-weight: 400; color: #888; }
+  .dash-plan-features { list-style: none; margin: 1rem 0; }
+  .dash-plan-features li { font-size: .8rem; color: #aaa; padding: .3rem 0; display: flex; align-items: center; gap: 6px; }
+  .dash-plan-features li::before { content: '✓'; color: #4cff72; font-weight: 700; font-size: .9rem; }
+  .btn-dash-upgrade { width: 100%; background: transparent; border: 1px solid #2a2a2a; color: #fff; padding: .65rem; border-radius: 8px; font-family: 'DM Sans'; font-size: .82rem; font-weight: 500; cursor: pointer; transition: all .2s; }
+  .btn-dash-upgrade:hover { background: #1a1a1a; border-color: #444; }
+  .btn-dash-upgrade.primary { background: var(--accent); border-color: var(--accent); }
+  .btn-dash-upgrade.primary:hover { opacity: .85; background: var(--accent); }
+  .btn-dash-upgrade:disabled { opacity: .5; cursor: not-allowed; }
+  .limit-warning { background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.3); border-radius: 10px; padding: 1rem; margin-bottom: 1rem; display: none; }
+  .limit-warning.show { display: block; }
+  .limit-warning p { color: #ff6b6b; font-size: .85rem; margin: 0; }
+  .limit-warning a { color: #ff3c3c; text-decoration: underline; cursor: pointer; }
 </style>
 </head>
 <body>
@@ -341,6 +373,24 @@
       <h2>Generador de Contenido</h2>
       <p>Escribe tu idea y obtén los textos perfectos para cada red social.</p>
     </div>
+
+    <!-- NUEVA SECCIÓN: Usage Card -->
+    <div class="usage-card" id="usage-section">
+      <div class="usage-header">
+        <h3>📊 Tu uso este mes</h3>
+        <span class="upgrade-badge" onclick="scrollToPricing()" id="upgrade-badge" style="display:none;">⚡ Mejorar Plan</span>
+      </div>
+      <div class="usage-bar">
+        <div class="usage-fill" id="usage-fill" style="width: 0%;"></div>
+      </div>
+      <p class="usage-text" id="usage-text">Has usado <strong>0 de 3</strong> generaciones gratuitas</p>
+    </div>
+
+    <!-- Advertencia de límite -->
+    <div class="limit-warning" id="limit-warning">
+      <p>⚠️ Has alcanzado el límite de 3 generaciones gratuitas. <a onclick="scrollToPricing()">Mejora a Pro</a> para generaciones ilimitadas.</p>
+    </div>
+
     <div class="dash-grid">
       <div class="dash-card">
         <h3>✨ Nueva generación</h3>
@@ -381,6 +431,35 @@
           <div class="ai-block"><label>Descripción</label><p id="res-yt-desc"></p></div>
           <div class="ai-block"><label>Hashtags</label><p id="res-yt-tags"></p></div>
           <button class="btn-copy" onclick="copyText(this, 'youtube')">Copiar todo</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- NUEVA SECCIÓN: Precios en Dashboard -->
+    <div class="dash-card" style="margin-top: 2rem;" id="pricing-section">
+      <h3>💎 Mejora tu plan</h3>
+      <p style="color: #888; font-size: .85rem; margin-bottom: 1.5rem;">Desbloquea todo el potencial de MultiPost</p>
+      <div class="dash-pricing-grid">
+        <div class="dash-price-card" id="free-plan-card">
+          <div class="dash-plan-name">Gratis</div>
+          <div class="dash-plan-price">0€ <span>/ mes</span></div>
+          <ul class="dash-plan-features">
+            <li>3 generaciones al mes</li>
+            <li>3 plataformas</li>
+            <li>Todos los tonos de voz</li>
+          </ul>
+          <button class="btn-dash-upgrade" disabled>Plan actual</button>
+        </div>
+        <div class="dash-price-card" id="pro-plan-card">
+          <div class="dash-plan-name">Pro</div>
+          <div class="dash-plan-price">7,99€ <span>/ mes</span></div>
+          <ul class="dash-plan-features">
+            <li>Generaciones ilimitadas</li>
+            <li>3 plataformas</li>
+            <li>Todos los tonos de voz</li>
+            <li>Historial completo</li>
+          </ul>
+          <button class="btn-dash-upgrade primary" onclick="handlePlanClick('pro')">Mejorar a Pro</button>
         </div>
       </div>
     </div>
@@ -493,20 +572,10 @@ async function handleOAuthRedirect() {
 }
 
 async function checkExistingSession() {
-  var saved = localStorage.getItem('user');
-  if (saved) {
-    try {
-      currentUser = JSON.parse(saved);
-      updateUIForLoggedInUser();
-    } catch(e) { localStorage.removeItem('user'); }
-  }
   var tokens = localStorage.getItem('sb_tokens');
   if (!tokens) {
-    if (currentUser) {
-      currentUser = null;
-      localStorage.removeItem('user');
-      updateUIForLoggedOutUser();
-    }
+    currentUser = null;
+    updateUIForLoggedOutUser();
     return;
   }
   try {
@@ -514,7 +583,6 @@ async function checkExistingSession() {
     await fetchUserAndLogin(tokensObj.access_token);
   } catch(e) {
     localStorage.removeItem('sb_tokens');
-    localStorage.removeItem('user');
     currentUser = null;
     updateUIForLoggedOutUser();
   }
@@ -531,26 +599,147 @@ async function fetchUserAndLogin(accessToken) {
     });
     if (!response.ok) {
       localStorage.removeItem('sb_tokens');
-      localStorage.removeItem('user');
       currentUser = null;
       updateUIForLoggedOutUser();
       return;
     }
     var user = await response.json();
+    
+    // Intentar obtener datos del usuario desde Supabase
+    await fetchUserProfile(user.id, accessToken);
+    
     var meta = user.user_metadata || {};
     currentUser = {
       id: user.id,
       email: user.email,
       name: meta.full_name || meta.name || user.email.split('@')[0],
       avatar: meta.avatar_url || meta.picture || null,
-      plan: 'Gratis'
+      plan: 'Gratis',
+      usageCount: 0
     };
-    localStorage.setItem('user', JSON.stringify(currentUser));
+    
+    // Cargar datos guardados si existen
+    await loadUserData(accessToken);
+    
     updateUIForLoggedInUser();
     showDashboard();
+    updateUsageDisplay();
     showToast('¡Bienvenido, ' + currentUser.name + '!');
   } catch(e) {
     console.error('Error fetching user:', e);
+  }
+}
+
+async function fetchUserProfile(userId, accessToken) {
+  try {
+    var response = await fetch(SB_URL + '/rest/v1/users?id=eq.' + userId, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + accessToken,
+        'apikey': SB_KEY,
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    if (response.ok) {
+      var data = await response.json();
+      if (data && data.length > 0) {
+        var userData = data[0];
+        if (currentUser) {
+          currentUser.name = userData.name || currentUser.name;
+          currentUser.avatar = userData.avatar || currentUser.avatar;
+          currentUser.plan = userData.plan || 'Gratis';
+          currentUser.usageCount = userData.usage_count || 0;
+        }
+      }
+    }
+  } catch(e) {
+    console.log('No se pudo cargar el perfil del usuario');
+  }
+}
+
+async function loadUserData(accessToken) {
+  try {
+    var response = await fetch(SB_URL + '/rest/v1/users?id=eq.' + currentUser.id, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + accessToken,
+        'apikey': SB_KEY,
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    if (response.ok) {
+      var data = await response.json();
+      if (data && data.length > 0) {
+        var userData = data[0];
+        currentUser.name = userData.name || currentUser.name;
+        currentUser.avatar = userData.avatar || currentUser.avatar;
+        currentUser.plan = userData.plan || 'Gratis';
+        currentUser.usageCount = userData.usage_count || 0;
+      }
+    }
+  } catch(e) {
+    console.log('Error loading user data');
+  }
+}
+
+async function saveUserData() {
+  var tokens = localStorage.getItem('sb_tokens');
+  if (!tokens || !currentUser) return;
+  
+  try {
+    var tokensObj = JSON.parse(tokens);
+    
+    // Primero verificar si el usuario existe
+    var checkResponse = await fetch(SB_URL + '/rest/v1/users?id=eq.' + currentUser.id, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + tokensObj.access_token,
+        'apikey': SB_KEY,
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    var existingUsers = await checkResponse.json();
+    var userExists = existingUsers && existingUsers.length > 0;
+    
+    var userData = {
+      id: currentUser.id,
+      email: currentUser.email,
+      name: currentUser.name,
+      avatar: currentUser.avatar,
+      plan: currentUser.plan,
+      usage_count: currentUser.usageCount || 0
+    };
+    
+    if (userExists) {
+      // Actualizar usuario existente
+      await fetch(SB_URL + '/rest/v1/users?id=eq.' + currentUser.id, {
+        method: 'PATCH',
+        headers: {
+          'Authorization': 'Bearer ' + tokensObj.access_token,
+          'apikey': SB_KEY,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(userData)
+      });
+    } else {
+      // Crear nuevo usuario
+      await fetch(SB_URL + '/rest/v1/users', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + tokensObj.access_token,
+          'apikey': SB_KEY,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(userData)
+      });
+    }
+  } catch(e) {
+    console.error('Error saving user data:', e);
   }
 }
 
@@ -570,7 +759,6 @@ async function logout() {
   }
   currentUser = null;
   localStorage.removeItem('sb_tokens');
-  localStorage.removeItem('user');
   updateUIForLoggedOutUser();
   showMainContent();
   showToast('Sesión cerrada');
@@ -590,6 +778,7 @@ function updateUIForLoggedInUser() {
     navAvatar.textContent = (currentUser.name || 'MP').substring(0, 2).toUpperCase();
   }
   updateHeroCta();
+  updatePlanCards();
 }
 
 function updateUIForLoggedOutUser() {
@@ -608,11 +797,72 @@ function updateHeroCta() {
   }
 }
 
+function updatePlanCards() {
+  if (!currentUser) return;
+  
+  var freePlanCard = document.getElementById('free-plan-card');
+  var proPlanCard = document.getElementById('pro-plan-card');
+  
+  if (currentUser.plan === 'Gratis') {
+    freePlanCard.classList.add('current-plan');
+    proPlanCard.classList.remove('current-plan');
+    if (!freePlanCard.querySelector('.current-plan-badge')) {
+      var badge = document.createElement('div');
+      badge.className = 'current-plan-badge';
+      badge.textContent = 'Plan actual';
+      freePlanCard.appendChild(badge);
+    }
+    var existingBadge = proPlanCard.querySelector('.current-plan-badge');
+    if (existingBadge) existingBadge.remove();
+  } else if (currentUser.plan === 'Pro') {
+    proPlanCard.classList.add('current-plan');
+    freePlanCard.classList.remove('current-plan');
+    if (!proPlanCard.querySelector('.current-plan-badge')) {
+      var badge = document.createElement('div');
+      badge.className = 'current-plan-badge';
+      badge.textContent = 'Plan actual';
+      proPlanCard.appendChild(badge);
+    }
+    var existingBadge = freePlanCard.querySelector('.current-plan-badge');
+    if (existingBadge) existingBadge.remove();
+  }
+}
+
+function updateUsageDisplay() {
+  if (!currentUser) return;
+  
+  var usageCount = currentUser.usageCount || 0;
+  var maxUsage = currentUser.plan === 'Pro' ? Infinity : 3;
+  
+  var usageFill = document.getElementById('usage-fill');
+  var usageText = document.getElementById('usage-text');
+  var upgradeBadge = document.getElementById('upgrade-badge');
+  var usageSection = document.getElementById('usage-section');
+  
+  if (currentUser.plan === 'Pro') {
+    usageSection.style.display = 'none';
+    return;
+  }
+  
+  usageSection.style.display = 'block';
+  
+  var percentage = Math.min((usageCount / maxUsage) * 100, 100);
+  usageFill.style.width = percentage + '%';
+  usageText.innerHTML = 'Has usado <strong>' + usageCount + ' de ' + maxUsage + '</strong> generaciones gratuitas';
+  
+  if (usageCount >= 2) {
+    upgradeBadge.style.display = 'inline-block';
+  } else {
+    upgradeBadge.style.display = 'none';
+  }
+}
+
 function showDashboard() {
   document.getElementById('main-content').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
   document.querySelectorAll('.legal-section').forEach(function(el) { el.style.display = 'none'; });
   document.getElementById('nav-links-landing').style.display = 'none';
+  updateUsageDisplay();
   window.scrollTo(0, 0);
 }
 
@@ -650,71 +900,124 @@ function handleHeroCta() {
 
 function handlePlanClick(plan) {
   if (!currentUser) { openModal(); return; }
-  var urls = { pro: 'https://buy.stripe.com/14A9AT3debVVcu0drW3gk01', agencia: 'https://buy.stripe.com/00w4gzg00f87bpW3Rm3gk00' };
-  if (urls[plan]) window.location.href = urls[plan];
-}
-
-function handleSaveProfile(event) {
-  event.preventDefault();
-  var newName = document.getElementById('settings-name').value.trim();
-  if (!newName) return;
-  if (currentUser) {
-    currentUser.name = newName;
-    localStorage.setItem('user', JSON.stringify(currentUser));
-    updateUIForLoggedInUser();
-    document.getElementById('settings-name-display').textContent = newName;
-    var avatar = document.getElementById('settings-avatar');
-    if (!currentUser.avatar) avatar.textContent = newName.substring(0, 2).toUpperCase();
-    document.getElementById('profile-success').style.display = 'block';
-    setTimeout(function() { document.getElementById('profile-success').style.display = 'none'; }, 3000);
+  
+  // URLs actualizadas de Stripe
+  var urls = { 
+    pro: 'https://buy.stripe.com/test_28o2aD2GQ0lW0kE6oo', // Actualiza con tu link real de 7.99€
+    agencia: 'https://buy.stripe.com/test_14k9Cfcbm0lW4AUcMN' // Actualiza con tu link real de 29.99€
+  };
+  
+  if (urls[plan]) {
+    // Añadir email del cliente a la URL de Stripe
+    var stripeUrl = urls[plan] + '?prefilled_email=' + encodeURIComponent(currentUser.email);
+    window.location.href = stripeUrl;
   }
 }
 
-function handleAvatarUpload(event) {
+function scrollToPricing() {
+  var pricingSection = document.getElementById('pricing-section');
+  if (pricingSection) {
+    pricingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+async function handleSaveProfile(event) {
+  event.preventDefault();
+  var newName = document.getElementById('settings-name').value.trim();
+  if (!newName || !currentUser) return;
+  
+  currentUser.name = newName;
+  
+  // Guardar en Supabase
+  await saveUserData();
+  
+  updateUIForLoggedInUser();
+  document.getElementById('settings-name-display').textContent = newName;
+  var avatar = document.getElementById('settings-avatar');
+  if (!currentUser.avatar) avatar.textContent = newName.substring(0, 2).toUpperCase();
+  document.getElementById('profile-success').style.display = 'block';
+  showToast('Perfil actualizado correctamente');
+  setTimeout(function() { document.getElementById('profile-success').style.display = 'none'; }, 3000);
+}
+
+async function handleAvatarUpload(event) {
   var file = event.target.files[0];
-  if (!file) return;
+  if (!file || !currentUser) return;
+  
   var reader = new FileReader();
-  reader.onload = function(e) {
+  reader.onload = async function(e) {
     var avatarUrl = e.target.result;
-    if (currentUser) {
-      currentUser.avatar = avatarUrl;
-      localStorage.setItem('user', JSON.stringify(currentUser));
-      document.getElementById('nav-avatar').style.backgroundImage = 'url(' + avatarUrl + ')';
-      document.getElementById('nav-avatar').textContent = '';
-      document.getElementById('settings-avatar').style.backgroundImage = 'url(' + avatarUrl + ')';
-      document.getElementById('settings-avatar').textContent = '';
-      showToast('Avatar actualizado');
-    }
+    currentUser.avatar = avatarUrl;
+    
+    // Guardar en Supabase
+    await saveUserData();
+    
+    document.getElementById('nav-avatar').style.backgroundImage = 'url(' + avatarUrl + ')';
+    document.getElementById('nav-avatar').textContent = '';
+    document.getElementById('settings-avatar').style.backgroundImage = 'url(' + avatarUrl + ')';
+    document.getElementById('settings-avatar').textContent = '';
+    showToast('Avatar actualizado');
   };
   reader.readAsDataURL(file);
 }
 
-function handleGenerateAI(event) {
+async function handleGenerateAI(event) {
   event.preventDefault();
+  
+  if (!currentUser) {
+    openModal();
+    return;
+  }
+  
+  // Verificar límite para usuarios gratuitos
+  if (currentUser.plan === 'Gratis' && currentUser.usageCount >= 3) {
+    document.getElementById('limit-warning').classList.add('show');
+    document.getElementById('dash-error').textContent = 'Has alcanzado el límite de generaciones gratuitas.';
+    scrollToPricing();
+    return;
+  }
+  
   var topic = document.getElementById('ai-topic').value.trim();
   var tone = document.getElementById('ai-tone').value;
   var errorDiv = document.getElementById('dash-error');
   var submitBtn = document.getElementById('ai-generate-btn');
-  if (!topic) { errorDiv.textContent = 'Escribe de qué va tu video.'; return; }
+  
+  if (!topic) { 
+    errorDiv.textContent = 'Escribe de qué va tu video.'; 
+    return; 
+  }
+  
   errorDiv.textContent = '';
+  document.getElementById('limit-warning').classList.remove('show');
   submitBtn.disabled = true;
   submitBtn.textContent = 'Generando... ⏳';
   document.getElementById('div-resultados-ia').style.display = 'none';
-  setTimeout(function() {
+  
+  setTimeout(async function() {
     var safeTag = topic.split(' ')[0].toLowerCase().replace(/[^a-záéíóúñ]/g, '');
     var toneEmoji = { 'Divertido': '😂', 'Educativo': '📚', 'Serio y Profesional': '💼', 'Polémico': '🔥', 'Motivador': '💪' };
+    
     document.getElementById('res-tiktok-hook').textContent = '¿' + topic + '? 🤯 Te cuento el secreto que nadie te dice...';
     document.getElementById('res-tiktok-screen').textContent = topic.toUpperCase() + ' ✨';
     document.getElementById('res-tiktok-caption').textContent = topic + ' y te va a cambiar la vida 🚀 (Tono: ' + tone + ')';
     document.getElementById('res-tiktok-tags').textContent = '#viral #tips #tutorial #parati #' + safeTag;
+    
     document.getElementById('res-ig-caption').textContent = '💡 ' + topic + '\n\n' + (toneEmoji[tone] || '📝') + ' Hoy te comparto todo lo que necesitas saber sobre esto.\n\n¿Listo para el cambio? 👇\n\n—\n#multipost #contenido #tutorial #' + safeTag;
     document.getElementById('res-ig-tags').textContent = '#multipost #contenido #tutorial #aprendizaje #' + safeTag;
+    
     document.getElementById('res-yt-title').textContent = topic + ' | Guía Completa 2025';
     document.getElementById('res-yt-desc').textContent = 'En este video te enseño todo sobre: ' + topic + '\n\n⏱️ TIMESTAMPS:\n0:00 - Introducción\n1:30 - Paso 1\n3:45 - Paso 2\n6:20 - Conclusión\n\n🔔 Suscríbete para más contenido';
     document.getElementById('res-yt-tags').textContent = '#youtube #tutorial #guia #' + safeTag;
+    
     document.getElementById('div-resultados-ia').style.display = 'grid';
     submitBtn.disabled = false;
     submitBtn.textContent = 'Generar textos con IA →';
+    
+    // Incrementar uso
+    currentUser.usageCount = (currentUser.usageCount || 0) + 1;
+    await saveUserData();
+    updateUsageDisplay();
+    
     document.getElementById('div-resultados-ia').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     showToast('¡Textos generados!');
   }, 2000);
