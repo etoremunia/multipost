@@ -605,9 +605,6 @@ async function fetchUserAndLogin(accessToken) {
     }
     var user = await response.json();
     
-    // Intentar obtener datos del usuario desde Supabase
-    await fetchUserProfile(user.id, accessToken);
-    
     var meta = user.user_metadata || {};
     currentUser = {
       id: user.id,
@@ -618,8 +615,8 @@ async function fetchUserAndLogin(accessToken) {
       usageCount: 0
     };
     
-    // Cargar datos guardados si existen
-    await loadUserData(accessToken);
+    // CRÍTICO: Cargar datos desde Supabase ANTES de mostrar nada
+    await loadUserDataFromSupabase(accessToken);
     
     updateUIForLoggedInUser();
     showDashboard();
@@ -627,38 +624,13 @@ async function fetchUserAndLogin(accessToken) {
     showToast('¡Bienvenido, ' + currentUser.name + '!');
   } catch(e) {
     console.error('Error fetching user:', e);
+    localStorage.removeItem('sb_tokens');
+    currentUser = null;
+    updateUIForLoggedOutUser();
   }
 }
 
-async function fetchUserProfile(userId, accessToken) {
-  try {
-    var response = await fetch(SB_URL + '/rest/v1/users?id=eq.' + userId, {
-      method: 'GET',
-      headers: {
-        'Authorization': 'Bearer ' + accessToken,
-        'apikey': SB_KEY,
-        'Content-Type': 'application/json'
-      }
-    });
-    
-    if (response.ok) {
-      var data = await response.json();
-      if (data && data.length > 0) {
-        var userData = data[0];
-        if (currentUser) {
-          currentUser.name = userData.name || currentUser.name;
-          currentUser.avatar = userData.avatar || currentUser.avatar;
-          currentUser.plan = userData.plan || 'Gratis';
-          currentUser.usageCount = userData.usage_count || 0;
-        }
-      }
-    }
-  } catch(e) {
-    console.log('No se pudo cargar el perfil del usuario');
-  }
-}
-
-async function loadUserData(accessToken) {
+async function loadUserDataFromSupabase(accessToken) {
   try {
     var response = await fetch(SB_URL + '/rest/v1/users?id=eq.' + currentUser.id, {
       method: 'GET',
@@ -673,36 +645,60 @@ async function loadUserData(accessToken) {
       var data = await response.json();
       if (data && data.length > 0) {
         var userData = data[0];
+        // Actualizar currentUser con datos reales de la BD
         currentUser.name = userData.name || currentUser.name;
         currentUser.avatar = userData.avatar || currentUser.avatar;
         currentUser.plan = userData.plan || 'Gratis';
         currentUser.usageCount = userData.usage_count || 0;
+        
+        console.log('✅ Datos cargados desde Supabase:', currentUser);
+      } else {
+        // Usuario nuevo - crear registro inicial
+        console.log('👤 Usuario nuevo detectado, creando registro...');
+        await createUserInSupabase(accessToken);
       }
     }
   } catch(e) {
-    console.log('Error loading user data');
+    console.error('❌ Error al cargar datos del usuario:', e);
   }
 }
 
-async function saveUserData() {
+async function createUserInSupabase(accessToken) {
+  try {
+    var userData = {
+      id: currentUser.id,
+      email: currentUser.email,
+      name: currentUser.name,
+      avatar: currentUser.avatar,
+      plan: 'Gratis',
+      usage_count: 0
+    };
+    
+    var response = await fetch(SB_URL + '/rest/v1/users', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + accessToken,
+        'apikey': SB_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(userData)
+    });
+    
+    if (response.ok) {
+      console.log('✅ Usuario creado en Supabase');
+    }
+  } catch(e) {
+    console.error('❌ Error al crear usuario:', e);
+  }
+}
+
+async function saveUserDataToSupabase() {
   var tokens = localStorage.getItem('sb_tokens');
   if (!tokens || !currentUser) return;
   
   try {
     var tokensObj = JSON.parse(tokens);
-    
-    // Primero verificar si el usuario existe
-    var checkResponse = await fetch(SB_URL + '/rest/v1/users?id=eq.' + currentUser.id, {
-      method: 'GET',
-      headers: {
-        'Authorization': 'Bearer ' + tokensObj.access_token,
-        'apikey': SB_KEY,
-        'Content-Type': 'application/json'
-      }
-    });
-    
-    var existingUsers = await checkResponse.json();
-    var userExists = existingUsers && existingUsers.length > 0;
     
     var userData = {
       id: currentUser.id,
@@ -710,36 +706,30 @@ async function saveUserData() {
       name: currentUser.name,
       avatar: currentUser.avatar,
       plan: currentUser.plan,
-      usage_count: currentUser.usageCount || 0
+      usage_count: currentUser.usageCount
     };
     
-    if (userExists) {
-      // Actualizar usuario existente
-      await fetch(SB_URL + '/rest/v1/users?id=eq.' + currentUser.id, {
-        method: 'PATCH',
-        headers: {
-          'Authorization': 'Bearer ' + tokensObj.access_token,
-          'apikey': SB_KEY,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=minimal'
-        },
-        body: JSON.stringify(userData)
-      });
+    console.log('💾 Guardando en Supabase:', userData);
+    
+    // Usar UPSERT para actualizar o crear
+    var response = await fetch(SB_URL + '/rest/v1/users', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + tokensObj.access_token,
+        'apikey': SB_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates,return=minimal'
+      },
+      body: JSON.stringify(userData)
+    });
+    
+    if (response.ok) {
+      console.log('✅ Datos guardados correctamente');
     } else {
-      // Crear nuevo usuario
-      await fetch(SB_URL + '/rest/v1/users', {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Bearer ' + tokensObj.access_token,
-          'apikey': SB_KEY,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=minimal'
-        },
-        body: JSON.stringify(userData)
-      });
+      console.error('❌ Error al guardar:', await response.text());
     }
   } catch(e) {
-    console.error('Error saving user data:', e);
+    console.error('❌ Error saving user data:', e);
   }
 }
 
@@ -855,6 +845,8 @@ function updateUsageDisplay() {
   } else {
     upgradeBadge.style.display = 'none';
   }
+  
+  console.log('📊 Uso actualizado:', usageCount + '/' + maxUsage);
 }
 
 function showDashboard() {
@@ -901,14 +893,12 @@ function handleHeroCta() {
 function handlePlanClick(plan) {
   if (!currentUser) { openModal(); return; }
   
-  // URLs actualizadas de Stripe
   var urls = { 
-    pro: 'https://buy.stripe.com/test_28o2aD2GQ0lW0kE6oo', // Actualiza con tu link real de 7.99€
-    agencia: 'https://buy.stripe.com/test_14k9Cfcbm0lW4AUcMN' // Actualiza con tu link real de 29.99€
+    pro: 'https://buy.stripe.com/test_28o2aD2GQ0lW0kE6oo',
+    agencia: 'https://buy.stripe.com/test_14k9Cfcbm0lW4AUcMN'
   };
   
   if (urls[plan]) {
-    // Añadir email del cliente a la URL de Stripe
     var stripeUrl = urls[plan] + '?prefilled_email=' + encodeURIComponent(currentUser.email);
     window.location.href = stripeUrl;
   }
@@ -928,8 +918,7 @@ async function handleSaveProfile(event) {
   
   currentUser.name = newName;
   
-  // Guardar en Supabase
-  await saveUserData();
+  await saveUserDataToSupabase();
   
   updateUIForLoggedInUser();
   document.getElementById('settings-name-display').textContent = newName;
@@ -949,8 +938,7 @@ async function handleAvatarUpload(event) {
     var avatarUrl = e.target.result;
     currentUser.avatar = avatarUrl;
     
-    // Guardar en Supabase
-    await saveUserData();
+    await saveUserDataToSupabase();
     
     document.getElementById('nav-avatar').style.backgroundImage = 'url(' + avatarUrl + ')';
     document.getElementById('nav-avatar').textContent = '';
@@ -969,7 +957,9 @@ async function handleGenerateAI(event) {
     return;
   }
   
-  // Verificar límite para usuarios gratuitos
+  // CRÍTICO: Verificar límite con el valor REAL de la base de datos
+  console.log('🔍 Verificando límite - Usage:', currentUser.usageCount, 'Plan:', currentUser.plan);
+  
   if (currentUser.plan === 'Gratis' && currentUser.usageCount >= 3) {
     document.getElementById('limit-warning').classList.add('show');
     document.getElementById('dash-error').textContent = 'Has alcanzado el límite de generaciones gratuitas.';
@@ -1013,9 +1003,11 @@ async function handleGenerateAI(event) {
     submitBtn.disabled = false;
     submitBtn.textContent = 'Generar textos con IA →';
     
-    // Incrementar uso
+    // CRÍTICO: Incrementar uso y guardar inmediatamente en Supabase
     currentUser.usageCount = (currentUser.usageCount || 0) + 1;
-    await saveUserData();
+    console.log('➕ Incrementando uso a:', currentUser.usageCount);
+    
+    await saveUserDataToSupabase();
     updateUsageDisplay();
     
     document.getElementById('div-resultados-ia').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
