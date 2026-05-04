@@ -454,7 +454,7 @@
             <li>Todos los tonos de voz</li>
             <li>Historial completo</li>
           </ul>
-          <button class="btn-dash-upgrade primary" onclick="handlePlanClick('pro')">Mejorar a Pro</button>
+          <button class="btn-dash-upgrade primary" id="btn-upgrade-pro" onclick="handlePlanClick('pro')">Mejorar a Pro</button>
         </div>
       </div>
     </div>
@@ -519,7 +519,6 @@ var TEMPLATES = {
       "Si est\u00e1s buscando c\u00f3mo mejorar en {topic}, este video es lo que necesitas. Te explico paso a paso c\u00f3mo lo hice.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - Introducci\u00f3n\n1:15 - Paso 1\n2:45 - Paso 2\n4:30 - Consejos finales\n\n\u2728 No olvides dejar tu like si te sirvi\u00f3."
     ]
   },
-
   "Educativo": {
     hooks: [
       "Solo el 5% de las personas sabe esto sobre {topic} \ud83e\udde0",
@@ -561,7 +560,6 @@ var TEMPLATES = {
       "He creado esta gu\u00eda completa sobre {topic} para que puedas entenderlo desde cero, sin conocimientos previos.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - \u00bfPor qu\u00e9 es importante?\n1:30 - Conceptos clave\n3:15 - Ejemplos pr\u00e1cticos\n5:30 - Paso a paso\n7:00 - Conclusi\u00f3n\n\n\u2713 Si te sirvi\u00f3, dale like y suscr\u00edbete."
     ]
   },
-
   "Serio y Profesional": {
     hooks: [
       "El 80% fracasa en {topic} por este \u00fanico error \ud83d\udcbc",
@@ -603,7 +601,6 @@ var TEMPLATES = {
       "En este v\u00edeo desgloso {topic} desde una perspectiva profesional, bas\u00e1ndome en experiencia real y datos verificados.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - Presentaci\u00f3n\n1:00 - Estado actual\n2:45 - An\u00e1lisis detallado\n5:00 - Recomendaciones\n6:30 - Cierre\n\n\u2713 Contenido profesional sin filtros."
     ]
   },
-
   "Pol\u00e9mico": {
     hooks: [
       "Est\u00e1s haciendo {topic} mal y nadie te lo dice \ud83d\udd25",
@@ -645,7 +642,6 @@ var TEMPLATES = {
       "Hablo claro y sin pelos en la lengua sobre {topic}. Si esperas un video m\u00e1s, este no es para ti.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - Por qu\u00e9 hago este video\n1:15 - Lo que est\u00e1 mal\n3:00 - Datos que no te quieren mostrar\n4:45 - La soluci\u00f3n real\n6:00 - Palabras finales\n\n\u2713 Si te gusta la verdad sin filtros, suscr\u00edbete."
     ]
   },
-
   "Motivador": {
     hooks: [
       "Si est\u00e1s pasando por una mala racha con {topic}, mira esto \ud83d\udcaa",
@@ -875,12 +871,69 @@ async function fetchUserAndLogin(accessToken) {
     updateUIForLoggedInUser();
     showDashboard();
     updateUsageDisplay();
+    
+    // COMPROBAR SI VIENE DE UN PAGO EXITOSO
+    handlePaymentSuccess();
+
     showToast('¡Bienvenido, ' + currentUser.name + '!');
   } catch(e) {
     console.error('Error fetching user:', e);
     localStorage.removeItem('sb_tokens');
     currentUser = null;
     updateUIForLoggedOutUser();
+  }
+}
+
+// ==========================================
+// LÓGICA DE PAGO Y ACTUALIZACIÓN DE PLAN
+// ==========================================
+
+function handlePlanClick(plan) {
+  if (!currentUser) { openModal(); return; }
+  
+  // Si ya es Pro, no enviar a Stripe
+  if (plan === 'pro' && currentUser.plan === 'Pro') {
+    showToast('Ya tienes el plan Pro activado');
+    return;
+  }
+  
+  var urls = { 
+    pro: 'https://buy.stripe.com/test_28o2aD2GQ0lW0kE6oo',
+    agencia: 'https://buy.stripe.com/test_14k9Cfcbm0lW4AUcMN'
+  };
+  
+  if (urls[plan]) {
+    // Añadimos el email y el ID del usuario para que Stripe lo sepa
+    var stripeUrl = urls[plan] 
+      + '?prefilled_email=' + encodeURIComponent(currentUser.email)
+      + '&client_reference_id=' + currentUser.id;
+    window.location.href = stripeUrl;
+  }
+}
+
+async function handlePaymentSuccess() {
+  var urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('payment') === 'success') {
+    
+    // 1. Actualizar el estado local
+    currentUser.plan = 'Pro';
+    currentUser.usageCount = 0; // Reiniciar contador de uso
+    
+    // 2. Guardar en localStorage
+    saveUsageToLocal();
+    
+    // 3. Guardar en Supabase (Actualización directa)
+    await saveUserDataToSupabase();
+    
+    // 4. Actualizar la interfaz
+    updateUIForLoggedInUser();
+    updateUsageDisplay();
+    
+    // 5. Limpiar la URL para que no se repita al recargar
+    window.history.replaceState({}, document.title, window.location.pathname);
+    
+    // 6. Notificar al usuario
+    showToast('🎉 ¡Pago exitoso! Plan Pro activado.', 5000);
   }
 }
 
@@ -1023,6 +1076,7 @@ function updatePlanCards() {
   
   var freePlanCard = document.getElementById('free-plan-card');
   var proPlanCard = document.getElementById('pro-plan-card');
+  var btnUpgradePro = document.getElementById('btn-upgrade-pro');
   
   // Limpiar badges anteriores
   var oldBadge1 = freePlanCard.querySelector('.current-plan-badge');
@@ -1038,12 +1092,16 @@ function updatePlanCards() {
     badge.className = 'current-plan-badge';
     badge.textContent = 'Plan actual';
     freePlanCard.appendChild(badge);
+    btnUpgradePro.textContent = 'Mejorar a Pro';
+    btnUpgradePro.disabled = false;
   } else if (currentUser.plan === 'Pro') {
     proPlanCard.classList.add('current-plan');
     var badge = document.createElement('div');
     badge.className = 'current-plan-badge';
     badge.textContent = 'Plan actual';
     proPlanCard.appendChild(badge);
+    btnUpgradePro.textContent = 'Plan actual';
+    btnUpgradePro.disabled = true;
   }
 }
 
@@ -1132,20 +1190,6 @@ function handleHeroCta() {
   if (currentUser) { showDashboard(); } else { openModal(); }
 }
 
-function handlePlanClick(plan) {
-  if (!currentUser) { openModal(); return; }
-  
-  var urls = { 
-    pro: 'https://buy.stripe.com/test_28o2aD2GQ0lW0kE6oo',
-    agencia: 'https://buy.stripe.com/test_14k9Cfcbm0lW4AUcMN'
-  };
-  
-  if (urls[plan]) {
-    var stripeUrl = urls[plan] + '?prefilled_email=' + encodeURIComponent(currentUser.email);
-    window.location.href = stripeUrl;
-  }
-}
-
 function scrollToPricing() {
   var pricingSection = document.getElementById('pricing-section');
   if (pricingSection) {
@@ -1230,7 +1274,6 @@ async function handleGenerateAI(event) {
     var safeTag = topic.split(' ')[0].toLowerCase().replace(/[^a-záéíóúñ]/g, '');
     var t = TEMPLATES[tone] || TEMPLATES['Divertido'];
 
-    // Generar textos \u00fanicos aleatorios seg\u00fan el tono elegido
     var hook = getRandomItem(t.hooks).replace(/{topic}/g, topic);
     var screen = getRandomItem(t.screens).replace(/{topic}/g, topic.toUpperCase());
     var captionTk = getRandomItem(t.captionsTk).replace(/{topic}/g, topic);
@@ -1241,24 +1284,20 @@ async function handleGenerateAI(event) {
     var toneEmojis = { 'Divertido': '😂', 'Educativo': '🧠', 'Serio y Profesional': '💼', 'Polémico': '🔥', 'Motivador': '💪' };
     var toneTag = tone.toLowerCase().replace(' y profesional', '').replace(' ', '');
 
-    // TikTok
     document.getElementById('res-tiktok-hook').textContent = hook;
     document.getElementById('res-tiktok-screen').textContent = screen;
     document.getElementById('res-tiktok-caption').textContent = captionTk;
     document.getElementById('res-tiktok-tags').textContent = '#viral #tips #tutorial #parati #' + safeTag + ' #' + toneTag;
 
-    // Instagram
     document.getElementById('res-ig-caption').textContent = captionIg;
     document.getElementById('res-ig-tags').textContent = '#multipost #contenido #tutorial #aprendizaje #' + safeTag + ' #' + toneTag;
 
-    // YouTube
     document.getElementById('res-yt-title').textContent = titleYt;
     document.getElementById('res-yt-desc').textContent = descYt;
     document.getElementById('res-yt-tags').textContent = '#youtube #tutorial #guia #' + safeTag;
 
     document.getElementById('div-resultados-ia').style.display = 'grid';
 
-    // Incrementar uso y PERSISTIR (doble capa: localStorage + Supabase)
     currentUser.usageCount = (currentUser.usageCount || 0) + 1;
     saveUsageToLocal();
     saveUserDataToSupabase();
