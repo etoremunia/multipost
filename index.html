@@ -1296,7 +1296,7 @@ async function handleGenerateAI(event) {
 
     currentUser.usageCount = (currentUser.usageCount || 0) + 1;
     saveUsageToLocal();
-    saveUserDataToSubabase();
+    saveUserDataToSupabase();
     
     // Guardar en el historial de Supabase
     saveGenerationToSupabase(topic, tone, {
@@ -1310,6 +1310,37 @@ async function handleGenerateAI(event) {
     document.getElementById('div-resultados-ia').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     showToast('¡Textos generados en tono ' + tone + '!');
   }, 2000);
+}
+
+async function saveGenerationToSupabase(topic, tone, results) {
+  var tokens = localStorage.getItem('sb_tokens');
+  if (!tokens || !currentUser) return;
+  try {
+    var tokensObj = JSON.parse(tokens);
+    await fetch(SB_URL + '/rest/v1/generations', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + tokensObj.access_token,
+        'apikey': SB_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        user_id: currentUser.id,
+        topic: topic,
+        tone: tone,
+        tiktok_hook: results.hook,
+        tiktok_screen: results.screen,
+        tiktok_caption: results.captionTk,
+        tiktok_tags: results.tagsTk,
+        instagram_caption: results.captionIg,
+        instagram_tags: results.tagsIg,
+        youtube_title: results.titleYt,
+        youtube_description: results.descYt,
+        youtube_tags: results.tagsYt
+      })
+    });
+  } catch(e) {}
 }
 
 function copyText(btn, platform) {
