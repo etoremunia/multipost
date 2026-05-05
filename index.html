@@ -994,25 +994,21 @@ async function saveUserDataToSupabase() {
   try {
     var tokensObj = JSON.parse(tokens);
     
-    var userData = {
-      id: currentUser.id,
-      email: currentUser.email,
-      name: currentUser.name,
-      avatar: currentUser.avatar,
-      plan: currentUser.plan,
-      usage_count: currentUser.usageCount
-    };
-    
-    // Usar UPSERT para actualizar o crear
-    await fetch(SB_URL + '/rest/v1/users', {
-      method: 'POST',
+    // Usar PATCH para actualizar solo los datos del usuario
+    await fetch(SB_URL + '/rest/v1/users?id=eq.' + currentUser.id, {
+      method: 'PATCH',
       headers: {
         'Authorization': 'Bearer ' + tokensObj.access_token,
         'apikey': SB_KEY,
         'Content-Type': 'application/json',
-        'Prefer': 'resolution=merge-duplicates,return=minimal'
+        'Prefer': 'return=minimal'
       },
-      body: JSON.stringify(userData)
+      body: JSON.stringify({
+        name: currentUser.name,
+        avatar: currentUser.avatar,
+        plan: currentUser.plan,
+        usage_count: currentUser.usageCount
+      })
     });
   } catch(e) {}
 }
