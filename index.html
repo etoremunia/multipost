@@ -1296,7 +1296,15 @@ async function handleGenerateAI(event) {
 
     currentUser.usageCount = (currentUser.usageCount || 0) + 1;
     saveUsageToLocal();
-    saveUserDataToSupabase();
+    saveUserDataToSubabase();
+    
+    // Guardar en el historial de Supabase
+    saveGenerationToSupabase(topic, tone, {
+      hook: hook, screen: screen, captionTk: captionTk, tagsTk: document.getElementById('res-tiktok-tags').textContent,
+      captionIg: captionIg, tagsIg: document.getElementById('res-ig-tags').textContent,
+      titleYt: titleYt, descYt: descYt, tagsYt: document.getElementById('res-yt-tags').textContent
+    });
+
     updateUsageDisplay();
     
     document.getElementById('div-resultados-ia').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
