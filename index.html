@@ -361,6 +361,7 @@
       <div class="dash-form-field"><label>NOMBRE DE USUARIO</label><input type="text" id="settings-name" placeholder="Tu nombre público" required></div>
       <div class="dash-success" id="profile-success">✅ Perfil actualizado.</div>
       <button type="submit" class="btn-dash-secondary">Guardar cambios</button>
+      <button type="button" class="btn-dash-secondary" id="btn-cancel-sub" style="background:transparent; border-color:#ff3c3c; color:#ff3c3c; display:none;" onclick="handleCancelSubscription()">Cancelar suscripción Pro</button>
     </form>
   </div>
 </div>
@@ -768,6 +769,7 @@ function openProfile() {
   document.getElementById('settings-name-display').textContent = currentUser.name || 'Usuario';
   document.getElementById('settings-email-display').textContent = currentUser.email || '';
   document.getElementById('settings-plan-badge').textContent = 'Plan: ' + (currentUser.plan || 'Gratis');
+  toggleCancelBtn(); // Mostrar/ocultar botón de cancelar
   var avatar = document.getElementById('settings-avatar');
   if (currentUser.avatar) {
     avatar.style.backgroundImage = 'url(' + currentUser.avatar + ')';
@@ -871,9 +873,6 @@ async function fetchUserAndLogin(accessToken) {
     updateUIForLoggedInUser();
     showDashboard();
     updateUsageDisplay();
-    
-    // COMPROBAR SI VIENE DE UN PAGO EXITOSO
-    handlePaymentSuccess();
 
     showToast('¡Bienvenido, ' + currentUser.name + '!');
   } catch(e) {
@@ -911,32 +910,6 @@ function handlePlanClick(plan) {
   }
 }
 
-async function handlePaymentSuccess() {
-  var urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('payment') === 'success') {
-    
-    // 1. Actualizar el estado local
-    currentUser.plan = 'Pro';
-    currentUser.usageCount = 0; // Reiniciar contador de uso
-    
-    // 2. Guardar en localStorage
-    saveUsageToLocal();
-    
-    // 3. Guardar en Supabase (Actualización directa)
-    await saveUserDataToSupabase();
-    
-    // 4. Actualizar la interfaz
-    updateUIForLoggedInUser();
-    updateUsageDisplay();
-    
-    // 5. Limpiar la URL para que no se repita al recargar
-    window.history.replaceState({}, document.title, window.location.pathname);
-    
-    // 6. Notificar al usuario
-    showToast('🎉 ¡Pago exitoso! Plan Pro activado.', 5000);
-  }
-}
-
 async function loadUserDataFromSupabase(accessToken) {
   try {
     var response = await fetch(SB_URL + '/rest/v1/users?id=eq.' + currentUser.id, {
@@ -956,6 +929,7 @@ async function loadUserDataFromSupabase(accessToken) {
         currentUser.avatar = userData.avatar || currentUser.avatar;
         currentUser.plan = userData.plan || 'Gratis';
         currentUser.usageCount = userData.usage_count || 0;
+        currentUser.stripe_customer_id = userData.stripe_customer_id || null;
       } else {
         await createUserInSupabase(accessToken);
       }
@@ -1341,6 +1315,43 @@ async function saveGenerationToSupabase(topic, tone, results) {
       })
     });
   } catch(e) {}
+}
+
+// ==========================================
+// CANCELACIÓN DE SUSCRIPCIÓN (STRIPE PORTAL)
+// ==========================================
+
+async function handleCancelSubscription() {
+  if (!currentUser || !currentUser.stripe_customer_id) {
+    showToast('No se encontró la suscripción. Contacta con soporte.', 3000, true);
+    return;
+  }
+  
+  try {
+    var response = await fetch('https://multipost-webhook.muniategi03.workers.dev/create-portal', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ customerId: currentUser.stripe_customer_id })
+    });
+    
+    var data = await response.json();
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      showToast('Error al conectar con Stripe', 3000, true);
+    }
+  } catch(e) {
+    showToast('Error de conexión', 3000, true);
+  }
+}
+
+function toggleCancelBtn() {
+  var btn = document.getElementById('btn-cancel-sub');
+  if (currentUser && currentUser.plan === 'Pro') {
+    btn.style.display = 'block';
+  } else {
+    btn.style.display = 'none';
+  }
 }
 
 function copyText(btn, platform) {
