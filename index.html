@@ -102,506 +102,361 @@
   .footer-col ul a:hover { color: var(--white); }
   .footer-bottom { border-top: 1px solid var(--border); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; color: var(--text-muted); font-size: .8rem; flex-wrap: wrap; gap: .5rem; }
   @media (max-width: 768px) { nav ul { display: none; } h1 { letter-spacing: -1px; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } .steps-grid { grid-template-columns: 1fr; } .features-grid { grid-template-columns: 1fr; } }
-
-  .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.85); z-index: 9999; justify-content: center; align-items: center; padding: 1rem; }
-  .modal.active { display: flex; }
-  .modal-box { background: #0a0a0a; border: 1px solid var(--border); border-radius: 16px; max-width: 440px; width: 100%; padding: 2rem; position: relative; animation: modalSlide 0.3s ease; }
-  @keyframes modalSlide { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-  .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--text-muted); font-size: 1.4rem; cursor: pointer; transition: color .2s; }
-  .modal-close:hover { color: var(--white); }
-  .modal-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; margin-bottom: 1.8rem; text-align: center; }
-  .form-group { margin-bottom: 1.2rem; }
-  .form-group label { display: block; font-size: .85rem; color: var(--text-muted); margin-bottom: .4rem; }
-  .form-group input { width: 100%; background: #111; border: 1px solid #2a2a2a; border-radius: 8px; color: var(--white); padding: .75rem 1rem; font-family: 'DM Sans', sans-serif; font-size: .9rem; outline: none; transition: border-color .2s; }
-  .form-group input:focus { border-color: var(--accent); }
-  .btn-submit { width: 100%; background: var(--accent); color: var(--white); border: none; padding: .85rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: .95rem; font-weight: 500; cursor: pointer; margin-top: 1rem; transition: opacity .2s; }
-  .btn-submit:hover { opacity: .85; }
-  .toggle-auth { text-align: center; margin-top: 1.2rem; font-size: .85rem; color: var(--text-muted); }
-  .toggle-auth a { color: var(--accent); cursor: pointer; text-decoration: underline; }
-
-  #container-dashboard { display: none; position: fixed; inset: 0; z-index: 200; background: var(--black); }
-  #container-dashboard.active { display: flex; }
-  .dash-sidebar { width: 240px; background: var(--card-bg); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 1.5rem 0; }
-  .dash-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; padding: 0 1.5rem 2rem; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; }
-  .dash-logo span { color: var(--accent); }
-  .dash-nav { flex: 1; display: flex; flex-direction: column; gap: .5rem; padding: 0 1rem; }
-  .dash-nav-item { padding: .75rem 1rem; background: transparent; border: none; color: var(--text-muted); text-align: left; border-radius: 8px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: .88rem; transition: all .2s; display: flex; align-items: center; gap: .6rem; }
-  .dash-nav-item:hover { background: #161616; color: var(--white); }
-  .dash-nav-item.active { background: var(--accent); color: var(--white); }
-  .dash-nav-item.logout { margin-top: auto; color: #ff5f57; }
-  .dash-nav-item.logout:hover { background: rgba(255,95,87,0.1); }
-  .dash-main { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
-  .dash-header { padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-  .dash-header h2 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; }
-  .dash-user-info { display: flex; align-items: center; gap: 1rem; }
-  .dash-plan-badge { font-size: .8rem; background: var(--card-bg); border: 1px solid var(--border); padding: .3rem .8rem; border-radius: 100px; }
-  .dash-plan-badge.pro { background: var(--accent); border-color: var(--accent); }
-  .dash-content { padding: 2rem; flex: 1; }
-  .dash-section { display: none; }
-  .dash-section.active { display: block; }
-  .usage-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
-  .usage-card h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: .8rem; }
-  .usage-bar { background: #1a1a1a; border-radius: 100px; height: 10px; overflow: hidden; margin-bottom: .5rem; }
-  .usage-bar-fill { background: linear-gradient(90deg, var(--accent), #ff6b6b); height: 100%; transition: width .3s; }
-  .usage-text { font-size: .85rem; color: var(--text-muted); }
-
-  .dash-generator-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; max-width: 700px; margin: 0 auto; }
-  .dash-generator-card h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center; }
-  .dash-input-group { margin-bottom: 1.2rem; }
-  .dash-input-group label { display: block; font-size: .88rem; color: var(--text-muted); margin-bottom: .5rem; }
-  .dash-input-group input, .dash-input-group select { width: 100%; background: #0a0a0a; border: 1px solid #2a2a2a; border-radius: 8px; color: var(--white); padding: .75rem 1rem; font-family: 'DM Sans', sans-serif; font-size: .9rem; outline: none; transition: border-color .2s; }
-  .dash-input-group input:focus, .dash-input-group select:focus { border-color: var(--accent); }
-  .btn-generate { width: 100%; background: var(--accent); color: var(--white); border: none; padding: .9rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: .95rem; font-weight: 500; cursor: pointer; margin-top: .5rem; transition: opacity .2s; }
-  .btn-generate:hover { opacity: .85; }
-  .btn-generate:disabled { opacity: .4; cursor: not-allowed; }
-
-  #div-resultados-ia { display: none; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-top: 2rem; }
-  .res-card { background: #0a0a0a; border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
-  .res-card-header { display: flex; align-items: center; gap: .6rem; margin-bottom: .5rem; }
-  .res-platform-icon { width: 24px; height: 24px; }
-  .res-card-header h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; }
-  .res-field { margin-bottom: 1rem; }
-  .res-field-label { font-size: .75rem; color: var(--text-muted); margin-bottom: .3rem; text-transform: uppercase; letter-spacing: .05em; }
-  .res-field-value { font-size: .88rem; line-height: 1.6; }
-  .btn-copy { width: 100%; background: transparent; border: 1px solid #2a2a2a; color: var(--white); padding: .65rem; border-radius: 6px; font-family: 'DM Sans', sans-serif; font-size: .85rem; cursor: pointer; transition: background .2s; margin-top: auto; }
-  .btn-copy:hover { background: #1a1a1a; }
-  .btn-copy.copied { background: #28c840; border-color: #28c840; }
-
-  .profile-container { display: none; position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,.85); justify-content: center; align-items: center; padding: 1rem; }
-  .profile-container.active { display: flex; }
-  .profile-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; max-width: 500px; width: 100%; padding: 2rem; position: relative; max-height: 90vh; overflow-y: auto; }
-  .profile-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--text-muted); font-size: 1.4rem; cursor: pointer; }
-  .profile-close:hover { color: var(--white); }
-  .profile-header { margin-bottom: 2rem; }
-  .profile-header h2 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.6rem; margin-bottom: .5rem; }
-  .dash-profile-plan { display: inline-block; font-size: .8rem; background: var(--card-bg); border: 1px solid var(--border); padding: .3rem .8rem; border-radius: 100px; }
-  .dash-profile-plan.pro { background: var(--accent); border-color: var(--accent); }
-  .profile-form { display: flex; flex-direction: column; gap: 1.2rem; }
-  .profile-form .form-group input { background: #0a0a0a; }
-  .btn-dash-secondary { background: transparent; border: 1px solid #2a2a2a; color: var(--white); padding: .75rem 1.5rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: .88rem; cursor: pointer; transition: background .2s; }
-  .btn-dash-secondary:hover { background: #1a1a1a; }
-
-  .history-list { display: flex; flex-direction: column; gap: 1rem; }
-  .history-item { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem; cursor: pointer; transition: border-color .2s; }
-  .history-item:hover { border-color: #333; }
-  .history-item-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: .6rem; }
-  .history-item-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .95rem; }
-  .history-item-date { font-size: .75rem; color: var(--text-muted); }
-  .history-item-meta { font-size: .8rem; color: var(--text-muted); }
-
-  .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: .8rem 1.5rem; font-size: .88rem; z-index: 10000; opacity: 0; pointer-events: none; transition: opacity .3s; }
-  .toast.show { opacity: 1; pointer-events: auto; }
-  .toast.error { border-color: #ff5f57; background: rgba(255,95,87,0.1); }
+  @media (max-width: 480px) { .cta-group { flex-direction: column; align-items: center; } .footer-grid { grid-template-columns: 1fr; } .pricing-grid-mockup { grid-template-columns: 1fr; } .mockup-results { grid-template-columns: 1fr; } }
+  #cookie-banner { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 16px; padding: 1.2rem 1.6rem; display: none; align-items: center; gap: 1.5rem; max-width: 680px; width: 90%; z-index: 999; flex-wrap: wrap; }
+  #cookie-banner.visible { display: flex; }
+  #cookie-banner p { font-size: .83rem; color: var(--text-muted); line-height: 1.6; flex: 1; min-width: 200px; font-weight: 300; }
+  #cookie-banner p a { color: var(--accent); }
+  .cookie-btns { display: flex; gap: .6rem; flex-shrink: 0; }
+  .btn-cookie-reject, .btn-cookie-accept { background: transparent; border: 1px solid #2a2a2a; color: var(--white); padding: .5rem 1rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: .82rem; cursor: pointer; transition: all .2s; }
+  .btn-cookie-accept { background: var(--accent); border-color: var(--accent); }
+  .btn-cookie-reject:hover { background: #222; }
+  .btn-cookie-accept:hover { opacity: .85; }
+  #modal-overlay, #profile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(6px); z-index: 1000; align-items: center; justify-content: center; }
+  #modal-overlay.active, #profile-overlay.active { display: flex; }
+  .modal-box, .profile-box { background: #111; border: 1px solid #2a2a2a; border-radius: 20px; padding: 2.2rem; width: 90%; max-width: 420px; position: relative; }
+  .modal-close, .profile-close { position: absolute; top: 1rem; right: 1.2rem; background: none; border: none; color: #888; font-size: 1.4rem; cursor: pointer; line-height: 1; transition: color .2s; }
+  .modal-close:hover, .profile-close:hover { color: #fff; }
+  .modal-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; margin-bottom: 1.4rem; }
+  .modal-logo span { color: #ff3c3c; }
+  .btn-google { width: 100%; background: #fff; color: #333; border: none; padding: .85rem; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .95rem; font-weight: 500; cursor: pointer; transition: opacity .2s; display: flex; align-items: center; justify-content: center; gap: .8rem; }
+  .btn-google:hover { opacity: .85; }
+  .btn-google:disabled { opacity: .6; cursor: not-allowed; }
+  .btn-google svg { width: 20px; height: 20px; }
+  .modal-error { color: #ff6b6b; font-size: .8rem; margin-top: 1rem; text-align: center; }
+  #dashboard { display: none; min-height: 100vh; }
+  .dash-user { display: flex; align-items: center; gap: .8rem; cursor: pointer; padding: .4rem; border-radius: 12px; transition: background .2s; }
+  .dash-user:hover { background: #1a1a1a; }
+  .dash-avatar { width: 36px; height: 36px; border-radius: 50%; background: #2d1a4a; color: #b48fe0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; background-size: cover; background-position: center; flex-shrink: 0; }
+  .dash-user-info { font-size: .85rem; }
+  .dash-user-info strong { display: block; color: #f5f3ee; }
+  .dash-user-info small { color: #888; }
+  .btn-logout { background: transparent; border: 1px solid #2a2a2a; color: #888; padding: .45rem 1rem; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: .82rem; cursor: pointer; transition: border-color .2s, color .2s; margin-left: .5rem; }
+  .btn-logout:hover { border-color: #555; color: #f5f3ee; }
+  .dash-body { max-width: 900px; margin: 0 auto; padding: 2.5rem 5%; }
+  .dash-header { margin-bottom: 2.5rem; }
+  .dash-header h2 { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; letter-spacing: -1px; }
+  .dash-header p { color: #888; font-size: .9rem; margin-top: .3rem; }
+  .dash-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+  .dash-card { background: #111; border: 1px solid #1e1e1e; border-radius: 18px; padding: 1.8rem; }
+  .dash-card h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 1.2rem; }
+  .dash-form-field { margin-bottom: .9rem; }
+  .dash-form-field label { display: block; font-size: .75rem; color: #888; margin-bottom: .3rem; }
+  .dash-form-field input[type=text], .dash-form-field select { width: 100%; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; color: #f5f3ee; padding: .6rem .9rem; font-family: 'DM Sans', sans-serif; font-size: .88rem; outline: none; transition: border-color .2s; }
+  .dash-form-field input:focus, .dash-form-field select:focus { border-color: #ff3c3c; }
+  .btn-dash-publish { width: 100%; background: #ff3c3c; border: none; color: #f5f3ee; padding: .8rem; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .92rem; font-weight: 500; cursor: pointer; transition: opacity .2s; }
+  .btn-dash-publish:hover { opacity: .85; }
+  .btn-dash-publish:disabled { opacity: .5; cursor: not-allowed; background: #999; border-color: #888; color: #555; }
+  .dash-error { color: #ff6b6b; font-size: .8rem; margin-bottom: .6rem; min-height: 1em; }
+  .ai-results-grid { display: none; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+  @media(min-width: 768px) { .ai-results-grid { grid-template-columns: 1fr 1fr 1fr; } }
+  .ai-card { background: #111; border: 1px solid #1e1e1e; border-radius: 18px; padding: 1.5rem; display: flex; flex-direction: column; }
+  .ai-card h3 { font-family: 'Syne', sans-serif; font-size: .95rem; font-weight: 700; margin-bottom: 1rem; padding-bottom: .8rem; border-bottom: 1px solid #222; }
+  .ai-block { margin-bottom: .8rem; }
+  .ai-block label { display: block; font-size: .68rem; color: #666; letter-spacing: .05em; text-transform: uppercase; margin-bottom: .2rem; }
+  .ai-block p { font-size: .85rem; color: #ddd; line-height: 1.6; background: #0a0a0a; padding: .7rem; border-radius: 8px; white-space: pre-wrap; word-break: break-word; min-height: 60px; }
+  .btn-copy { width: 100%; background: transparent; border: 1px solid #333; color: #fff; padding: .6rem; border-radius: 8px; font-family: 'DM Sans'; font-size: .82rem; cursor: pointer; margin-top: auto; transition: all .2s; }
+  .btn-copy:hover { background: #222; border-color: #555; }
+  .btn-copy.copied { background: #1a3a1a; border-color: #4cff72; color: #4cff72; }
+  .dash-profile-header { display: flex; align-items: center; gap: 1.2rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #1e1e1e; }
+  .dash-profile-avatar { width: 70px; height: 70px; border-radius: 50%; background: #2d1a4a; color: #b48fe0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.5rem; background-size: cover; background-position: center; flex-shrink:0; cursor:pointer; position:relative; overflow:hidden; }
+  .dash-profile-avatar:hover::after { content: '📷'; position: absolute; inset:0; background: rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; font-size:24px; }
+  .dash-profile-plan { font-size: .78rem; padding: .2rem .6rem; border-radius: 100px; background: rgba(255,60,60,0.1); color: var(--accent); border: 1px solid rgba(255,60,60,0.3); display:inline-block; margin-top:.3rem; }
+  .btn-dash-secondary { width: 100%; background: transparent; border: 1px solid #2a2a2a; color: #f5f3ee; padding: .8rem; border-radius: 10px; font-family: 'DM Sans'; font-size: .92rem; font-weight:500; cursor:pointer; transition:all .2s; margin-top: .5rem; }
+  .btn-dash-secondary:hover { background:#1a1a1a; border-color:#555; }
+  .dash-success { color:#4cff72; font-size:.85rem; margin-top:.5rem; display:none; }
+  .legal-section { display: none; padding: 4rem 5%; max-width: 800px; margin: 0 auto; }
+  .legal-section h2 { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem; }
+  .legal-section p { color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem; }
+  .back-btn { background: transparent; border: 1px solid #2a2a2a; color: var(--text-muted); padding: .6rem 1.2rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: .88rem; cursor: pointer; transition: all .2s; margin-bottom: 2rem; }
+  .back-btn:hover { background: #1a1a1a; color: var(--white); border-color: #555; }
+  .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px); background: #1a3a1a; border: 1px solid #4cff72; color: #4cff72; padding: .7rem 1.4rem; border-radius: 10px; font-size: .85rem; z-index: 9999; transition: transform .35s ease; pointer-events: none; }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast.error { background: #3a1a1a; border-color: #ff6b6b; color: #ff6b6b; }
+  .usage-card { background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%); border: 1px solid #2a2a2a; border-radius: 18px; padding: 1.8rem; margin-bottom: 1.5rem; }
+  .usage-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
+  .usage-header h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
+  .upgrade-badge { background: linear-gradient(135deg, #ff3c3c, #ff6b6b); color: white; padding: .3rem .8rem; border-radius: 100px; font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; cursor: pointer; transition: opacity .2s; }
+  .upgrade-badge:hover { opacity: .85; }
+  .usage-bar { background: #0a0a0a; border-radius: 100px; height: 12px; overflow: hidden; margin-bottom: .8rem; }
+  .usage-fill { background: linear-gradient(90deg, #ff3c3c, #ff6b6b); height: 100%; border-radius: 100px; transition: width .5s ease; }
+  .usage-text { font-size: .85rem; color: #888; }
+  .usage-text strong { color: #fff; font-weight: 600; }
+  .dash-pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 1.5rem; }
+  @media(max-width: 768px) { .dash-pricing-grid { grid-template-columns: 1fr; } }
+  .dash-price-card { background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 14px; padding: 1.5rem; position: relative; transition: all .2s; }
+  .dash-price-card:hover { border-color: #333; }
+  .dash-price-card.current-plan { border-color: #4cff72; background: rgba(76, 255, 114, 0.03); }
+  .current-plan-badge { position: absolute; top: -10px; right: 1rem; background: #4cff72; color: #0a0a0a; font-size: .65rem; font-weight: 600; padding: .2rem .7rem; border-radius: 100px; text-transform: uppercase; letter-spacing: .05em; }
+  .dash-plan-name { font-size: .7rem; color: #666; text-transform: uppercase; letter-spacing: .08em; margin-bottom: .6rem; }
+  .dash-plan-price { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; letter-spacing: -1px; margin-bottom: .3rem; }
+  .dash-plan-price span { font-size: .8rem; font-weight: 400; color: #888; }
+  .dash-plan-features { list-style: none; margin: 1rem 0; }
+  .dash-plan-features li { font-size: .8rem; color: #aaa; padding: .3rem 0; display: flex; align-items: center; gap: 6px; }
+  .dash-plan-features li::before { content: '✓'; color: #4cff72; font-weight: 700; font-size: .9rem; }
+  .btn-dash-upgrade { width: 100%; background: transparent; border: 1px solid #2a2a2a; color: #fff; padding: .65rem; border-radius: 8px; font-family: 'DM Sans'; font-size: .82rem; font-weight: 500; cursor: pointer; transition: all .2s; }
+  .btn-dash-upgrade:hover { background: #1a1a1a; border-color: #444; }
+  .btn-dash-upgrade.primary { background: var(--accent); border-color: var(--accent); }
+  .btn-dash-upgrade.primary:hover { opacity: .85; background: var(--accent); }
+  .btn-dash-upgrade:disabled { opacity: .5; cursor: not-allowed; }
+  .limit-warning { background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.3); border-radius: 10px; padding: 1rem; margin-bottom: 1rem; display: none; }
+  .limit-warning.show { display: block; }
+  .limit-warning p { color: #ff6b6b; font-size: .85rem; margin: 0; }
+  .limit-warning a { color: #ff3c3c; text-decoration: underline; cursor: pointer; }
 </style>
 </head>
-
 <body>
 
 <nav>
-  <div class="logo" onclick="scrollToHero()">Multi<span>Post</span></div>
-  <ul>
+  <div class="logo" onclick="handleLogoClick()">Multi<span>Post</span></div>
+  <ul id="nav-links-landing">
     <li><a href="#como-funciona">Cómo funciona</a></li>
-    <li><a href="#ventajas">Ventajas</a></li>
-    <li><a href="#precios">Precios</a></li>
+    <li><a href="#caracteristicas">Características</a></li>
     <li><a href="#faq">FAQ</a></li>
   </ul>
-  <button class="btn-nav" id="btn-cta-nav" onclick="openAuthModal()">Empezar gratis</button>
+  <button class="btn-nav" id="nav-btn-guest" onclick="openModal()">Iniciar sesión</button>
+  <div id="nav-user-menu" style="display:none; align-items:center; gap:.5rem;">
+    <div class="dash-user" onclick="openProfile()">
+      <div class="dash-avatar" id="nav-avatar">MP</div>
+      <div class="dash-user-info"><strong id="nav-name">Usuario</strong><small id="nav-email">user@email.com</small></div>
+    </div>
+    <button class="btn-logout" onclick="logout()">Salir</button>
+  </div>
 </nav>
 
-<section class="hero" id="hero">
-  <div class="blob"></div>
-  <div class="badge"><div class="badge-dot"></div> Nuevo: generación en 3 plataformas</div>
-  <h1>Genera textos virales<br><span class="line2">en 10 segundos</span></h1>
-  <p class="hero-sub">Crea hooks, textos en pantalla y captions personalizados para TikTok, Instagram y YouTube con IA. Sin plantillas genéricas.</p>
-  <div class="cta-group">
-    <button class="btn-primary" onclick="openAuthModal()">Pruébalo gratis</button>
-    <button class="btn-secondary-outline" onclick="scrollTo('#como-funciona')">Ver cómo funciona</button>
-  </div>
-  <div class="platforms-strip">
-    <div class="plat-pill">
-      <svg class="plat-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
-      TikTok
+<div id="main-content">
+  <div class="hero">
+    <div class="blob"></div>
+    <div class="badge"><div class="badge-dot"></div> Impulsado por Inteligencia Artificial</div>
+    <h1>Una idea.<br><span class="line2">Tres plataformas.</span><br>Textos perfectos.</h1>
+    <p class="hero-sub">Escribe de qué va tu video y nuestra IA genera los ganchos, captions y descripciones optimizados para TikTok, Instagram y YouTube en segundos.</p>
+    <div class="cta-group" id="hero-cta">
+      <button class="btn-primary" id="hero-btn-main" onclick="handleHeroCta()">Empezar ahora</button>
     </div>
-    <div class="plat-pill">
-      <svg class="plat-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
-      Instagram
+    <div class="platforms-strip">
+      <div class="plat-pill"><svg class="plat-icon" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.21a8.25 8.25 0 004.83 1.56V7.32a4.85 4.85 0 01-1.06-.63z"/></svg>TikTok</div>
+      <div class="plat-pill"><svg class="plat-icon" viewBox="0 0 24 24"><rect width="24" height="24" fill="#ff0000" rx="5"/><polygon points="9.5,7 9.5,17 17,12" fill="white"/></svg>YouTube</div>
+      <div class="plat-pill"><svg class="plat-icon" viewBox="0 0 24 24"><defs><linearGradient id="ig" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f09433"/><stop offset="25%" stop-color="#e6683c"/><stop offset="50%" stop-color="#dc2743"/><stop offset="75%" stop-color="#cc2366"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs><rect width="24" height="24" rx="6" fill="url(#ig)"/><rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="white" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="none" stroke="white" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="white"/></svg>Instagram</div>
     </div>
-    <div class="plat-pill">
-      <svg class="plat-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
-      YouTube
-    </div>
-  </div>
-  <div class="mockup-wrap">
-    <div class="mockup-bar">
-      <div class="dot dot-r"></div>
-      <div class="dot dot-y"></div>
-      <div class="dot dot-g"></div>
-    </div>
-    <div class="mockup-body">
-      <input type="text" class="mockup-input" placeholder="Tema de tu video (ej: meditación, fitness, cocina...)" readonly>
-      <select class="mockup-input" disabled><option>Tono: Motivador</option></select>
-      <button class="mockup-btn">Generar textos →</button>
-      <div class="mockup-results">
-        <div><div class="mockup-res-box"></div><div class="mockup-label">Hook TikTok</div></div>
-        <div><div class="mockup-res-box"></div><div class="mockup-label">Caption Instagram</div></div>
-        <div><div class="mockup-res-box"></div><div class="mockup-label">Título YouTube</div></div>
+    <div class="mockup-wrap">
+      <div class="mockup-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+      <div class="mockup-body">
+        <input type="text" class="mockup-input" placeholder="Ej: Cómo hacer la tortilla de patatas perfecta" disabled>
+        <button class="mockup-btn" disabled>Generar Multipost con IA ✨</button>
+        <div class="mockup-results">
+          <div><div class="mockup-res-box"></div><div class="mockup-label">TikTok</div></div>
+          <div><div class="mockup-res-box"></div><div class="mockup-label">YouTube</div></div>
+          <div><div class="mockup-res-box"></div><div class="mockup-label">Instagram</div></div>
+        </div>
       </div>
     </div>
   </div>
-</section>
 
-<section class="landing-section" id="como-funciona">
-  <h2>Cómo funciona</h2>
-  <p class="section-sub">Tres pasos para conseguir textos que enganchen desde el primer segundo.</p>
-  <div class="steps-grid">
-    <div class="step-card">
-      <div class="step-num">1</div>
-      <h3>Dinos el tema</h3>
-      <p>Escribe sobre qué va tu video. Ejemplo: "recetas fitness", "productividad", "meditación".</p>
+  <section class="landing-section" id="como-funciona">
+    <h2>¿Cómo funciona?</h2>
+    <p class="section-sub">De tu idea a tres textos publicables en menos de 10 segundos. Sin experiencia en copywriting.</p>
+    <div class="steps-grid">
+      <div class="step-card"><div class="step-num">01</div><h3>Escribe tu idea</h3><p>Describe de qué va tu video en una frase. No hace falta que sea perfecto.</p></div>
+      <div class="step-card"><div class="step-num">02</div><h3>La IA trabaja</h3><p>Nuestro modelo genera ganchos, captions y descripciones optimizados para cada plataforma.</p></div>
+      <div class="step-card"><div class="step-num">03</div><h3>Copia y publica</h3><p>Copía cada texto con un clic y pégalo directamente en TikTok, Instagram o YouTube.</p></div>
     </div>
-    <div class="step-card">
-      <div class="step-num">2</div>
-      <h3>Elige el tono</h3>
-      <p>Selecciona si quieres un estilo motivador, informativo, viral o educativo.</p>
-    </div>
-    <div class="step-card">
-      <div class="step-num">3</div>
-      <h3>Copia y pega</h3>
-      <p>Obtén hooks, textos en pantalla y captions listos para TikTok, Instagram y YouTube.</p>
-    </div>
-  </div>
-</section>
+  </section>
 
-<section class="landing-section" id="ventajas">
-  <h2>¿Por qué MultiPost?</h2>
-  <p class="section-sub">No generamos plantillas. Creamos textos únicos para cada video.</p>
-  <div class="features-grid">
-    <div class="feature-item">
-      <div class="feature-icon">⚡</div>
-      <div>
-        <h3>Rápido y sin complicaciones</h3>
-        <p>Genera todo en menos de 10 segundos. Sin configuraciones complejas ni cursos.</p>
-      </div>
+  <section class="landing-section" id="caracteristicas">
+    <h2>Características</h2>
+    <p class="section-sub">Todo lo que necesitas para crear contenido que conecte, sin complicaciones.</p>
+    <div class="features-grid">
+      <div class="feature-item"><div class="feature-icon">⚡</div><div><h3>Generación en 10 segundos</h3><p>No esperes minutos. Escribe tu idea y obtén resultados al instante.</p></div></div>
+      <div class="feature-item"><div class="feature-icon">🎯</div><div><h3>Optimizado por plataforma</h3><p>Cada texto sigue las mejores prácticas de TikTok, Instagram y YouTube.</p></div></div>
+      <div class="feature-item"><div class="feature-icon">🎨</div><div><h3>5 tonos de voz</h3><p>Divertido, educativo, serio, polémico o motivador. Elige el que encaje con tu marca.</p></div></div>
+      <div class="feature-item"><div class="feature-icon">📋</div><div><h3>Copiar con un clic</h3><p>Un botón para copiar todo el contenido de cada plataforma al portapapeles.</p></div></div>
+      <div class="feature-item"><div class="feature-icon">🔄</div><div><h3>Generaciones ilimitadas</h3><p>Con el plan Pro puedes generar todo el contenido que necesites sin límites.</p></div></div>
+      <div class="feature-item"><div class="feature-icon">💾</div><div><h3>Historial completo</h3><p>Accede a todas tus generaciones anteriores desde tu panel.</p></div></div>
     </div>
-    <div class="feature-item">
-      <div class="feature-icon">🎯</div>
-      <div>
-        <h3>Optimizado para cada plataforma</h3>
-        <p>Textos adaptados a TikTok, Instagram y YouTube. No son copias genéricas.</p>
-      </div>
-    </div>
-    <div class="feature-item">
-      <div class="feature-icon">💡</div>
-      <div>
-        <h3>Hooks que enganchan</h3>
-        <p>Genera primeras líneas potentes que retienen a tu audiencia desde el segundo 1.</p>
-      </div>
-    </div>
-    <div class="feature-item">
-      <div class="feature-icon">🔥</div>
-      <div>
-        <h3>Variedad de tonos</h3>
-        <p>Elige entre motivador, informativo, viral o educativo según tu estilo.</p>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<section class="landing-section" id="precios">
-  <h2>Precios simples</h2>
-  <p class="section-sub">Prueba gratis o desbloquea acceso ilimitado por 4,99€/mes.</p>
-  <div class="pricing-grid-mockup">
-    <div class="price-card">
-      <div class="plan-name">Gratis</div>
-      <div class="plan-price">0€ <span>/mes</span></div>
-      <p class="plan-desc">Prueba la herramienta y descubre cómo funciona.</p>
-      <ul class="plan-features">
-        <li>3 generaciones al mes</li>
-        <li>Acceso a TikTok, Instagram y YouTube</li>
-        <li>Todos los tonos disponibles</li>
-      </ul>
-      <button class="btn-plan" onclick="openAuthModal()">Empezar gratis</button>
+  <section class="landing-section" id="precios">
+    <h2>Precios simples</h2>
+    <p class="section-sub">Sin sorpresas, sin letras pequeñas. Elige tu plan y empieza a crear.</p>
+    <div class="pricing-grid-mockup" style="margin-bottom:0;">
+      <div class="price-card featured">
+        <div class="featured-badge">Más popular</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-price">7,99€ <span>/ mes</span></div>
+        <div class="plan-desc">Para creadores activos</div>
+        <ul class="plan-features"><li>Multipost ilimitados</li><li>3 plataformas</li><li>Todos los tonos de voz</li><li>Historial de generaciones</li></ul>
+        <button class="btn-plan featured-btn" onclick="handlePlanClick('pro')">Empezar con Pro</button>
+      </div>
+      <div class="price-card">
+        <div class="plan-name">Agencia</div>
+        <div class="plan-price">29,99€ <span>/ mes</span></div>
+        <div class="plan-desc">Para equipos y agencias</div>
+        <ul class="plan-features"><li>Multipost ilimitados</li><li>Cuentas múltiples</li><li>Hasta 10 usuarios</li><li>API de integración</li></ul>
+        <button class="btn-plan" onclick="handlePlanClick('agencia')">Contactar ventas</button>
+      </div>
     </div>
-    <div class="price-card featured">
-      <div class="featured-badge">Popular</div>
-      <div class="plan-name">Pro</div>
-      <div class="plan-price">4,99€ <span>/mes</span></div>
-      <p class="plan-desc">Generaciones ilimitadas para escalar tu contenido.</p>
-      <ul class="plan-features">
-        <li>Generaciones ilimitadas</li>
-        <li>Historial completo</li>
-        <li>Soporte prioritario</li>
-        <li>Nuevas funcionalidades primero</li>
-      </ul>
-      <button class="btn-plan featured-btn" onclick="openAuthModal()">Activar Pro</button>
-    </div>
-  </div>
-</section>
+  </section>
 
-<section class="landing-section" id="faq">
-  <h2>Preguntas frecuentes</h2>
-  <p class="section-sub">Resolvemos tus dudas más comunes.</p>
-  <div class="faq-list">
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-question">
-        ¿Necesito conocimientos técnicos?
-        <span class="faq-arrow">▼</span>
-      </div>
-      <div class="faq-answer">
-        <div class="faq-answer-inner">No. Solo introduces el tema de tu video y eliges el tono. En segundos obtienes hooks, captions y textos listos para copiar y pegar.</div>
-      </div>
+  <section class="landing-section" id="faq">
+    <h2>Preguntas frecuentes</h2>
+    <p class="section-sub">Resolvemos tus dudas antes de que las tengas.</p>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">¿Las generaciones son realmente ilimitadas?<span class="faq-arrow">▼</span></div><div class="faq-answer"><div class="faq-answer-inner">Sí. Con el plan Pro puedes generar todo el contenido que quieras sin ningún tipo de límite diario o mensual.</div></div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">¿Puedo usar los textos generados comercialmente?<span class="faq-arrow">▼</span></div><div class="faq-answer"><div class="faq-answer-inner">Por supuesto. Los textos generados son tuyos y puedes usarlos en tus redes, clientes, proyectos comerciales, etc.</div></div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">¿En qué idioma genera el contenido?<span class="faq-arrow">▼</span></div><div class="faq-answer"><div class="faq-answer-inner">Actualmente generamos contenido en español. Estamos trabajando en añadir más idiomas próximamente.</div></div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">¿Puedo cancelar en cualquier momento?<span class="faq-arrow">▼</span></div><div class="faq-answer"><div class="faq-answer-inner">Sí, puedes cancelar tu suscripción cuando quieras desde tu perfil. Sin permanencias ni penalizaciones.</div></div></div>
     </div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-question">
-        ¿Es compatible con todos los nichos?
-        <span class="faq-arrow">▼</span>
-      </div>
-      <div class="faq-answer">
-        <div class="faq-answer-inner">Sí. Funciona con fitness, cocina, educación, marketing, tecnología, coaching y más. La IA se adapta al tema que elijas.</div>
-      </div>
-    </div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-question">
-        ¿Puedo cancelar cuando quiera?
-        <span class="faq-arrow">▼</span>
-      </div>
-      <div class="faq-answer">
-        <div class="faq-answer-inner">Por supuesto. Cancelas desde tu perfil sin permanencia. Si cancelas, mantienes el acceso hasta el final del mes pagado.</div>
-      </div>
-    </div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-question">
-        ¿Qué pasa si ya tengo ideas de contenido?
-        <span class="faq-arrow">▼</span>
-      </div>
-      <div class="faq-answer">
-        <div class="faq-answer-inner">Perfecto. MultiPost no genera el guion completo del video, sino los textos que lo acompañan (hook, caption, título). Tú sigues controlando el contenido.</div>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <div class="logo">Multi<span>Post</span></div>
-      <p>Genera textos virales para TikTok, Instagram y YouTube con IA. Ahorra tiempo y consigue más engagement.</p>
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="logo">Multi<span>Post</span></div><p>La forma más rápida de generar textos virales para TikTok, YouTube e Instagram con Inteligencia Artificial.</p></div>
+      <div class="footer-col"><h4>Legal</h4><ul><li><a onclick="showLegal('privacidad')">Privacidad</a></li><li><a onclick="showLegal('terminos')">Términos</a></li></ul></div>
+      <div class="footer-col"><h4>Empresa</h4><ul><li><a onclick="showLegal('about')">Sobre nosotros</a></li><li><a onclick="showLegal('contacto')">Contacto</a></li></ul></div>
     </div>
-    <div class="footer-col">
-      <h4>Producto</h4>
-      <ul>
-        <li><a href="#como-funciona">Cómo funciona</a></li>
-        <li><a href="#ventajas">Ventajas</a></li>
-        <li><a href="#precios">Precios</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Recursos</h4>
-      <ul>
-        <li><a href="#faq">Preguntas frecuentes</a></li>
-        <li><a onclick="openAuthModal()">Empezar gratis</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Legal</h4>
-      <ul>
-        <li><a onclick="openModal('privacidad')">Privacidad</a></li>
-        <li><a onclick="openModal('terminos')">Términos de uso</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div>© 2025 MultiPost. Todos los derechos reservados.</div>
-    <div>Hecho con ☕ por creadores de contenido</div>
-  </div>
-</footer>
+    <div class="footer-bottom"><span>© 2025 MultiPost Technologies S.L. · Bilbao, España</span><span>Hecho con ♥ para creadores</span></div>
+  </footer>
+</div>
 
-<div class="modal" id="modal-auth">
-  <div class="modal-box">
+<div class="legal-section" id="page-privacidad"><button class="back-btn" onclick="hideLegal()">← Volver</button><h2>Política de Privacidad</h2><p>Recogemos tu correo de Google para prestar el servicio de IA y gestionar tu cuenta.</p><p>Tus datos están protegidos y nunca los compartimos con terceros sin tu consentimiento.</p></div>
+<div class="legal-section" id="page-terminos"><button class="back-btn" onclick="hideLegal()">← Volver</button><h2>Términos y Condiciones</h2><p>MultiPost genera textos con IA. El usuario es el único responsable del contenido que publica en sus redes.</p><p>Al usar este servicio, aceptas nuestros términos de uso y política de privacidad.</p></div>
+<div class="legal-section" id="page-about"><button class="back-btn" onclick="hideLegal()">← Volver</button><h2>Sobre nosotros</h2><p>MultiPost nació en Bilbao con la misión de hacer el copywriting más accesible para creadores de contenido.</p><p>Somos el asistente de copywriting definitivo para creadores que quieren maximizar su impacto en redes sociales.</p></div>
+<div class="legal-section" id="page-contacto"><button class="back-btn" onclick="hideLegal()">← Volver</button><h2>Contacto</h2><p>¿Tienes preguntas o sugerencias? Escríbenos a:</p><p><strong>hola@multipost.cc</strong></p></div>
+
+<div id="cookie-banner">
+  <p>Usamos cookies para mejorar tu experiencia. <a onclick="showLegal('privacidad')">Más información</a></p>
+  <div class="cookie-btns">
+    <button class="btn-cookie-reject" onclick="closeCookie()">Solo necesarias</button>
+    <button class="btn-cookie-accept" onclick="closeCookie()">Aceptar todas</button>
+  </div>
+</div>
+
+<div id="modal-overlay">
+  <div class="modal-box" style="max-width: 400px; text-align: center;">
     <button class="modal-close" onclick="closeModal()">✕</button>
-    <div id="auth-login">
-      <h3 class="modal-title">Inicia sesión</h3>
-      <form onsubmit="handleLogin(event)">
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" id="login-email" required>
-        </div>
-        <div class="form-group">
-          <label>Contraseña</label>
-          <input type="password" id="login-password" required>
-        </div>
-        <button type="submit" class="btn-submit">Entrar</button>
-      </form>
-      <div class="toggle-auth">¿No tienes cuenta? <a onclick="toggleAuthMode()">Regístrate</a></div>
-    </div>
-    <div id="auth-register" style="display:none;">
-      <h3 class="modal-title">Crea tu cuenta</h3>
-      <form onsubmit="handleRegister(event)">
-        <div class="form-group">
-          <label>Nombre</label>
-          <input type="text" id="register-name" required>
-        </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" id="register-email" required>
-        </div>
-        <div class="form-group">
-          <label>Contraseña</label>
-          <input type="password" id="register-password" required>
-        </div>
-        <button type="submit" class="btn-submit">Crear cuenta</button>
-      </form>
-      <div class="toggle-auth">¿Ya tienes cuenta? <a onclick="toggleAuthMode()">Inicia sesión</a></div>
-    </div>
+    <div class="modal-logo" style="margin-bottom: 2rem;">Multi<span>Post</span></div>
+    <p style="color: #888; margin-bottom: 1.5rem; font-size: .9rem;">Inicia sesión con Google. Sin contraseñas inventadas.</p>
+    <button class="btn-google" id="btn-google-login" onclick="loginWithGoogle()">
+      <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+      Continuar con Google
+    </button>
+    <div class="modal-error" id="login-error"></div>
   </div>
 </div>
 
-<div id="container-dashboard">
-  <div class="dash-sidebar">
-    <div class="dash-logo">Multi<span>Post</span></div>
-    <div class="dash-nav">
-      <button class="dash-nav-item active" onclick="showDashSection('generator')">
-        <span>⚡</span> Generador
-      </button>
-      <button class="dash-nav-item" onclick="showDashSection('history')">
-        <span>📝</span> Historial
-      </button>
-      <button class="dash-nav-item logout" onclick="handleLogout()">
-        <span>🚪</span> Salir
-      </button>
-    </div>
-  </div>
-  <div class="dash-main">
-    <div class="dash-header">
-      <h2 id="dash-title">Generador</h2>
-      <div class="dash-user-info">
-        <span id="dash-user-email"></span>
-        <div class="dash-plan-badge" id="dash-plan-badge">Plan: Gratis</div>
-        <button class="btn-nav" onclick="openProfile()" style="padding:.5rem 1rem;font-size:.85rem;">Mi perfil</button>
-      </div>
-    </div>
-    <div class="dash-content">
-      <div class="dash-section active" id="section-generator">
-        <div class="usage-card">
-          <h3>Tu uso este mes</h3>
-          <div class="usage-bar">
-            <div class="usage-bar-fill" id="usage-bar-fill" style="width:0%"></div>
-          </div>
-          <p class="usage-text" id="usage-text">0 de 3 generaciones usadas</p>
-        </div>
-        <div class="dash-generator-card">
-          <h3>Genera textos para tus redes</h3>
-          <form onsubmit="generateContent(event)">
-            <div class="dash-input-group">
-              <label>Tema de tu video</label>
-              <input type="text" id="input-topic" placeholder="ej: fitness, cocina saludable, productividad..." required>
-            </div>
-            <div class="dash-input-group">
-              <label>Tono del contenido</label>
-              <select id="input-tone" required>
-                <option value="">Selecciona un tono</option>
-                <option value="motivador">Motivador</option>
-                <option value="informativo">Informativo</option>
-                <option value="viral">Viral / Llamativo</option>
-                <option value="educativo">Educativo</option>
-              </select>
-            </div>
-            <button type="submit" class="btn-generate" id="btn-generate">Generar textos ✨</button>
-          </form>
-          <div id="div-resultados-ia">
-            <div class="res-card">
-              <div class="res-card-header">
-                <svg class="res-platform-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
-                <h4>TikTok</h4>
-              </div>
-              <div class="res-field">
-                <div class="res-field-label">Gancho</div>
-                <div class="res-field-value" id="res-tiktok-hook"></div>
-              </div>
-              <div class="res-field">
-                <div class="res-field-label">Texto en pantalla</div>
-                <div class="res-field-value" id="res-tiktok-screen"></div>
-              </div>
-              <div class="res-field">
-                <div class="res-field-label">Caption</div>
-                <div class="res-field-value" id="res-tiktok-caption"></div>
-              </div>
-              <div class="res-field">
-                <div class="res-field-label">Hashtags</div>
-                <div class="res-field-value" id="res-tiktok-tags"></div>
-              </div>
-              <button class="btn-copy" onclick="copyText(this, 'tiktok')">Copiar todo</button>
-            </div>
-            <div class="res-card">
-              <div class="res-card-header">
-                <svg class="res-platform-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
-                <h4>Instagram</h4>
-              </div>
-              <div class="res-field">
-                <div class="res-field-label">Caption</div>
-                <div class="res-field-value" id="res-ig-caption"></div>
-              </div>
-              <div class="res-field">
-                <div class="res-field-label">Hashtags</div>
-                <div class="res-field-value" id="res-ig-tags"></div>
-              </div>
-              <button class="btn-copy" onclick="copyText(this, 'instagram')">Copiar todo</button>
-            </div>
-            <div class="res-card">
-              <div class="res-card-header">
-                <svg class="res-platform-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
-                <h4>YouTube</h4>
-              </div>
-              <div class="res-field">
-                <div class="res-field-label">Título</div>
-                <div class="res-field-value" id="res-yt-title"></div>
-              </div>
-              <div class="res-field">
-                <div class="res-field-label">Descripción</div>
-                <div class="res-field-value" id="res-yt-desc"></div>
-              </div>
-              <div class="res-field">
-                <div class="res-field-label">Hashtags</div>
-                <div class="res-field-value" id="res-yt-tags"></div>
-              </div>
-              <button class="btn-copy" onclick="copyText(this, 'youtube')">Copiar todo</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="dash-section" id="section-history">
-        <div class="usage-card">
-          <h3>Tus generaciones recientes</h3>
-          <p class="usage-text">Aquí aparecerán todas las generaciones que hayas creado.</p>
-        </div>
-        <div class="history-list" id="history-list">
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="profile-container" id="profile-container">
+<div id="profile-overlay">
   <div class="profile-box">
     <button class="profile-close" onclick="closeProfile()">✕</button>
-    <div class="profile-header">
-      <h2>Mi perfil</h2>
-      <div class="dash-profile-plan" id="settings-plan-badge" onchange="toggleCancelBtn()">Plan: Gratis</div>
+    <h3 style="font-family:'Syne',sans-serif; font-size:1.2rem; margin-bottom:1.5rem;">⚙️ Mi Perfil</h3>
+    <div class="dash-profile-header">
+      <div class="dash-profile-avatar" id="settings-avatar" onclick="document.getElementById('avatar-input').click()">MP</div>
+      <input type="file" id="avatar-input" accept="image/png, image/jpeg, image/webp" onchange="handleAvatarUpload(event)" style="display:none;">
+      <div>
+        <div id="settings-name-display" style="font-weight:700; font-size:1.1rem; margin-bottom:.2rem;">Usuario</div>
+        <div id="settings-email-display" style="font-size:.85rem; color:#888;">user@email.com</div>
+        <div class="dash-profile-plan" id="settings-plan-badge">Plan: Gratis</div>
+      </div>
     </div>
-    <form class="profile-form" onsubmit="updateProfile(event)">
-      <div class="form-group">
-        <label>Nombre</label>
-        <input type="text" id="profile-name" required>
-      </div>
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="profile-email" disabled>
-      </div>
+    <form onsubmit="handleSaveProfile(event)">
+      <div class="dash-form-field"><label>NOMBRE DE USUARIO</label><input type="text" id="settings-name" placeholder="Tu nombre público" required></div>
+      <div class="dash-success" id="profile-success">✅ Perfil actualizado.</div>
       <button type="submit" class="btn-dash-secondary">Guardar cambios</button>
-      <button type="button" class="btn-dash-secondary" id="btn-cancel-sub" style="background:transparent; border-color:#ff3c3c; color:#ff3c3c; display:none;" onclick="handleCancelSubscription()">Cancelar suscripción Pro</button>
     </form>
-    <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
-      <button class="btn-dash-secondary" onclick="upgradeToPro()" id="btn-upgrade" style="width:100%;background:var(--accent);border-color:var(--accent);color:var(--white);">Activar Plan Pro - 4,99€/mes</button>
+  </div>
+</div>
+
+<div id="dashboard">
+  <div class="dash-body">
+    <div class="dash-header">
+      <h2>Generador de Contenido</h2>
+      <p>Escribe tu idea y obtén los textos perfectos para cada red social.</p>
+    </div>
+
+    <div class="usage-card" id="usage-section">
+      <div class="usage-header">
+        <h3>📊 Tu uso este mes</h3>
+        <span class="upgrade-badge" onclick="scrollToPricing()" id="upgrade-badge" style="display:none;">⚡ Mejorar Plan</span>
+      </div>
+      <div class="usage-bar">
+        <div class="usage-fill" id="usage-fill" style="width: 0%;"></div>
+      </div>
+      <p class="usage-text" id="usage-text">Has usado <strong>0 de 3</strong> generaciones gratuitas</p>
+    </div>
+
+    <div class="limit-warning" id="limit-warning">
+      <p>⚠️ Has alcanzado el límite de 3 generaciones gratuitas. <a onclick="scrollToPricing()">Mejora a Pro</a> para generaciones ilimitadas.</p>
+    </div>
+
+    <div class="dash-grid">
+      <div class="dash-card">
+        <h3>✨ Nueva generación</h3>
+        <form onsubmit="handleGenerateAI(event)">
+          <div class="dash-form-field"><label>¿DE QUÉ VA TU VIDEO?</label><input type="text" id="ai-topic" placeholder="Ej: Cómo ganar dinero con IA sin ser programador" required></div>
+          <div class="dash-form-field">
+            <label>TONO DEL CONTENIDO</label>
+            <select id="ai-tone">
+              <option value="Divertido">😂 Divertido</option>
+              <option value="Educativo">🧠 Educativo</option>
+              <option value="Serio y Profesional">💼 Serio y Profesional</option>
+              <option value="Polémico">🔥 Polémico</option>
+              <option value="Motivador">💪 Motivador</option>
+            </select>
+          </div>
+          <div class="dash-error" id="dash-error"></div>
+          <button type="submit" class="btn-dash-publish" id="ai-generate-btn">Generar textos con IA →</button>
+        </form>
+      </div>
+      <div class="ai-results-grid" id="div-resultados-ia">
+        <div class="ai-card" style="border-top: 3px solid #fff;">
+          <h3>🎵 TikTok</h3>
+          <div class="ai-block"><label>Gancho</label><p id="res-tiktok-hook"></p></div>
+          <div class="ai-block"><label>Texto en pantalla</label><p id="res-tiktok-screen"></p></div>
+          <div class="ai-block"><label>Caption</label><p id="res-tiktok-caption"></p></div>
+          <div class="ai-block"><label>Hashtags</label><p id="res-tiktok-tags"></p></div>
+          <button class="btn-copy" onclick="copyText(this, 'tiktok')">Copiar todo</button>
+        </div>
+        <div class="ai-card" style="border-top: 3px solid #e1306c;">
+          <h3>📸 Instagram</h3>
+          <div class="ai-block"><label>Caption</label><p id="res-ig-caption"></p></div>
+          <div class="ai-block"><label>Hashtags</label><p id="res-ig-tags"></p></div>
+          <button class="btn-copy" onclick="copyText(this, 'instagram')">Copiar todo</button>
+        </div>
+        <div class="ai-card" style="border-top: 3px solid #ff0000;">
+          <h3>📺 YouTube</h3>
+          <div class="ai-block"><label>Título</label><p id="res-yt-title"></p></div>
+          <div class="ai-block"><label>Descripción</label><p id="res-yt-desc"></p></div>
+          <div class="ai-block"><label>Hashtags</label><p id="res-yt-tags"></p></div>
+          <button class="btn-copy" onclick="copyText(this, 'youtube')">Copiar todo</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="dash-card" style="margin-top: 2rem;" id="pricing-section">
+      <h3>💎 Mejora tu plan</h3>
+      <p style="color: #888; font-size: .85rem; margin-bottom: 1.5rem;">Desbloquea todo el potencial de MultiPost</p>
+      <div class="dash-pricing-grid">
+        <div class="dash-price-card" id="free-plan-card">
+          <div class="dash-plan-name">Gratis</div>
+          <div class="dash-plan-price">0€ <span>/ mes</span></div>
+          <ul class="dash-plan-features">
+            <li>3 generaciones al mes</li>
+            <li>3 plataformas</li>
+            <li>Todos los tonos de voz</li>
+          </ul>
+          <button class="btn-dash-upgrade" disabled>Plan actual</button>
+        </div>
+        <div class="dash-price-card" id="pro-plan-card">
+          <div class="dash-plan-name">Pro</div>
+          <div class="dash-plan-price">7,99€ <span>/ mes</span></div>
+          <ul class="dash-plan-features">
+            <li>Generaciones ilimitadas</li>
+            <li>3 plataformas</li>
+            <li>Todos los tonos de voz</li>
+            <li>Historial completo</li>
+          </ul>
+          <button class="btn-dash-upgrade primary" id="btn-upgrade-pro" onclick="handlePlanClick('pro')">Mejorar a Pro</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -609,149 +464,537 @@
 <div class="toast" id="toast"></div>
 
 <script>
-var SB_URL = 'https://jqipccvcqrbjqldtvonb.supabase.co';
-var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxaXBjY3ZjcXJianFsZHR2b25iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzU4MzY2OTYsImV4cCI6MjA1MTQxMjY5Nn0.KsWHcCKHq-jMRXA2gPDL1X-7Y3TIhINHPL8RQ1w6Mfc';
+var SB_URL = 'https://xwbreyqsgujjxqwjtrbi.supabase.co';
+var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3YnJleXFzZ3Vqanhxd2p0cmJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5MTU2NTQsImV4cCI6MjA5MTQ5MTY1NH0.HWw89AP7p7DmEPuy_UUhdt5nQzrSlzT3x8pc7R5S2Zo';
+
 var currentUser = null;
 
-function scrollToHero() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
-function scrollTo(id) { document.querySelector(id).scrollIntoView({ behavior: 'smooth' }); }
-function toggleFaq(el) { el.classList.toggle('open'); }
-function openAuthModal() { document.getElementById('modal-auth').classList.add('active'); }
-function closeModal() { document.getElementById('modal-auth').classList.remove('active'); }
-function toggleAuthMode() {
-  var login = document.getElementById('auth-login');
-  var register = document.getElementById('auth-register');
-  if (login.style.display === 'none') {
-    login.style.display = 'block';
-    register.style.display = 'none';
+// ==========================================
+// SISTEMA DE PLANTILLAS POR TONO
+// ==========================================
+
+function getRandomItem(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+var TEMPLATES = {
+  "Divertido": {
+    hooks: [
+      "\u00bf{topic}? Yo tampoco lo sab\u00eda y m\u00edrame ahora \ud83d\ude02",
+      "Amigos, si no sabes de {topic}, est\u00e1s perdiendo el 50% de tu vida \ud83d\ude80",
+      "Pens\u00e9 que sab\u00eda todo sobre {topic}... me equivoqu\u00e9 de gratitud \ud83d\ude2d",
+      "Nivel de {topic}: principiante \u2192 experto en 3 minutos \u26a1",
+      "Mi madre cuando le dije que iba a hablar de {topic}... \ud83e\udd21",
+      "Avis\u00e9: despu\u00e9s de ver esto sobre {topic} no vas a poder parar \ud83d\ude02"
+    ],
+    screens: [
+      "{topic} (PERO EN SERIO)",
+      "TODO LO QUE NADIE TE DICE SOBRE {topic}",
+      "{topic} - EDICI\u00d3N SIN FILTRO",
+      "TE VAN A JUZGAR POR ESTO DE {topic}",
+      "{topic}?! AYUDA \ud83d\ude2d",
+      "LO QUE PASA CUANDO ENTIENDES {topic}"
+    ],
+    captionsTk: [
+      "Me acab\u00e9 de dar cuenta de esto sobre {topic} y mi vida cambi\u00f3 (para bien) \ud83d\ude02 Si te pas\u00f3 lo mismo, reacciona \ud83d\ude4f",
+      "Si est\u00e1s pasando por esto con {topic}, este video es para ti \ud83d\ude02 No est\u00e1s solo, somos muchos \ud83d\udc4f",
+      "El truco sobre {topic} que deber\u00eda ser ilegal de lo bueno que es \ud83d\ude02 Guarda esto antes de que lo borren",
+      "POV: acabas de descubrir esto de {topic} \ud83d\ude02 \u00bfA qui\u00e9n le pasa esto? Comenta \ud83d\udcac",
+      "Esto de {topic} es m\u00e1s f\u00e1cil de lo que parece y voy a demostr\u00e1rtelo \ud83d\ude02 S\u00edgueme para m\u00e1s"
+    ],
+    captionsIg: [
+      "\ud83d\ude02 S\u00ed, pas\u00e9 por esto con {topic} y aqu\u00ed te cuento c\u00f3mo lo solucion\u00e9.\n\nSi est\u00e1s en la misma situaci\u00f3n, \u00bfqu\u00e9 esperas? \ud83d\udc47\n\n\u2014\n#multipost #contenido #tutorial #{tag}",
+      "\ud83d\ude02 Otra vez hablando de {topic} pero es que es NECESARIO.\n\nTe dejo el paso a paso aqu\u00ed abajo \u2193\u2193\u2193\n\n\u2014\n#multipost #contenido #tutorial #{tag}",
+      "Me cans\u00e9 de ver informaci\u00f3n falsa sobre {topic} as\u00ed que lo hice yo mismo \ud83d\ude02\n\nGuarda este post porque te va a servir \ud83d\udd25\n\n\u2014\n#multipost #contenido #tutorial #{tag}"
+    ],
+    titlesYt: [
+      "{topic} | La verdad que NADIE te cuenta (con humor)",
+      "Prob\u00e9 {topic} durante 30 d\u00edas y pas\u00f3 esto...",
+      "C\u00f3mo dominar {topic} sin volverte loco (gu\u00eda real)",
+      "Todo lo que te equivocas sobre {topic} (y c\u00f3mo arreglarlo)",
+      "{topic} para principiantes: de cero a pro sin morir en el intento"
+    ],
+    descsYt: [
+      "En este video te cuento mi experiencia real con {topic}. Sin filtros, sin teor\u00eda, solo pr\u00e1ctica.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - El error que comet\u00eda\n1:30 - El truco que cambi\u00f3 todo\n3:00 - Resultados reales\n5:00 - Conclusi\u00f3n\n\n\u26a1 Suscr\u00edbete para m\u00e1s contenido como este.",
+      "Si est\u00e1s buscando c\u00f3mo mejorar en {topic}, este video es lo que necesitas. Te explico paso a paso c\u00f3mo lo hice.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - Introducci\u00f3n\n1:15 - Paso 1\n2:45 - Paso 2\n4:30 - Consejos finales\n\n\u2728 No olvides dejar tu like si te sirvi\u00f3."
+    ]
+  },
+  "Educativo": {
+    hooks: [
+      "Solo el 5% de las personas sabe esto sobre {topic} \ud83e\udde0",
+      "\u00bfSab\u00edas esto sobre {topic}? La ciencia lo confirma \ud83e\udde0",
+      "La diferencia entre quien sabe {topic} y quien no, es esto \ud83d\udcca",
+      "3 datos sobre {topic} que cambiar\u00e1n tu perspectiva \ud83e\udde0",
+      "{topic} explicado en menos de 60 segundos \u23f1\ufe0f",
+      "Deja de hacer esto con {topic}. Haz esto en su lugar \ud83e\udde0"
+    ],
+    screens: [
+      "3 DATOS CIENT\u00cdFICOS SOBRE {topic}",
+      "LO QUE LA CIENCIA DICE DE {topic}",
+      "{topic} - EXPLICADO F\u00c1CIL",
+      "APRENDE {topic} EN 60 SEGUNDOS",
+      "EL M\u00c9TODO CIENT\u00cdFICO PARA {topic}",
+      "ERROR VS ACIERTO EN {topic}"
+    ],
+    captionsTk: [
+      "Esto sobre {topic} deber\u00eda ense\u00f1arse en todas partes \ud83e\udde0 Pasa a quien le sirva \ud83d\udc49",
+      "La mayor\u00eda hace mal esto de {topic}. Aqu\u00ed te explico el m\u00e9todo correcto \ud83d\udcca Guarda para despu\u00e9s",
+      "Aprend\u00ed esto de {topic} despu\u00e9s de a\u00f1os y me hubiera gustado saberlo antes \ud83e\udde0 Comenta si lo sab\u00edas",
+      "Si quieres entender {topic} de verdad, presta atenci\u00f3n \ud83e\udde0 No es lo que te han contado",
+      "El concepto clave de {topic} que todo el mundo ignora \ud83d\udcca Reacciona si aprendiste algo nuevo"
+    ],
+    captionsIg: [
+      "\ud83e\udde0 {topic}: lo que la ciencia dice vs lo que todo el mundo cree.\n\nTe resumo los puntos clave aqu\u00ed \u2193\n\n1. El mito m\u00e1s com\u00fan\n2. Lo que realmente funciona\n3. C\u00f3mo aplicarlo hoy\n\n\u2014\n#multipost #educaci\u00f3n #tutorial #{tag}",
+      "\ud83d\udcca Gu\u00eda completa sobre {topic}.\n\nHe recopilado la informaci\u00f3n m\u00e1s actualizada para que no tengas que buscar m\u00e1s.\n\n\u2014\n#multipost #educaci\u00f3n #aprender #{tag}",
+      "\ud83e\udde0 Te explico {topic} de forma simple y clara.\n\nSi te ha quedado alguna duda, d\u00edmelo en comentarios y te respondo.\n\n\u2014\n#multipost #educaci\u00f3n #conocimiento #{tag}"
+    ],
+    titlesYt: [
+      "{topic} | Gu\u00eda completa para principiantes (2025)",
+      "Todo lo que necesitas saber sobre {topic} en un solo video",
+      "La ciencia detr\u00e1s de {topic} explicada f\u00e1cilmente",
+      "{topic}: mitos, verdades y c\u00f3mo aplicarlo correctamente",
+      "Aprende {topic} desde cero - Curso expr\u00e9s gratuito"
+    ],
+    descsYt: [
+      "En este video te explico todo lo que necesitas saber sobre {topic} de forma clara y estructurada.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - Introducci\u00f3n\n1:00 - Fundamentos b\u00e1sicos\n3:00 - Errores comunes\n5:00 - Gu\u00eda pr\u00e1ctica\n7:00 - Resumen y conclusi\u00f3n\n\n\u2728 Suscr\u00edbete para no perderte los pr\u00f3ximos v\u00eddeos educativos.",
+      "He creado esta gu\u00eda completa sobre {topic} para que puedas entenderlo desde cero, sin conocimientos previos.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - \u00bfPor qu\u00e9 es importante?\n1:30 - Conceptos clave\n3:15 - Ejemplos pr\u00e1cticos\n5:30 - Paso a paso\n7:00 - Conclusi\u00f3n\n\n\u2713 Si te sirvi\u00f3, dale like y suscr\u00edbete."
+    ]
+  },
+  "Serio y Profesional": {
+    hooks: [
+      "El 80% fracasa en {topic} por este \u00fanico error \ud83d\udcbc",
+      "Lo que nadie te explica sobre {topic} en el mundo profesional \ud83d\udcbc",
+      "Si trabajas con {topic}, necesitas saber esto \ud83d\udcbc",
+      "La realidad de {topic} que pocos se atreven a contar \ud83d\udcbc",
+      "Tras 10 a\u00f1os en {topic}, esto es lo que he aprendido \ud83d\udcbc",
+      "La diferencia profesional en {topic} est\u00e1 en los detalles \ud83d\udcbc"
+    ],
+    screens: [
+      "EL ERROR QUE DESTRUYE TU {topic}",
+      "{topic}: AN\u00c1LISIS PROFESIONAL",
+      "LO QUE REALMENTE IMPORTA EN {topic}",
+      "LA REALIDAD SOBRE {topic}",
+      "{topic} - VISI\u00d3N PROFESIONAL",
+      "DATOS REALES SOBRE {topic}"
+    ],
+    captionsTk: [
+      "La mayor\u00eda aborda {topic} sin estrategia. Aqu\u00ed te explico c\u00f3mo hacerlo bien \ud83d\udcbc Para profesionales",
+      "No es opini\u00f3n, es dato: as\u00ed es como funciona realmente {topic} \ud83d\udcbc Guarda este contenido",
+      "Despu\u00e9s de analizar {topic} a fondo, estas son mis conclusiones \ud83d\udcbc Comparte si eres profesional del sector",
+      "El enfoque correcto para {topic} no es el que te venden \ud83d\udcbc Te explico la diferencia",
+      "Si te tomas {topic} en serio, necesitas entender esto \ud83d\udcbc Sin atajos, sin falsas promesas"
+    ],
+    captionsIg: [
+      "\ud83d\udcbc An\u00e1lisis profesional sobre {topic}.\n\nTras a\u00f1os de experiencia, comparto las claves que realmente marcan la diferencia.\n\n\u2014\n#multipost #profesional #{tag}",
+      "\ud83d\udcbc {topic}: m\u00e1s all\u00e1 de la superficie.\n\nLa mayor\u00eda se queda en lo b\u00e1sico. Aqu\u00ed vamos al fondo del tema.\n\n\u2014\n#multipost #profesional #an\u00e1lisis #{tag}",
+      "\ud83d\udcbc Lo que funciona en {topic} vs lo que es solo ruido.\n\nDato sobre opini\u00f3n. Siempre.\n\n\u2014\n#multipost #profesional #{tag}"
+    ],
+    titlesYt: [
+      "{topic} | An\u00e1lisis profesional completo (2025)",
+      "La realidad de {topic} que nadie te cuenta",
+      "C\u00f3mo abordar {topic} con un m\u00e9todo profesional",
+      "{topic}: errores comunes y c\u00f3mo evitarlos",
+      "Gu\u00eda profesional sobre {topic} para resultados reales"
+    ],
+    descsYt: [
+      "An\u00e1lisis profundo y profesional sobre {topic}. Sin simplificaciones innecesarias, con datos y estrategias reales.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - Contexto actual\n1:45 - An\u00e1lisis del problema\n3:30 - Estrategia profesional\n5:30 - Implementaci\u00f3n pr\u00e1ctica\n7:00 - Conclusiones\n\n\u26a1 Canal dedicado a contenido profesional de calidad. Suscr\u00edbete.",
+      "En este v\u00edeo desgloso {topic} desde una perspectiva profesional, bas\u00e1ndome en experiencia real y datos verificados.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - Presentaci\u00f3n\n1:00 - Estado actual\n2:45 - An\u00e1lisis detallado\n5:00 - Recomendaciones\n6:30 - Cierre\n\n\u2713 Contenido profesional sin filtros."
+    ]
+  },
+  "Pol\u00e9mico": {
+    hooks: [
+      "Est\u00e1s haciendo {topic} mal y nadie te lo dice \ud83d\udd25",
+      "Todo lo que te han dicho sobre {topic} es una mentira \ud83d\udd25",
+      "Me van a odiar por decir esto sobre {topic} pero me da igual \ud83d\udd25",
+      "El negocio de {topic} es una estafa y te explico por qu\u00e9 \ud83d\udd25",
+      "Deja de seguir consejos falsos sobre {topic} \ud83d\udd25",
+      "Lo que los 'expertos' de {topic} no quieren que sepas \ud83d\udd25"
+    ],
+    screens: [
+      "LA VERDAD QUE NADIE DICE SOBRE {topic}",
+      "EST\u00c1S HACIENDO {topic} MAL",
+      "{topic}: LA GRAN ESTAFA",
+      "NO VAYAS A HACER {topic} SIN VER ESTO",
+      "LOS EXPERTOS MIENTEN SOBRE {topic}",
+      "POR QU\u00c9 {topic} NO FUNCIONA"
+    ],
+    captionsTk: [
+      "Voy a recibir odio por esto pero alguien ten\u00eda que decirlo sobre {topic} \ud83d\udd25 \u00bfEst\u00e1s de acuerdo o no?",
+      "Todos los 'gurus' de {topic} te est\u00e1n mintiendo y aqu\u00ed est\u00e1 la prueba \ud83d\udd25 Comparte si tienes valor",
+      "Me cancelar\u00e1n por este video sobre {topic} pero no me callo \ud83d\udd25 Reacciona si piensas igual",
+      "El 99% de lo que ves sobre {topic} es basura \ud83d\udd25 Te digo qu\u00e9 es lo \u00fanico que funciona de verdad",
+      "Aviso: esto sobre {topic} te va a molestar \ud83d\udd25 Pero es la realidad y hay que decirla"
+    ],
+    captionsIg: [
+      "\ud83d\udd25 Me van a cancelar por esto pero me da igual.\n\nLa verdad sobre {topic} que nadie quiere admitir.\n\n\u00bfEst\u00e1s de acuerdo? Dilo en comentarios.\n\n\u2014\n#multipost #verdad #{tag}",
+      "\ud83d\udd25 Todos hablan de {topic} pero casi nadie dice la verdad.\n\nAqu\u00ed rompo el silencio. Comparte si tienes los pantalones.\n\n\u2014\n#multipost #sinfiltros #{tag}",
+      "\ud83d\udd25 Deja de consumir contenido basura sobre {topic}.\n\nEsto es lo que realmente pasa detr\u00e1s. Y no es bonito.\n\n\u2014\n#multipost #realidad #{tag}"
+    ],
+    titlesYt: [
+      "La VERDAD sobre {topic} que nadie te cuenta",
+      "Por qu\u00e9 {topic} es una ESTAFA (y qu\u00e9 hacer en su lugar)",
+      "Los 'expertos' de {topic} te est\u00e1n mintiendo",
+      "NO hagas {topic} hasta que veas este video",
+      "Destruyo los mitos m\u00e1s grandes sobre {topic}"
+    ],
+    descsYt: [
+      "Nadie quiere decir la verdad sobre {topic}, pero yo s\u00ed. En este video expongo lo que realmente pasa detr\u00e1s.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - La mentira que todos creen\n1:30 - La realidad inc\u00f3moda\n3:00 - Lo que los 'expertos' ocultan\n5:00 - Qu\u00e9 hacer realmente\n6:30 - Reflexi\u00f3n final\n\n\u26a0\ufe0f Contenido que puede molestar a algunos. Se advierte.",
+      "Hablo claro y sin pelos en la lengua sobre {topic}. Si esperas un video m\u00e1s, este no es para ti.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - Por qu\u00e9 hago este video\n1:15 - Lo que est\u00e1 mal\n3:00 - Datos que no te quieren mostrar\n4:45 - La soluci\u00f3n real\n6:00 - Palabras finales\n\n\u2713 Si te gusta la verdad sin filtros, suscr\u00edbete."
+    ]
+  },
+  "Motivador": {
+    hooks: [
+      "Si est\u00e1s pasando por una mala racha con {topic}, mira esto \ud83d\udcaa",
+      "No eres demasiado tarde para empezar con {topic} \ud83d\udcaa",
+      "Este video sobre {topic} te va a cambiar la vida \ud83d\udcaa",
+      "Dej\u00e9 de postergar {topic} y haz esto hoy \ud83d\udcaa",
+      "Tu futuro yo te agradecer\u00e1 haber visto esto sobre {topic} \ud83d\udcaa",
+      "El momento perfecto para {topic} fue ayer. El segundo mejor: ahora \ud83d\udcaa"
+    ],
+    screens: [
+      "EMPIEZA {topic} HOY",
+      "TU TRANSFORMACI\u00d3N CON {topic} EMPIEZA AHORA",
+      "NO RINDAS CON {topic}",
+      "{topic} - TU MEJOR VERSI\u00d3N",
+      "EL CAMINO HACIA {topic} EMPIEZA AQU\u00cd",
+      "DA EL PASO: {topic}"
+    ],
+    captionsTk: [
+      "S\u00e9 que es dif\u00edcil empezar con {topic} pero te prometo que vale la pena \ud83d\udcaa Etiqueta a alguien que lo necesite",
+      "Hace un a\u00f1o no sab\u00eda nada de {topic}. Hoy mira d\u00f3nde estoy \ud83d\udcaa Si yo pude, t\u00fa tambi\u00e9n. Guarda este video",
+      "Deja de esperar el momento perfecto para {topic}. El momento perfecto es ahora \ud83d\udcaa Reacciona si est\u00e1s listo",
+      "Este es tu signo para empezar con {topic} \ud83d\udcaa No lo pienses m\u00e1s, solo hazlo. Comenta 'YO PUEDO' si est\u00e1s de acuerdo",
+      "La primera vez que intent\u00e9 {topic} fue un desastre. Pero no me rend\u00ed \ud83d\udcaa Tu historia puede ser diferente"
+    ],
+    captionsIg: [
+      "\ud83d\udcaa Si est\u00e1s pensando en empezar con {topic}, esto es para ti.\n\nNo importa d\u00f3nde est\u00e1s ahora. Lo que importa es que des el primer paso hoy.\n\n\u00bfListo? \u2193\u2193\u2193\n\n\u2014\n#multipost #motivaci\u00f3n #{tag}",
+      "\ud83d\udcaa {topic} cambi\u00f3 mi vida y puede cambiar la tuya.\n\nNo necesitas ser perfecto. Solo necesitas empezar.\n\n\u2014\n#multipost #crecimiento #{tag}",
+      "\ud83d\udcaa Deja de decir 'ma\u00f1ana' a {topic}.\n\nMa\u00f1ana no existe. Solo hay hoy. Y hoy puedes dar el primer paso.\n\n\u2014\n#multipost #motivaci\u00f3n #{tag}"
+    ],
+    titlesYt: [
+      "C\u00f3mo {topic} cambi\u00f3 mi vida (y puede cambiar la tuya)",
+      "Deja de procrastinar {topic}: haz esto HOY",
+      "Mi transformaci\u00f3n con {topic} | Historia real",
+      "Empieza {topic} desde cero: gu\u00eda motivacional",
+      "El video que necesitabas ver sobre {topic} hoy"
+    ],
+    descsYt: [
+      "Este video es diferente. No es un tutorial m\u00e1s sobre {topic}. Es una historia real de transformaci\u00f3n que te va a inspirar a dar el primer paso.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - Mi historia personal\n1:30 - El punto de inflexi\u00f3n\n3:00 - C\u00f3mo lo logr\u00e9\n4:30 - Lo que aprend\u00ed\n6:00 - Mensaje para ti\n\n\u2728 Si este video te inspira, comp\u00e1rtelo con alguien que lo necesite. Suscr\u00edbete para m\u00e1s contenido motivacional.",
+      "Si has estado dudando en empezar con {topic}, este v\u00edeo es para ti. Te cuento mi experiencia real y te doy las herramientas para que empieces hoy mismo.\n\n\u23f1\ufe0f TIMESTAMPS:\n0:00 - \u00bfPor qu\u00e9 hice esto?\n1:15 - Los miedos que super\u00e9\n3:00 - El proceso paso a paso\n5:00 - Resultados reales\n6:30 - Tu turno\n\n\u2713 Dale al play. Tu futuro yo te lo agradecer\u00e1."
+    ]
+  }
+};
+
+// ==========================================
+// SISTEMA DE USO PERSISTENTE (localStorage)
+// Se reinicia autom\u00e1ticamente cada mes
+// ==========================================
+
+function getUsageKey() {
+  if (!currentUser || !currentUser.id) return null;
+  var now = new Date();
+  var monthKey = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0");
+  return "mp_usage_" + currentUser.id + "_" + monthKey;
+}
+
+function loadUsageFromLocal() {
+  var key = getUsageKey();
+  if (!key) return;
+  try {
+    var saved = JSON.parse(localStorage.getItem(key));
+    if (saved && typeof saved.count === "number") {
+      if (saved.count > currentUser.usageCount) currentUser.usageCount = saved.count;
+      if (saved.plan && saved.plan !== "Gratis") currentUser.plan = saved.plan;
+    }
+  } catch(e) {}
+}
+
+function saveUsageToLocal() {
+  var key = getUsageKey();
+  if (!key) return;
+  try {
+    localStorage.setItem(key, JSON.stringify({ count: currentUser.usageCount || 0, plan: currentUser.plan || "Gratis" }));
+  } catch(e) {}
+}
+
+// ==========================================
+// INICIO Y AUTENTICACI\u00d3N
+// ==========================================
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (!localStorage.getItem('cookiesAccepted')) {
+    document.getElementById('cookie-banner').classList.add('visible');
+  }
+  handleOAuthRedirect();
+});
+
+function showToast(msg, duration, isError) {
+  duration = duration || 2500;
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isError ? ' error' : '');
+  setTimeout(function() { t.className = 'toast'; }, duration);
+}
+
+function closeCookie() {
+  localStorage.setItem('cookiesAccepted', 'true');
+  document.getElementById('cookie-banner').classList.remove('visible');
+}
+
+function toggleFaq(el) {
+  var item = el.parentElement;
+  var wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+  if (!wasOpen) item.classList.add('open');
+}
+
+function openModal() {
+  document.getElementById('modal-overlay').classList.add('active');
+  document.getElementById('login-error').textContent = '';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('active');
+  document.getElementById('login-error').textContent = '';
+}
+
+document.getElementById('modal-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+function openProfile() {
+  if (!currentUser) return;
+  document.getElementById('settings-name').value = currentUser.name || '';
+  document.getElementById('settings-name-display').textContent = currentUser.name || 'Usuario';
+  document.getElementById('settings-email-display').textContent = currentUser.email || '';
+  document.getElementById('settings-plan-badge').textContent = 'Plan: ' + (currentUser.plan || 'Gratis');
+  var avatar = document.getElementById('settings-avatar');
+  if (currentUser.avatar) {
+    avatar.style.backgroundImage = 'url(' + currentUser.avatar + ')';
+    avatar.textContent = '';
   } else {
-    login.style.display = 'none';
-    register.style.display = 'block';
+    avatar.style.backgroundImage = 'none';
+    avatar.textContent = (currentUser.name || 'MP').substring(0, 2).toUpperCase();
   }
+  document.getElementById('profile-overlay').classList.add('active');
 }
 
-async function handleRegister(e) {
-  e.preventDefault();
-  var name = document.getElementById('register-name').value;
-  var email = document.getElementById('register-email').value;
-  var password = document.getElementById('register-password').value;
-  try {
-    var res = await fetch(SB_URL + '/auth/v1/signup', {
-      method: 'POST',
-      headers: { 'apikey': SB_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, password: password, data: { name: name } })
-    });
-    var data = await res.json();
-    if (data.user && data.session) {
-      localStorage.setItem('sb_tokens', JSON.stringify({ access_token: data.session.access_token, refresh_token: data.session.refresh_token }));
-      await createUserProfile(data.user, name);
-      await fetchUserAndLogin();
-      showToast('¡Cuenta creada! Bienvenido.');
-      closeModal();
-    } else {
-      showToast(data.msg || 'Error al registrar', 3000, true);
-    }
-  } catch(e) {
-    showToast('Error de conexión', 3000, true);
-  }
+function closeProfile() {
+  document.getElementById('profile-overlay').classList.remove('active');
+  document.getElementById('profile-success').style.display = 'none';
 }
 
-async function handleLogin(e) {
-  e.preventDefault();
-  var email = document.getElementById('login-email').value;
-  var password = document.getElementById('login-password').value;
-  try {
-    var res = await fetch(SB_URL + '/auth/v1/token?grant_type=password', {
-      method: 'POST',
-      headers: { 'apikey': SB_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, password: password })
-    });
-    var data = await res.json();
-    if (data.access_token) {
-      localStorage.setItem('sb_tokens', JSON.stringify({ access_token: data.access_token, refresh_token: data.refresh_token }));
-      await fetchUserAndLogin();
-      showToast('¡Sesión iniciada!');
-      closeModal();
-    } else {
-      showToast('Email o contraseña incorrectos', 3000, true);
-    }
-  } catch(e) {
-    showToast('Error de conexión', 3000, true);
-  }
+document.getElementById('profile-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeProfile();
+});
+
+function loginWithGoogle() {
+  var redirectUrl = window.location.origin + window.location.pathname;
+  var authUrl = SB_URL + '/auth/v1/authorize'
+    + '?provider=google'
+    + '&redirect_to=' + encodeURIComponent(redirectUrl)
+    + '&apikey=' + SB_KEY;
+  window.location.href = authUrl;
 }
 
-async function createUserProfile(user, name) {
+async function handleOAuthRedirect() {
+  var hash = window.location.hash;
+  if (!hash || hash.indexOf('access_token') === -1) {
+    await checkExistingSession();
+    return;
+  }
+  var params = new URLSearchParams(hash.substring(1));
+  var accessToken = params.get('access_token');
+  var refreshToken = params.get('refresh_token');
+  if (!accessToken) {
+    await checkExistingSession();
+    return;
+  }
+  localStorage.setItem('sb_tokens', JSON.stringify({
+    access_token: accessToken,
+    refresh_token: refreshToken
+  }));
+  window.history.replaceState(null, '', window.location.pathname + window.location.search);
+  await fetchUserAndLogin(accessToken);
+}
+
+async function checkExistingSession() {
   var tokens = localStorage.getItem('sb_tokens');
-  if (!tokens) return;
+  if (!tokens) {
+    currentUser = null;
+    updateUIForLoggedOutUser();
+    return;
+  }
   try {
     var tokensObj = JSON.parse(tokens);
+    await fetchUserAndLogin(tokensObj.access_token);
+  } catch(e) {
+    localStorage.removeItem('sb_tokens');
+    currentUser = null;
+    updateUIForLoggedOutUser();
+  }
+}
+
+async function fetchUserAndLogin(accessToken) {
+  try {
+    var response = await fetch(SB_URL + '/auth/v1/user', {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + accessToken,
+        'apikey': SB_KEY
+      }
+    });
+    if (!response.ok) {
+      localStorage.removeItem('sb_tokens');
+      currentUser = null;
+      updateUIForLoggedOutUser();
+      return;
+    }
+    var user = await response.json();
+    
+    var meta = user.user_metadata || {};
+    currentUser = {
+      id: user.id,
+      email: user.email,
+      name: meta.full_name || meta.name || user.email.split('@')[0],
+      avatar: meta.avatar_url || meta.picture || null,
+      plan: 'Gratis',
+      usageCount: 0
+    };
+    
+    // Cargar datos desde Supabase
+    await loadUserDataFromSupabase(accessToken);
+    
+    // Fallback a localStorage (garantiza que el l\u00edmite persista aunque Supabase falle)
+    loadUsageFromLocal();
+    
+    updateUIForLoggedInUser();
+    showDashboard();
+    updateUsageDisplay();
+    
+    // COMPROBAR SI VIENE DE UN PAGO EXITOSO
+    handlePaymentSuccess();
+
+    showToast('¡Bienvenido, ' + currentUser.name + '!');
+  } catch(e) {
+    console.error('Error fetching user:', e);
+    localStorage.removeItem('sb_tokens');
+    currentUser = null;
+    updateUIForLoggedOutUser();
+  }
+}
+
+// ==========================================
+// LÓGICA DE PAGO Y ACTUALIZACIÓN DE PLAN
+// ==========================================
+
+function handlePlanClick(plan) {
+  if (!currentUser) { openModal(); return; }
+  
+  // Si ya es Pro, no enviar a Stripe
+  if (plan === 'pro' && currentUser.plan === 'Pro') {
+    showToast('Ya tienes el plan Pro activado');
+    return;
+  }
+  
+  var urls = { 
+    pro: 'https://buy.stripe.com/eVqaEXeVW1hhgKg73y3gk02',
+    agencia: 'https://buy.stripe.com/test_14k9Cfcbm0lW4AUcMN'
+  };
+  
+  if (urls[plan]) {
+    // Añadimos el email y el ID del usuario para que Stripe lo sepa
+    var stripeUrl = urls[plan] 
+      + '?prefilled_email=' + encodeURIComponent(currentUser.email)
+      + '&client_reference_id=' + currentUser.id;
+    window.location.href = stripeUrl;
+  }
+}
+
+async function handlePaymentSuccess() {
+  var urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('payment') === 'success') {
+    
+    // 1. Actualizar el estado local
+    currentUser.plan = 'Pro';
+    currentUser.usageCount = 0; // Reiniciar contador de uso
+    
+    // 2. Guardar en localStorage
+    saveUsageToLocal();
+    
+    // 3. Guardar en Supabase (Actualización directa)
+    await saveUserDataToSupabase();
+    
+    // 4. Actualizar la interfaz
+    updateUIForLoggedInUser();
+    updateUsageDisplay();
+    
+    // 5. Limpiar la URL para que no se repita al recargar
+    window.history.replaceState({}, document.title, window.location.pathname);
+    
+    // 6. Notificar al usuario
+    showToast('🎉 ¡Pago exitoso! Plan Pro activado.', 5000);
+  }
+}
+
+async function loadUserDataFromSupabase(accessToken) {
+  try {
+    var response = await fetch(SB_URL + '/rest/v1/users?id=eq.' + currentUser.id, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + accessToken,
+        'apikey': SB_KEY,
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    if (response.ok) {
+      var data = await response.json();
+      if (data && data.length > 0) {
+        var userData = data[0];
+        currentUser.name = userData.name || currentUser.name;
+        currentUser.avatar = userData.avatar || currentUser.avatar;
+        currentUser.plan = userData.plan || 'Gratis';
+        currentUser.usageCount = userData.usage_count || 0;
+      } else {
+        await createUserInSupabase(accessToken);
+      }
+    }
+  } catch(e) {}
+}
+
+async function createUserInSupabase(accessToken) {
+  try {
+    var userData = {
+      id: currentUser.id,
+      email: currentUser.email,
+      name: currentUser.name,
+      avatar: currentUser.avatar,
+      plan: 'Gratis',
+      usage_count: 0
+    };
+    
     await fetch(SB_URL + '/rest/v1/users', {
       method: 'POST',
       headers: {
-        'Authorization': 'Bearer ' + tokensObj.access_token,
+        'Authorization': 'Bearer ' + accessToken,
         'apikey': SB_KEY,
         'Content-Type': 'application/json',
         'Prefer': 'return=minimal'
       },
-      body: JSON.stringify({
-        id: user.id,
-        email: user.email,
-        name: name,
-        plan: 'Free',
-        usage_count: 0,
-        stripe_customer_id: null
-      })
+      body: JSON.stringify(userData)
     });
-  } catch(e) {}
-}
-
-async function fetchUserAndLogin() {
-  var tokens = localStorage.getItem('sb_tokens');
-  if (!tokens) return;
-  try {
-    var tokensObj = JSON.parse(tokens);
-    var res = await fetch(SB_URL + '/auth/v1/user', {
-      headers: { 'Authorization': 'Bearer ' + tokensObj.access_token, 'apikey': SB_KEY }
-    });
-    var user = await res.json();
-    if (user.id) {
-      currentUser = { id: user.id, email: user.email, name: user.user_metadata?.name || 'Usuario' };
-      await loadUserDataFromSupabase();
-      updateUIForLoggedInUser();
-      loadHistoryFromSupabase();
-    } else {
-      localStorage.removeItem('sb_tokens');
-    }
-  } catch(e) {
-    localStorage.removeItem('sb_tokens');
-  }
-}
-
-async function loadUserDataFromSupabase() {
-  var tokens = localStorage.getItem('sb_tokens');
-  if (!tokens || !currentUser) return;
-  try {
-    var tokensObj = JSON.parse(tokens);
-    var res = await fetch(SB_URL + '/rest/v1/users?id=eq.' + currentUser.id, {
-      headers: { 'Authorization': 'Bearer ' + tokensObj.access_token, 'apikey': SB_KEY }
-    });
-    var users = await res.json();
-    if (users && users.length > 0) {
-      var userData = users[0];
-      currentUser.name = userData.name || currentUser.name;
-      currentUser.plan = userData.plan || 'Free';
-      currentUser.usageCount = userData.usage_count || 0;
-      currentUser.stripe_customer_id = userData.stripe_customer_id || null;
-      saveUsageToLocal();
-    }
   } catch(e) {}
 }
 
 async function saveUserDataToSupabase() {
   var tokens = localStorage.getItem('sb_tokens');
   if (!tokens || !currentUser) return;
+  
   try {
     var tokensObj = JSON.parse(tokens);
+    
+    // Usar PATCH para actualizar solo los datos del usuario
     await fetch(SB_URL + '/rest/v1/users?id=eq.' + currentUser.id, {
       method: 'PATCH',
       headers: {
@@ -761,237 +1004,281 @@ async function saveUserDataToSupabase() {
         'Prefer': 'return=minimal'
       },
       body: JSON.stringify({
+        name: currentUser.name,
+        avatar: currentUser.avatar,
         plan: currentUser.plan,
-        usage_count: currentUser.usageCount,
-        name: currentUser.name
+        usage_count: currentUser.usageCount
       })
     });
   } catch(e) {}
 }
 
-async function loadHistoryFromSupabase() {
+async function logout() {
   var tokens = localStorage.getItem('sb_tokens');
-  if (!tokens || !currentUser) return;
-  try {
-    var tokensObj = JSON.parse(tokens);
-    var res = await fetch(SB_URL + '/rest/v1/generations?user_id=eq.' + currentUser.id + '&order=created_at.desc&limit=20', {
-      headers: { 'Authorization': 'Bearer ' + tokensObj.access_token, 'apikey': SB_KEY }
-    });
-    var generations = await res.json();
-    displayHistory(generations);
-  } catch(e) {}
-}
-
-function displayHistory(generations) {
-  var container = document.getElementById('history-list');
-  container.innerHTML = '';
-  if (!generations || generations.length === 0) {
-    container.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:2rem;">Aún no tienes generaciones. ¡Crea tu primera!</p>';
-    return;
+  if (tokens) {
+    try {
+      var tokensObj = JSON.parse(tokens);
+      await fetch(SB_URL + '/auth/v1/logout', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + tokensObj.access_token,
+          'apikey': SB_KEY
+        }
+      });
+    } catch(e) {}
   }
-  generations.forEach(function(gen) {
-    var item = document.createElement('div');
-    item.className = 'history-item';
-    var date = new Date(gen.created_at);
-    item.innerHTML = '<div class="history-item-header"><div class="history-item-title">' + gen.topic + '</div><div class="history-item-date">' + date.toLocaleDateString('es-ES') + '</div></div><div class="history-item-meta">Tono: ' + gen.tone + '</div>';
-    item.onclick = function() { viewHistoryDetail(gen); };
-    container.appendChild(item);
-  });
-}
-
-function viewHistoryDetail(gen) {
-  document.getElementById('res-tiktok-hook').textContent = gen.tiktok_hook || '';
-  document.getElementById('res-tiktok-screen').textContent = gen.tiktok_screen || '';
-  document.getElementById('res-tiktok-caption').textContent = gen.tiktok_caption || '';
-  document.getElementById('res-tiktok-tags').textContent = gen.tiktok_tags || '';
-  document.getElementById('res-ig-caption').textContent = gen.instagram_caption || '';
-  document.getElementById('res-ig-tags').textContent = gen.instagram_tags || '';
-  document.getElementById('res-yt-title').textContent = gen.youtube_title || '';
-  document.getElementById('res-yt-desc').textContent = gen.youtube_description || '';
-  document.getElementById('res-yt-tags').textContent = gen.youtube_tags || '';
-  document.getElementById('div-resultados-ia').style.display = 'grid';
-  showDashSection('generator');
-  showToast('Generación cargada del ' + new Date(gen.created_at).toLocaleDateString('es-ES'));
-}
-
-function saveUsageToLocal() {
-  if (currentUser) {
-    localStorage.setItem('multipost_user', JSON.stringify(currentUser));
-  }
-}
-
-function loadUsageFromLocal() {
-  var data = localStorage.getItem('multipost_user');
-  if (data) {
-    var user = JSON.parse(data);
-    if (currentUser && currentUser.id === user.id) {
-      currentUser.usageCount = user.usageCount || 0;
-      currentUser.plan = user.plan || 'Free';
-    }
-  }
-}
-
-function updateUIForLoggedInUser() {
-  document.getElementById('container-dashboard').classList.add('active');
-  document.getElementById('dash-user-email').textContent = currentUser.email;
-  var badge = document.getElementById('dash-plan-badge');
-  var settingsBadge = document.getElementById('settings-plan-badge');
-  if (currentUser.plan === 'Pro') {
-    badge.textContent = 'Plan: Pro';
-    badge.classList.add('pro');
-    settingsBadge.textContent = 'Plan: Pro';
-    settingsBadge.classList.add('pro');
-    document.getElementById('btn-upgrade').style.display = 'none';
-  } else {
-    badge.textContent = 'Plan: Gratis';
-    badge.classList.remove('pro');
-    settingsBadge.textContent = 'Plan: Gratis';
-    settingsBadge.classList.remove('pro');
-    document.getElementById('btn-upgrade').style.display = 'block';
-  }
-  document.getElementById('profile-name').value = currentUser.name || '';
-  document.getElementById('profile-email').value = currentUser.email || '';
-  updateUsageDisplay();
-  toggleCancelBtn();
-}
-
-function updateUsageDisplay() {
-  var limit = currentUser.plan === 'Pro' ? 999 : 3;
-  var used = currentUser.usageCount || 0;
-  var percent = (used / limit) * 100;
-  document.getElementById('usage-bar-fill').style.width = Math.min(percent, 100) + '%';
-  var usageText = currentUser.plan === 'Pro' ? used + ' generaciones usadas (ilimitadas)' : used + ' de ' + limit + ' generaciones usadas';
-  document.getElementById('usage-text').textContent = usageText;
-}
-
-function handleLogout() {
-  localStorage.removeItem('sb_tokens');
-  localStorage.removeItem('multipost_user');
   currentUser = null;
-  document.getElementById('container-dashboard').classList.remove('active');
+  localStorage.removeItem('sb_tokens');
+  updateUIForLoggedOutUser();
+  showMainContent();
   showToast('Sesión cerrada');
 }
 
-function showDashSection(section) {
-  document.querySelectorAll('.dash-section').forEach(function(s) { s.classList.remove('active'); });
-  document.querySelectorAll('.dash-nav-item').forEach(function(i) { i.classList.remove('active'); });
-  document.getElementById('section-' + section).classList.add('active');
-  if (section === 'generator') {
-    document.getElementById('dash-title').textContent = 'Generador';
-    document.querySelector('.dash-nav-item').classList.add('active');
-  } else if (section === 'history') {
-    document.getElementById('dash-title').textContent = 'Historial';
-    document.querySelectorAll('.dash-nav-item')[1].classList.add('active');
-  }
-}
-
-function openProfile() {
-  document.getElementById('profile-container').classList.add('active');
-}
-
-function closeProfile() {
-  document.getElementById('profile-container').classList.remove('active');
-}
-
-function updateProfile(e) {
-  e.preventDefault();
-  currentUser.name = document.getElementById('profile-name').value;
-  saveUsageToLocal();
-  saveUserDataToSupabase();
-  showToast('Perfil actualizado');
-  closeProfile();
-}
-
-async function upgradeToPro() {
-  if (!currentUser) return;
-  try {
-    var response = await fetch('https://multipost-webhook.muniategi03.workers.dev/create-checkout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: currentUser.email,
-        userId: currentUser.id,
-        userName: currentUser.name
-      })
-    });
-    var data = await response.json();
-    if (data.url) {
-      window.location.href = data.url;
-    } else {
-      showToast('Error al conectar con Stripe', 3000, true);
-    }
-  } catch(e) {
-    showToast('Error de conexión', 3000, true);
-  }
-}
-
-async function handleCancelSubscription() {
-  if (!currentUser || !currentUser.stripe_customer_id) {
-    showToast('No se encontró la suscripción. Contacta con soporte.', 3000, true);
-    return;
-  }
- 
-  try {
-    var response = await fetch('https://multipost-webhook.muniategi03.workers.dev/create-portal', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ customerId: currentUser.stripe_customer_id })
-    });
-   
-    var data = await response.json();
-    if (data.url) {
-      window.location.href = data.url;
-    } else {
-      showToast('Error al conectar con Stripe', 3000, true);
-    }
-  } catch(e) {
-    showToast('Error de conexión', 3000, true);
-  }
-}
- 
-function toggleCancelBtn() {
-  var btn = document.getElementById('btn-cancel-sub');
-  if (currentUser && currentUser.plan === 'Pro') {
-    btn.style.display = 'block';
+function updateUIForLoggedInUser() {
+  document.getElementById('nav-btn-guest').style.display = 'none';
+  document.getElementById('nav-user-menu').style.display = 'flex';
+  document.getElementById('nav-name').textContent = currentUser.name || 'Usuario';
+  document.getElementById('nav-email').textContent = currentUser.email || '';
+  var navAvatar = document.getElementById('nav-avatar');
+  if (currentUser.avatar) {
+    navAvatar.style.backgroundImage = 'url(' + currentUser.avatar + ')';
+    navAvatar.textContent = '';
   } else {
-    btn.style.display = 'none';
+    navAvatar.style.backgroundImage = 'none';
+    navAvatar.textContent = (currentUser.name || 'MP').substring(0, 2).toUpperCase();
+  }
+  updateHeroCta();
+  updatePlanCards();
+}
+
+function updateUIForLoggedOutUser() {
+  document.getElementById('nav-btn-guest').style.display = 'block';
+  document.getElementById('nav-user-menu').style.display = 'none';
+  updateHeroCta();
+}
+
+function updateHeroCta() {
+  var cta = document.getElementById('hero-cta');
+  if (currentUser) {
+    cta.innerHTML = '<button class="btn-primary" onclick="showDashboard()">Ir al generador →</button>'
+      + '<button class="btn-secondary-outline" onclick="showMainContent()">Ver landing</button>';
+  } else {
+    cta.innerHTML = '<button class="btn-primary" onclick="openModal()">Empezar ahora</button>';
   }
 }
 
-function showToast(msg, duration, isError) {
-  var toast = document.getElementById('toast');
-  toast.textContent = msg;
-  toast.classList.add('show');
-  if (isError) { toast.classList.add('error'); } else { toast.classList.remove('error'); }
-  setTimeout(function() { toast.classList.remove('show'); }, duration || 3000);
+function updatePlanCards() {
+  if (!currentUser) return;
+  
+  var freePlanCard = document.getElementById('free-plan-card');
+  var proPlanCard = document.getElementById('pro-plan-card');
+  var btnUpgradePro = document.getElementById('btn-upgrade-pro');
+  
+  // Limpiar badges anteriores
+  var oldBadge1 = freePlanCard.querySelector('.current-plan-badge');
+  var oldBadge2 = proPlanCard.querySelector('.current-plan-badge');
+  if (oldBadge1) oldBadge1.remove();
+  if (oldBadge2) oldBadge2.remove();
+  freePlanCard.classList.remove('current-plan');
+  proPlanCard.classList.remove('current-plan');
+
+  if (currentUser.plan === 'Gratis') {
+    freePlanCard.classList.add('current-plan');
+    var badge = document.createElement('div');
+    badge.className = 'current-plan-badge';
+    badge.textContent = 'Plan actual';
+    freePlanCard.appendChild(badge);
+    btnUpgradePro.textContent = 'Mejorar a Pro';
+    btnUpgradePro.disabled = false;
+  } else if (currentUser.plan === 'Pro') {
+    proPlanCard.classList.add('current-plan');
+    var badge = document.createElement('div');
+    badge.className = 'current-plan-badge';
+    badge.textContent = 'Plan actual';
+    proPlanCard.appendChild(badge);
+    btnUpgradePro.textContent = 'Plan actual';
+    btnUpgradePro.disabled = true;
+  }
 }
 
-function generateContent(e) {
-  e.preventDefault();
-  var topic = document.getElementById('input-topic').value.trim();
-  var tone = document.getElementById('input-tone').value;
-  if (!currentUser) { showToast('Debes iniciar sesión', 3000, true); return; }
-  var limit = currentUser.plan === 'Pro' ? 999 : 3;
-  if ((currentUser.usageCount || 0) >= limit) {
-    showToast('Has alcanzado el límite. Activa el plan Pro.', 4000, true);
+function updateUsageDisplay() {
+  if (!currentUser) return;
+  
+  var usageCount = currentUser.usageCount || 0;
+  var maxUsage = currentUser.plan === 'Pro' ? Infinity : 3;
+  
+  var usageFill = document.getElementById('usage-fill');
+  var usageText = document.getElementById('usage-text');
+  var upgradeBadge = document.getElementById('upgrade-badge');
+  var usageSection = document.getElementById('usage-section');
+  var limitWarning = document.getElementById('limit-warning');
+  var generateBtn = document.getElementById('ai-generate-btn');
+  
+  if (currentUser.plan === 'Pro') {
+    usageSection.style.display = 'none';
+    limitWarning.classList.remove('show');
+    generateBtn.disabled = false;
+    generateBtn.textContent = 'Generar textos con IA →';
     return;
   }
-  if (!topic || !tone) { showToast('Completa todos los campos', 3000, true); return; }
-  var btn = document.getElementById('btn-generate');
-  btn.disabled = true;
-  btn.textContent = 'Generando...';
+  
+  usageSection.style.display = 'block';
+  var percentage = Math.min((usageCount / maxUsage) * 100, 100);
+  usageFill.style.width = percentage + '%';
+  usageText.innerHTML = 'Has usado <strong>' + usageCount + ' de ' + maxUsage + '</strong> generaciones gratuitas';
+  
+  if (usageCount >= maxUsage) {
+    upgradeBadge.style.display = 'inline-block';
+    limitWarning.classList.add('show');
+    generateBtn.disabled = true;
+    generateBtn.textContent = 'Límite alcanzado';
+  } else if (usageCount >= maxUsage - 1) {
+    upgradeBadge.style.display = 'inline-block';
+    limitWarning.classList.remove('show');
+    generateBtn.disabled = false;
+    generateBtn.textContent = 'Generar textos con IA →';
+  } else {
+    upgradeBadge.style.display = 'none';
+    limitWarning.classList.remove('show');
+    generateBtn.disabled = false;
+    generateBtn.textContent = 'Generar textos con IA →';
+  }
+}
+
+function showDashboard() {
+  document.getElementById('main-content').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  document.querySelectorAll('.legal-section').forEach(function(el) { el.style.display = 'none'; });
+  document.getElementById('nav-links-landing').style.display = 'none';
+  updateUsageDisplay();
+  window.scrollTo(0, 0);
+}
+
+function showMainContent() {
+  document.getElementById('main-content').style.display = 'block';
+  document.getElementById('dashboard').style.display = 'none';
+  document.querySelectorAll('.legal-section').forEach(function(el) { el.style.display = 'none'; });
+  document.getElementById('nav-links-landing').style.display = 'flex';
+  window.scrollTo(0, 0);
+}
+
+function showLegal(page) {
+  closeModal();
+  closeCookie();
+  document.getElementById('main-content').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('nav-links-landing').style.display = 'none';
+  document.querySelectorAll('.legal-section').forEach(function(el) { el.style.display = 'none'; });
+  document.getElementById('page-' + page).style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+function hideLegal() {
+  document.querySelectorAll('.legal-section').forEach(function(el) { el.style.display = 'none'; });
+  if (currentUser) { showDashboard(); } else { showMainContent(); }
+}
+
+function handleLogoClick() {
+  if (currentUser) { showDashboard(); } else { showMainContent(); }
+}
+
+function handleHeroCta() {
+  if (currentUser) { showDashboard(); } else { openModal(); }
+}
+
+function scrollToPricing() {
+  var pricingSection = document.getElementById('pricing-section');
+  if (pricingSection) {
+    pricingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+async function handleSaveProfile(event) {
+  event.preventDefault();
+  var newName = document.getElementById('settings-name').value.trim();
+  if (!newName || !currentUser) return;
+  
+  currentUser.name = newName;
+  saveUsageToLocal();
+  await saveUserDataToSupabase();
+  
+  updateUIForLoggedInUser();
+  document.getElementById('settings-name-display').textContent = newName;
+  var avatar = document.getElementById('settings-avatar');
+  if (!currentUser.avatar) avatar.textContent = newName.substring(0, 2).toUpperCase();
+  document.getElementById('profile-success').style.display = 'block';
+  showToast('Perfil actualizado correctamente');
+  setTimeout(function() { document.getElementById('profile-success').style.display = 'none'; }, 3000);
+}
+
+async function handleAvatarUpload(event) {
+  var file = event.target.files[0];
+  if (!file || !currentUser) return;
+  
+  var reader = new FileReader();
+  reader.onload = async function(e) {
+    var avatarUrl = e.target.result;
+    currentUser.avatar = avatarUrl;
+    saveUsageToLocal();
+    await saveUserDataToSupabase();
+    
+    document.getElementById('nav-avatar').style.backgroundImage = 'url(' + avatarUrl + ')';
+    document.getElementById('nav-avatar').textContent = '';
+    document.getElementById('settings-avatar').style.backgroundImage = 'url(' + avatarUrl + ')';
+    document.getElementById('settings-avatar').textContent = '';
+    showToast('Avatar actualizado');
+  };
+  reader.readAsDataURL(file);
+}
+
+// ==========================================
+// GENERADOR CON TONOS \u00daNICOS Y ALEATORIEDAD
+// ==========================================
+
+async function handleGenerateAI(event) {
+  event.preventDefault();
+  
+  if (!currentUser) {
+    openModal();
+    return;
+  }
+  
+  if (currentUser.plan === 'Gratis' && currentUser.usageCount >= 3) {
+    document.getElementById('limit-warning').classList.add('show');
+    document.getElementById('dash-error').textContent = 'Has alcanzado el límite de generaciones gratuitas.';
+    scrollToPricing();
+    return;
+  }
+  
+  var topic = document.getElementById('ai-topic').value.trim();
+  var tone = document.getElementById('ai-tone').value;
+  var errorDiv = document.getElementById('dash-error');
+  var submitBtn = document.getElementById('ai-generate-btn');
+  
+  if (!topic) { 
+    errorDiv.textContent = 'Escribe de qué va tu video.'; 
+    return; 
+  }
+  
+  errorDiv.textContent = '';
+  document.getElementById('limit-warning').classList.remove('show');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Generando... ⏳';
   document.getElementById('div-resultados-ia').style.display = 'none';
-  setTimeout(function() {
-    btn.disabled = false;
-    btn.textContent = 'Generar textos ✨';
-    var hook = '¿Sabías que ' + topic + ' puede cambiar tu vida? 👀';
-    var screen = 'Este tip sobre ' + topic + ' te va a sorprender...';
-    var captionTk = 'Te cuento todo sobre ' + topic + ' en menos de 60 segundos. ¡Guarda este post!';
-    var captionIg = '¿Quieres saber más sobre ' + topic + '? Aquí te lo explico paso a paso. 🔥';
-    var titleYt = 'TODO lo que necesitas saber sobre ' + topic.toUpperCase() + ' (Guía completa)';
-    var descYt = 'En este video te explico de forma clara y directa todo lo relacionado con ' + topic + '. Si buscas aprender sin complicaciones, este video es para ti.';
-    var safeTag = topic.toLowerCase().replace(/\s+/g, '');
-    var toneTag = tone.toLowerCase();
+  
+  setTimeout(async function() {
+    var safeTag = topic.split(' ')[0].toLowerCase().replace(/[^a-záéíóúñ]/g, '');
+    var t = TEMPLATES[tone] || TEMPLATES['Divertido'];
+
+    var hook = getRandomItem(t.hooks).replace(/{topic}/g, topic);
+    var screen = getRandomItem(t.screens).replace(/{topic}/g, topic.toUpperCase());
+    var captionTk = getRandomItem(t.captionsTk).replace(/{topic}/g, topic);
+    var captionIg = getRandomItem(t.captionsIg).replace(/{topic}/g, topic).replace(/{tag}/g, safeTag);
+    var titleYt = getRandomItem(t.titlesYt).replace(/{topic}/g, topic);
+    var descYt = getRandomItem(t.descsYt).replace(/{topic}/g, topic);
+
+    var toneEmojis = { 'Divertido': '😂', 'Educativo': '🧠', 'Serio y Profesional': '💼', 'Polémico': '🔥', 'Motivador': '💪' };
+    var toneTag = tone.toLowerCase().replace(' y profesional', '').replace(' ', '');
 
     document.getElementById('res-tiktok-hook').textContent = hook;
     document.getElementById('res-tiktok-screen').textContent = screen;
@@ -1094,10 +1381,6 @@ function copySuccess(btn) {
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') { closeModal(); closeProfile(); }
-});
-
-window.addEventListener('load', function() {
-  fetchUserAndLogin();
 });
 </script>
 
