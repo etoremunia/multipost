@@ -470,10 +470,6 @@ var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZ
 
 var currentUser = null;
 
-// ==========================================
-// SISTEMA DE PLANTILLAS POR TONO
-// ==========================================
-
 function getRandomItem(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
@@ -686,11 +682,6 @@ var TEMPLATES = {
   }
 };
 
-// ==========================================
-// SISTEMA DE USO PERSISTENTE (localStorage)
-// Se reinicia autom\u00e1ticamente cada mes
-// ==========================================
-
 function getUsageKey() {
   if (!currentUser || !currentUser.id) return null;
   var now = new Date();
@@ -717,10 +708,6 @@ function saveUsageToLocal() {
     localStorage.setItem(key, JSON.stringify({ count: currentUser.usageCount || 0, plan: currentUser.plan || "Gratis" }));
   } catch(e) {}
 }
-
-// ==========================================
-// INICIO Y AUTENTICACI\u00d3N
-// ==========================================
 
 document.addEventListener('DOMContentLoaded', function() {
   if (!localStorage.getItem('cookiesAccepted')) {
@@ -769,7 +756,7 @@ function openProfile() {
   document.getElementById('settings-name-display').textContent = currentUser.name || 'Usuario';
   document.getElementById('settings-email-display').textContent = currentUser.email || '';
   document.getElementById('settings-plan-badge').textContent = 'Plan: ' + (currentUser.plan || 'Gratis');
-  toggleCancelBtn(); // Mostrar/ocultar botón de cancelar
+  toggleCancelBtn();
   var avatar = document.getElementById('settings-avatar');
   if (currentUser.avatar) {
     avatar.style.backgroundImage = 'url(' + currentUser.avatar + ')';
@@ -864,10 +851,7 @@ async function fetchUserAndLogin(accessToken) {
       usageCount: 0
     };
     
-    // Cargar datos desde Supabase
     await loadUserDataFromSupabase(accessToken);
-    
-    // Fallback a localStorage (garantiza que el l\u00edmite persista aunque Supabase falle)
     loadUsageFromLocal();
     
     updateUIForLoggedInUser();
@@ -883,14 +867,9 @@ async function fetchUserAndLogin(accessToken) {
   }
 }
 
-// ==========================================
-// LÓGICA DE PAGO Y ACTUALIZACIÓN DE PLAN
-// ==========================================
-
 function handlePlanClick(plan) {
   if (!currentUser) { openModal(); return; }
   
-  // Si ya es Pro, no enviar a Stripe
   if (plan === 'pro' && currentUser.plan === 'Pro') {
     showToast('Ya tienes el plan Pro activado');
     return;
@@ -902,7 +881,6 @@ function handlePlanClick(plan) {
   };
   
   if (urls[plan]) {
-    // Añadimos el email y el ID del usuario para que Stripe lo sepa
     var stripeUrl = urls[plan] 
       + '?prefilled_email=' + encodeURIComponent(currentUser.email)
       + '&client_reference_id=' + currentUser.id;
@@ -968,7 +946,6 @@ async function saveUserDataToSupabase() {
   try {
     var tokensObj = JSON.parse(tokens);
     
-    // Usar PATCH para actualizar solo los datos del usuario
     await fetch(SB_URL + '/rest/v1/users?id=eq.' + currentUser.id, {
       method: 'PATCH',
       headers: {
@@ -979,7 +956,6 @@ async function saveUserDataToSupabase() {
       },
       body: JSON.stringify({
         name: currentUser.name,
-        avatar: currentUser.avatar,
         plan: currentUser.plan,
         usage_count: currentUser.usageCount
       })
@@ -1048,7 +1024,6 @@ function updatePlanCards() {
   var proPlanCard = document.getElementById('pro-plan-card');
   var btnUpgradePro = document.getElementById('btn-upgrade-pro');
   
-  // Limpiar badges anteriores
   var oldBadge1 = freePlanCard.querySelector('.current-plan-badge');
   var oldBadge2 = proPlanCard.querySelector('.current-plan-badge');
   if (oldBadge1) oldBadge1.remove();
@@ -1193,9 +1168,24 @@ async function handleAvatarUpload(event) {
   reader.onload = async function(e) {
     var avatarUrl = e.target.result;
     currentUser.avatar = avatarUrl;
-    saveUsageToLocal();
-    await saveUserDataToSupabase();
     
+    var tokens = localStorage.getItem('sb_tokens');
+    if (tokens) {
+      try {
+        var tokensObj = JSON.parse(tokens);
+        await fetch(SB_URL + '/rest/v1/users?id=eq.' + currentUser.id, {
+          method: 'PATCH',
+          headers: {
+            'Authorization': 'Bearer ' + tokensObj.access_token,
+            'apikey': SB_KEY,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({ avatar: avatarUrl })
+        });
+      } catch(e) {}
+    }
+
     document.getElementById('nav-avatar').style.backgroundImage = 'url(' + avatarUrl + ')';
     document.getElementById('nav-avatar').textContent = '';
     document.getElementById('settings-avatar').style.backgroundImage = 'url(' + avatarUrl + ')';
@@ -1204,10 +1194,6 @@ async function handleAvatarUpload(event) {
   };
   reader.readAsDataURL(file);
 }
-
-// ==========================================
-// GENERADOR CON TONOS \u00daNICOS Y ALEATORIEDAD
-// ==========================================
 
 async function handleGenerateAI(event) {
   event.preventDefault();
@@ -1270,9 +1256,8 @@ async function handleGenerateAI(event) {
 
     currentUser.usageCount = (currentUser.usageCount || 0) + 1;
     saveUsageToLocal();
-    saveUserDataToSupabase();
+    await saveUserDataToSupabase();
     
-    // Guardar en el historial de Supabase
     saveGenerationToSupabase(topic, tone, {
       hook: hook, screen: screen, captionTk: captionTk, tagsTk: document.getElementById('res-tiktok-tags').textContent,
       captionIg: captionIg, tagsIg: document.getElementById('res-ig-tags').textContent,
@@ -1316,10 +1301,6 @@ async function saveGenerationToSupabase(topic, tone, results) {
     });
   } catch(e) {}
 }
-
-// ==========================================
-// CANCELACIÓN DE SUSCRIPCIÓN (STRIPE PORTAL)
-// ==========================================
 
 async function handleCancelSubscription() {
   if (!currentUser || !currentUser.stripe_customer_id) {
