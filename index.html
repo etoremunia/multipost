@@ -694,9 +694,10 @@ function loadUsageFromLocal() {
   if (!key) return;
   try {
     var saved = JSON.parse(localStorage.getItem(key));
+    // Solo usamos el contador local como respaldo si Supabase falla. 
+    // NUNCA sobreescribimos el plan desde aquí. Supabase es la única fuente de verdad.
     if (saved && typeof saved.count === "number") {
       if (saved.count > currentUser.usageCount) currentUser.usageCount = saved.count;
-      if (saved.plan && saved.plan !== "Gratis") currentUser.plan = saved.plan;
     }
   } catch(e) {}
 }
@@ -899,20 +900,35 @@ async function loadUserDataFromSupabase(accessToken) {
       }
     });
     
-    if (response.ok) {
-      var data = await response.json();
-      if (data && data.length > 0) {
-        var userData = data[0];
-        currentUser.name = userData.name || currentUser.name;
-        currentUser.avatar = userData.avatar || currentUser.avatar;
-        currentUser.plan = userData.plan || 'Gratis';
-        currentUser.usageCount = userData.usage_count || 0;
-        currentUser.stripe_customer_id = userData.stripe_customer_id || null;
-      } else {
-        await createUserInSupabase(accessToken);
-      }
+    // Si el token expiró o hay un error de red, forzamos a cerrar sesión
+    if (!response.ok) {
+      localStorage.removeItem('sb_tokens');
+      currentUser = null;
+      updateUIForLoggedOutUser();
+      showMainContent();
+      showToast('Tu sesión ha expirado. Por favor, inicia sesión de nuevo.', 4000, true);
+      return;
     }
-  } catch(e) {}
+    
+    var data = await response.json();
+    if (data && data.length > 0) {
+      var userData = data[0];
+      currentUser.name = userData.name || currentUser.name;
+      currentUser.avatar = userData.avatar || currentUser.avatar;
+      currentUser.plan = userData.plan || 'Gratis';
+      currentUser.usageCount = userData.usage_count || 0;
+      currentUser.stripe_customer_id = userData.stripe_customer_id || null;
+    } else {
+      await createUserInSupabase(accessToken);
+    }
+  } catch(e) {
+    // Si hay un error de red real, también forzamos cierre de sesión
+    localStorage.removeItem('sb_tokens');
+    currentUser = null;
+    updateUIForLoggedOutUser();
+    showMainContent();
+    showToast('Error de conexión. Inicia sesión de nuevo.', 4000, true);
+  }
 }
 
 async function createUserInSupabase(accessToken) {
