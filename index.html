@@ -942,8 +942,7 @@ async function saveUserDataToSupabase() {
       headers: {
         'Authorization': 'Bearer ' + tokensObj.access_token,
         'apikey': SB_KEY,
-        'Content-Type': 'application/json',
-        'Prefer': 'return=representation'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         name: currentUser.name,
@@ -953,11 +952,10 @@ async function saveUserDataToSupabase() {
     });
     
     if (response.ok) {
-      var data = await response.json();
-      console.log('✅ Usos guardados en BD:', data[0].usage_count);
+      console.log('✅ Usos guardados en BD');
     } else {
-      var errorData = await response.json().catch(function() { return {}; });
-      console.error('❌ Error guardando usos:', response.status, errorData);
+      var errorText = await response.text();
+      console.error('❌ Error guardando usos (' + response.status + '):', errorText);
     }
   } catch(e) {
     console.error('❌ Error de conexión guardando usos:', e);
