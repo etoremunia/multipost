@@ -682,34 +682,6 @@ var TEMPLATES = {
   }
 };
 
-function getUsageKey() {
-  if (!currentUser || !currentUser.id) return null;
-  var now = new Date();
-  var monthKey = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0");
-  return "mp_usage_" + currentUser.id + "_" + monthKey;
-}
-
-function loadUsageFromLocal() {
-  var key = getUsageKey();
-  if (!key) return;
-  try {
-    var saved = JSON.parse(localStorage.getItem(key));
-    // Solo usamos el contador local como respaldo si Supabase falla. 
-    // NUNCA sobreescribimos el plan desde aquí. Supabase es la única fuente de verdad.
-    if (saved && typeof saved.count === "number") {
-      if (saved.count > currentUser.usageCount) currentUser.usageCount = saved.count;
-    }
-  } catch(e) {}
-}
-
-function saveUsageToLocal() {
-  var key = getUsageKey();
-  if (!key) return;
-  try {
-    localStorage.setItem(key, JSON.stringify({ count: currentUser.usageCount || 0, plan: currentUser.plan || "Gratis" }));
-  } catch(e) {}
-}
-
 document.addEventListener('DOMContentLoaded', function() {
   if (!localStorage.getItem('cookiesAccepted')) {
     document.getElementById('cookie-banner').classList.add('visible');
@@ -852,8 +824,11 @@ async function fetchUserAndLogin(accessToken) {
       usageCount: 0
     };
     
+    // CARGAR USOS DESDE SUPABASE (no localStorage)
     await loadUserDataFromSupabase(accessToken);
-    loadUsageFromLocal();
+    
+    // LOG PARA VERIFICAR
+    console.log('✅ Usuario cargado:', currentUser.email, '- Usos:', currentUser.usageCount, '- Plan:', currentUser.plan);
     
     updateUIForLoggedInUser();
     showDashboard();
@@ -900,17 +875,19 @@ async function loadUserDataFromSupabase(accessToken) {
       }
     });
     
-    // Si el token expiró o hay un error de red, forzamos a cerrar sesión
     if (!response.ok) {
+      var errorData = await response.json().catch(function() { return {}; });
+      console.error('❌ Error cargando datos de Supabase:', response.status, errorData);
       localStorage.removeItem('sb_tokens');
       currentUser = null;
       updateUIForLoggedOutUser();
       showMainContent();
-      showToast('Tu sesión ha expirado. Por favor, inicia sesión de nuevo.', 4000, true);
+      showToast('Error de sesión. Inicia sesión de nuevo.', 4000, true);
       return;
     }
     
     var data = await response.json();
+    
     if (data && data.length > 0) {
       var userData = data[0];
       currentUser.name = userData.name || currentUser.name;
@@ -918,16 +895,14 @@ async function loadUserDataFromSupabase(accessToken) {
       currentUser.plan = userData.plan || 'Gratis';
       currentUser.usageCount = userData.usage_count || 0;
       currentUser.stripe_customer_id = userData.stripe_customer_id || null;
+      console.log('✅ Datos cargados de BD - Usos:', currentUser.usageCount);
     } else {
+      console.log('🆕 Usuario nuevo, creando en BD...');
       await createUserInSupabase(accessToken);
     }
   } catch(e) {
-    // Si hay un error de red real, también forzamos cierre de sesión
-    localStorage.removeItem('sb_tokens');
-    currentUser = null;
-    updateUIForLoggedOutUser();
-    showMainContent();
-    showToast('Error de conexión. Inicia sesión de nuevo.', 4000, true);
+    console.error('❌ Error de conexión cargando datos:', e);
+    // NO cerrar sesión por error de red, usar valores por defecto
   }
 }
 
@@ -962,13 +937,13 @@ async function saveUserDataToSupabase() {
   try {
     var tokensObj = JSON.parse(tokens);
     
-    await fetch(SB_URL + '/rest/v1/users?id=eq.' + currentUser.id, {
+    var response = await fetch(SB_URL + '/rest/v1/users?id=eq.' + currentUser.id, {
       method: 'PATCH',
       headers: {
         'Authorization': 'Bearer ' + tokensObj.access_token,
         'apikey': SB_KEY,
         'Content-Type': 'application/json',
-        'Prefer': 'return=minimal'
+        'Prefer': 'return=representation'
       },
       body: JSON.stringify({
         name: currentUser.name,
@@ -976,7 +951,17 @@ async function saveUserDataToSupabase() {
         usage_count: currentUser.usageCount
       })
     });
-  } catch(e) {}
+    
+    if (response.ok) {
+      var data = await response.json();
+      console.log('✅ Usos guardados en BD:', data[0].usage_count);
+    } else {
+      var errorData = await response.json().catch(function() { return {}; });
+      console.error('❌ Error guardando usos:', response.status, errorData);
+    }
+  } catch(e) {
+    console.error('❌ Error de conexión guardando usos:', e);
+  }
 }
 
 async function logout() {
@@ -1164,7 +1149,7 @@ async function handleSaveProfile(event) {
   if (!newName || !currentUser) return;
   
   currentUser.name = newName;
-  saveUsageToLocal();
+  // BORRADO: saveUsageToLocal(); ← ya no necesitamos localStorage
   await saveUserDataToSupabase();
   
   updateUIForLoggedInUser();
@@ -1271,7 +1256,7 @@ async function handleGenerateAI(event) {
     document.getElementById('div-resultados-ia').style.display = 'grid';
 
     currentUser.usageCount = (currentUser.usageCount || 0) + 1;
-    saveUsageToLocal();
+    console.log('💾 Incrementando usos a:', currentUser.usageCount);
     await saveUserDataToSupabase();
     
     saveGenerationToSupabase(topic, tone, {
