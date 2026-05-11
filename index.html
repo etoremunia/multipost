@@ -471,7 +471,7 @@ var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZ
 var currentUser = null;
 
 async function generateWithAI(topic, tone) {
-  var GROQ_KEY = 'TU_API_KEY_DE_GROQ_AQUI';
+  var GROQ_KEY = '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';
   var systemPrompt = 'Eres un experto copywriter para redes sociales. Generas textos VIRALES, únicos y creativos. NUNCA repitas los mismos textos. Cada generación debe ser completamente diferente incluso para el mismo tema. Adapta el tono exactamente como se pida. Responde SOLO en JSON válido, sin texto adicional.';
   var userPrompt = 'Tema del video: "' + topic + '". Tono: ' + tone + '. Genera textos ÚNICOS y diferentes a cualquier generación anterior para este mismo tema. Responde con este JSON exacto:\n\n{\n "tiktok": {\n "hook": "Gancho de 1-2 líneas que capte atención al instante",\n "screen": "Texto corto para poner en pantalla (máximo 8 palabras)",\n "caption": "Caption de 2-3 líneas para TikTok",\n "tags": "5-7 hashtags sin # separados por coma"\n },\n "instagram": {\n "caption": "Caption de 3-5 líneas con emojis y saltos de línea para Instagram",\n "tags": "5-7 hashtags sin # separados por coma"\n },\n "youtube": {\n "title": "Título atractivo y clickeable para YouTube",\n "description": "Descripción de 4-6 líneas con timestamps falsos y llamado a la acción",\n "tags": "5-7 hashtags sin # separados por coma"\n }\n}';
   var response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
