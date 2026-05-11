@@ -472,8 +472,8 @@ var currentUser = null;
 
 async function generateWithAI(topic, tone) {
   var GROQ_KEY = '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';
-  var systemPrompt = 'Eres un experto copywriter para redes sociales. Generas textos VIRALES, únicos y creativos. NUNCA repitas los mismos textos. Cada generación debe ser completamente diferente incluso para el mismo tema. Adapta el tono exactamente como se pida. Responde SOLO en JSON válido, sin texto adicional.';
-  var userPrompt = 'Tema del video: "' + topic + '". Tono: ' + tone + '. Genera textos ÚNICOS y diferentes a cualquier generación anterior para este mismo tema. Responde con este JSON exacto:\n\n{\n "tiktok": {\n "hook": "Gancho de 1-2 líneas que capte atención al instante",\n "screen": "Texto corto para poner en pantalla (máximo 8 palabras)",\n "caption": "Caption de 2-3 líneas para TikTok",\n "tags": "5-7 hashtags sin # separados por coma"\n },\n "instagram": {\n "caption": "Caption de 3-5 líneas con emojis y saltos de línea para Instagram",\n "tags": "5-7 hashtags sin # separados por coma"\n },\n "youtube": {\n "title": "Título atractivo y clickeable para YouTube",\n "description": "Descripción de 4-6 líneas con timestamps falsos y llamado a la acción",\n "tags": "5-7 hashtags sin # separados por coma"\n }\n}';
+  var systemPrompt = 'Eres el copywriter #1 de redes sociales en España. Has estudiado miles de videos virales de TikTok, Instagram y YouTube y sabes exactamente qué funciona y qué no.\n\nREGLAS OBLIGATORIAS:\n- Los ganchos de TikTok deben ser AGRESIVOS, POLÉMICOS o que generen CURIOSIDAD EXTREMA. Nunca algo suave como "¿Quieres X?". Mejor: "NADIE te enseña esto de X", "El error que te está DESTROYING con X", "Si sigues haciendo X así, estás frito".\n- Los títulos de YouTube deben ser CLICKEABLES pero sin clickbait mentiroso. Usá números, mayúsculas estratégicas, y palabras que generen urgencia.\n- Los captions de Instagram deben tener PERSONALIDAD, no suenen a chat GPT. Usá saltos de línea, emojis estratégicos (no demasiados), y un cierre que invite a interactuar.\n- Los hashtags DEBEN ser los más virales y usados para ESE tema específico en cada plataforma. Pensá cuáles usaría un creador con millones de seguidores.\n- Los hashtags VAN PEGADOS: #dormirrápido NO #dormir rápido. #hacerdinero NO #hacer dinero. Sin espacios, sin guiones, sin puntos.\n- Cada generación debe ser COMPLETAMENTE DIFERENTE a cualquier otra. Siempre nuevos ángulos, nuevas palabras.\n- Responde SOLO en JSON válido, sin texto antes ni después.';
+  var userPrompt = 'Tema del video: "' + topic + '". Tono: ' + tone + '.\n\nGenera textos VIRALES, ÚNICOS e IMPOSIBLES de ignorar. Piensa como un creador que busca millones de vistas, no como un redactor aburrido.\n\nResponde con este JSON exacto:\n\n{\n "tiktok": {\n "hook": "Gancho AGRESIVO o POLÉMICO de 1-2 líneas. Que parezca que vas a decir una verdad incómoda o revelar un secreto. Nada de preguntas aburridas.",\n "screen": "Texto de MÁXIMO 5 palabras para poner en pantalla. Impactante, corto, que parezca un grito.",\n "caption": "Caption de 2-3 líneas con actitud. Que no suene a IA. Cierra con algo que invite a comentar o compartir.",\n "tags": "8-10 hashtags virales pegados sin # separados por coma. Sin espacios dentro del hashtag. Los más usados y efectivos para este tema en TikTok."\n },\n "instagram": {\n "caption": "Caption de 4-6 líneas con emojis bien colocados (no en cada frase), saltos de línea, y un cierre que invite a guardar o comentar. Que tenga personalidad, no suene genérico.",\n "tags": "10-12 hashtags pegados sin # separados por coma. Sin espacios. Los más efectivos para este tema en Instagram. Mezcla algunos grandes con otros de nicho."\n },\n "youtube": {\n "title": "Título CLICKEABLE. Usá números, palabras poderosas y mayúsculas estratégicas. Que al verlo tengas ganas de hacer click. Ejemplo de estilo: \"10 ERRORES que te DESTROYING al hacer X (2025)\" o \"Así es como los PROS hacen X (y tú no)\".",\n "description": "Descripción de 5-7 líneas. Incluí timestamps falsos pero realistas, un pequeño resumen del video, y un llamado a la acción claro. Que parezca un canal profesional.",\n "tags": "8-10 hashtags pegados sin # separados por coma. Sin espacios. Los más buscados y virales para este tema en YouTube."\n }\n}';
   var response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
     headers: {
@@ -487,7 +487,7 @@ async function generateWithAI(topic, tone) {
         { role: 'user', content: userPrompt }
       ],
       temperature: 1.2,
-      max_tokens: 1000
+      max_tokens: 1200
     })
   });
   if (!response.ok) {
@@ -502,6 +502,11 @@ async function generateWithAI(topic, tone) {
   var data = await response.json();
   var content = data.choices[0].message.content;
   content = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+  // Forzar hashtags pegados por si la IA los deja con espacios
+  content = content.replace(/"tags":\s*"([^"]+)"/g, function(match, tags) {
+  var fixed = tags.replace(/#\s*/g, '#').replace(/\s+/g, ', ');
+  return '"tags": "' + fixed + '"';
+});
   return JSON.parse(content);
 }
 
