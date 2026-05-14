@@ -505,10 +505,26 @@ async function generateWithAI(topic, tone) {
   content = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
   // Forzar hashtags pegados por si la IA los deja con espacios
   content = content.replace(/"tags":\s*"([^"]+)"/g, function(match, tags) {
-  var fixed = tags.replace(/#\s*/g, '#').replace(/\s+/g, ', ');
-  return '"tags": "' + fixed + '"';
-});
-  return JSON.parse(content);
+    var fixed = tags.replace(/#\s*/g, '#').replace(/\s+/g, ', ');
+    return '"tags": "' + fixed + '"';
+  });
+  // Limpiar caracteres de control que rompen el JSON (saltos de línea reales dentro de strings)
+  var cleaned = '';
+  var inString = false;
+  var escaped = false;
+  for (var i = 0; i < content.length; i++) {
+    var c = content[i];
+    if (escaped) { cleaned += c; escaped = false; continue; }
+    if (c === '\\') { cleaned += c; escaped = true; continue; }
+    if (c === '"') { inString = !inString; cleaned += c; continue; }
+    if (inString) {
+      if (c === '\n') { cleaned += '\\n'; continue; }
+      if (c === '\r') { cleaned += '\\n'; continue; }
+      if (c === '\t') { cleaned += '\\t'; continue; }
+    }
+    cleaned += c;
+  }
+  return JSON.parse(cleaned);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
